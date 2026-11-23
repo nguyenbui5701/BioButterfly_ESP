@@ -1,16 +1,18 @@
 # 16 — PRE-TASK Design Plan: SG90-Style 3-Hole Horn / 2-Bolt Wing Arm
 
-**Status:** DESIGN_PROPOSAL — Owner mechanical approval and measurement pending.  
+**Status:** OWNER_CONCEPT_CONFIRMED / MEASURED_SPLINE_AND_PRINT_VALIDATION_PENDING. Owner confirmed on 2026-11-23: fully 3D-printed horn directly mounted on SDS1601 (Option A), 3 straight-line holes, H1/H3 used with 2 screws. This confirmation **does not** approve spline geometry, screw sizes, material, tolerances or powered tests.  
 **Date:** 2026-11-23 | **Author:** SA | **Agent consultation required:** AI-3D + AI-HW.  
 **This is a design discussion, NOT a Task or permission to print/energize the assembly.**
 
-## 1. Owner request and locked intent
+## 1. Owner-confirmed design intent
 
 - Use the **new uploaded STL** `SG90_one_horn_without_holes.stl` as the geometric reference for a horn to be 3D printed/modified.
 - Add **three available mounting holes on the straight horn lever**, but fasten the wing arm with **only two screws**. The wing arm (source `ARMV5(1).STL`) gets **two matching holes**, not three.
 - Choose fastener size and attachment spacing appropriate for lightweight, high-cycle bionic butterfly wings. The servo is **SDS1601**, NOT a confirmed SG90. Existing ARMV5 and FC Mount V5 originals must be preserved.
 - **Separate the servo central retention screw** from the two arm-to-horn screws. A total of two connection bolts **per wing** plus the shaft-center retention screw (if required by compatible horn design) is intended.
-- No Task until rules/design scope is agreed. The source STL uploaded in this conversation is NOT stored in GitHub; other AI sessions require the actual byte-identical attachment, not just the basename.
+- **No metal horn, 25T insert or adapter is to be silently substituted.** Owner chooses an entirely 3D-printed horn with its **own internal mating spline** and bolt-lever. An alternative coupler would require a fresh owner design change.
+- **Three holes in one straight line** along the horn lever. Initial proposed use H1 (inner) and H3 (outer), leave H2 unbolted; ARMV5 gets just two aligned holes.
+- No Task until remaining design prerequisites and owner sign-off. Source STL is NOT stored in GitHub; other AI sessions require byte-identical attachment, not just filename.
 
 ## 2. Exact inspected source geometry
 
@@ -35,11 +37,22 @@
 3. **Wing root -> four carbon rods:** separate fit issue; do not silently change rod sockets as part of a horn-only dimension revision unless authorized.
 4. **Servo -> PCB power:** no new movement or safety clearance assumptions from CAD alone.
 
-### Mechanical alternatives awaiting owner decision
+### SELECTED — fully 3D-printed horn, direct SDS1601 coupling
 
-- **Option A — fully 3D-printed servo horn:** Create a **correctly measured SDS1601-specific 25T spline** plus center retainer, three bolt holes on printed lever. Use coupon and physical spline engagement test on actual printer. High risk: fine teeth, backlash, creep and fatigue under flapping; no direct wing drive until independently validated.
-- **Option B — recommended for winged prototype:** Keep a **verified 25T metal horn as torque interface**, print a lightweight three-hole outer wing adapter/lever or custom arm, and fasten the wing arm with two screws. It avoids 3D-printing the critical 25T spline. The supplied SG90-style STL can inform lever geometry but the final metal-horn bolt pattern must be physically measured. Not allowed to assume 21T metal horns fit SDS1601.
-- The best solution for full printed-coupler experiments may require resin/high-resolution process and strength tests. **Do not claim FDM can accurately reproduce or retain 25 tiny spline teeth from this STL**.
+**OWNER-CONFIRMED DESIGN CHOICE:** horn including hub, mating spline and lever must be made as a fully printed part. No metal horn or insert in the load path unless owner later changes direction. The supplied SG90-style STL is the starting geometry/reference, not a guaranteed fitted SDS1601 horn: its bore is circular/stepped and lacks the exact SDS1601 tooth profile. **A new parametric internal spline must be derived from measured purchased SDS1601 shaft and appropriate datasheet geometry.** Simply boring the SG90 part to nominal Ø4.9mm is not acceptable.
+
+**Structural risk:** a printed micro-spline can shear, round off or creep under repeated high-cycle flapping even if it statically engages. At nominal 25T and Ø4.90mm, tooth pitch around the outer circumference is approximately 0.62mm (order-of-magnitude only); whether the chosen printer, nozzle, layer orientation and material can reproduce the engagement depends on real process capability. Any printed spline that is too coarse, fragile or slips **FAILS the mechanical gate**; do not hide the failure with excessive interference, glue, heating or an unapproved metal alternative.
+
+**Minimum development sequence (before winged use):**
+1. Physically identify SDS1601 exact servo variant, output spline tooth count, major/minor diameters, effective spline engagement depth/height, shaft-center retaining screw dimensions and horn-installation direction. Separate manufacturer-advertised dimensions from actual measurements.
+2. Select printer/process/material and print **small spline-fit test coupons**, not full horns first. Compare geometry with caliper/microscope where possible, inspect tooth resolution, orientation, hole shrink and internal tooth damage.
+3. Non-powered engagement test on the real servo with no wing load: fully seats with no forcing, no permanent damage to shaft teeth, acceptable backlash, secure separate center retention screw, removable for service; record tests/failed samples.
+4. Only after spline static engagement passes, combine hub and 3-hole lever in CAD, analyze root fillets, fatigue, layer orientation, stress concentrations and mass; print a single horn+ARM connection specimen.
+5. Subject prototype to restrained, instrumented no-wing and then low-load cycling **only after existing electrical, mechanical and owner powered-test gates**. Any slip, rounding, crack, heat/creep or excessive looseness is STOP/FAIL; redesign or revisit coupling with explicit owner authorization.
+
+**Manufacturing reality check:** standard FDM with a large nozzle may not resolve a 25T micro-spline sufficiently. If printed samples cannot meet the fit/fatigue gates, report `FULL_PRINTED_SPLINE_NOT_VIABLE_WITH_AVAILABLE_PROCESS` rather than treating the part as approved. A resin/higher-resolution process may improve dimensional fidelity but **does not automatically prove fatigue strength**.
+
+**Confirmed hole topology:** 3 through-holes **collinear** on lever centerline; ARMV5 root has 2 matching holes; install 2 bolts at selected outer positions H1 and H3, leave H2 unused. The third hole weakens the lever locally: inspect the net ligament and consider localized width increase rather than moving to oversized bolts. All dimensions below remain **proposed** until fabrication testing.
 
 ## 4. Fastener size assessment (proposed, no load qualification)
 
@@ -61,7 +74,7 @@
 
 M2 would leave less than 1mm nominal at the outermost hole before print tolerance and fatigue. Even M1.6 leaves only ~1mm at the outermost station; **local widening, radiused reinforcement or a shorter usable pair may be required** after structural review. Three holes have a strength penalty regardless of only using two bolts.
 
-## 5. Three-hole / two-bolt pattern proposal
+## 5. Confirmed straight-line layout / provisional dimensions
 
 Coordinate convention for the supplied STL: central hub rotation axis **O = (X=0, Y=0)**, lever extends toward **negative Y**, through-holes drilled along **Z**. All proposed positions must be validated on physically measured, printable geometry.
 
@@ -87,7 +100,7 @@ Screw holes: CAD nominal **1.8mm for M1.6 through clearance** in both horn and w
 ## 7. Assembly and printing proposal (before producing files)
 
 1. **Identify physical servo spline:** exact SDS1601 batch, shaft tooth count/diameter/height, retention screw and photo; do not rely on SG90 STL name.
-2. **Choose A or B coupling** with owner. For B obtain the real metal horn model/hole geometry. For A model exact compatible spline and run tiny shaft-fit coupons first.
+2. **Use the confirmed all-plastic direct-hub approach**. Construct a measured SDS1601-specific mating spline in new parametric CAD, and print isolated engagement coupons first. A metal coupler is not part of this approved concept.
 3. Confirm original ARMV5 arm-side root material, alignment plane, 2-bolt pad width/thickness and full left/right actuation sweep.
 4. Parameterized CAD revision: hub/spline, three hole centers H1/H2/H3, clearance diameter, head/washer/nut pockets, fillets and local reinforcement, exact screw stack and material; matching **two** holes in wing arm, mirrored only after verifying handedness.
 5. **Print test coupons first**: hole size variants and, for Option A, spline engagement coupons. Record printer/nozzle/material, axes, dimensional errors, number of failed prints and actual measured fit.
@@ -98,7 +111,7 @@ Screw holes: CAD nominal **1.8mm for M1.6 through clearance** in both horn and w
 ## 8. Mechanical acceptance criteria (to be validated with AI-3D)
 
 - **HORN-G0**: compatible actual servo spline and central retainer fully identified (BLOCKED now).
-- **HORN-G1**: horn interface option A/B selected, compatible with exact physical servo and full test plan.
+- **HORN-G1**: concept choice VERIFIED BY OWNER = printed direct spline, straight-line H1/H2/H3; **dimensional fit and process feasibility still BLOCKED** until test coupons and full plan are approved.
 - **HORN-G2**: three through mounting holes in horn, centerline true to datum; corresponding TWO arm holes match selected pair without forced screw insertion.
 - **HORN-G3**: printed fit results and no cracks/delamination; all fasteners have adequate thread engagement and secure retention method.
 - **HORN-G4**: visual/manual static sweep and tool/cable/switch clearance with no collisions; mass increase documented.
@@ -107,11 +120,13 @@ Screw holes: CAD nominal **1.8mm for M1.6 through clearance** in both horn and w
 
 HORN-G0..G6 are **NOT_RUN/BLOCKED** at time of design draft. Replacing plastic with metal or changing screw size requires a revised review/approval.
 
-## 9. Specific unresolved questions for owner
+## 9. Remaining INPUT questions (not repeat owner-confirmed choices)
 
-1. **Most important:** Do you intend to put the newly 3D-printed horn **directly on the SDS1601 output shaft** (Option A), or use an **actual 25T metal horn on the servo and attach the printed wing arm/adapter by two bolts** (Option B, recommended)? The existing uploaded STL hub has no verified 25T interface.
-2. Is the three-hole pattern meant to be a **line along the narrow lever**, using the inner and outer holes, with the middle as spare? If instead three holes form a triangle around the hub, the geometry and bolt recommendation changes.
-3. Which physical printer/process/material is available (FDM nozzle size PLA/PETG, or resin)? Can you provide a photo of actual SDS1601 spline and any metal horn/retention screw?
-4. Do you already have M1.6/M2 machine bolts/nuts, and can you measure wing-arm root thickness and intended stack? No final bolt length without this.
+1. **Printer capability:** exact machine/process (FDM or resin), nozzle diameter or resolution, actual material; this determines whether ~25T micro-spline is printable and durable.
+2. **Physical servo and fasteners:** close-up of SDS1601 shaft markings/spline and original retention screw, optionally caliper readings of shaft outer diameter and axial engagement depth. No fabricated spline dimensions.
+3. **Stackup:** original ARMV5 root thickness, printer profile, availability of M1.6 machine bolts/nuts/washers and usable lever head clearance. Final bolt length unknown until measured.
+4. **Verification method:** static no-wing test and later controlled fatigue cycling with builder present; no powered test without PCB/Battery gates.
 
-Do not create Task files until owner has reviewed the design choices and SA records accepted scope. **Current: HORN_PRETASK_PLAN_READY / HORN_G0_BLOCKED / NO_NEW_CAD_CREATED.**
+Owner's two core design decisions (fully printed direct horn; 3 holes collinear) are **CLOSED**. Do not ask them again unless the owner changes scope.
+
+Do not create Task files until other prerequisites are reviewed and SA records approved scope. **Current: CONCEPT_CONFIRMED / PRINT_PROCESS_UNKNOWN / HORN_G0_BLOCKED / NO_TASK / NO_NEW_CAD_CREATED.**
