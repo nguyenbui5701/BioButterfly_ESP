@@ -2,6 +2,10 @@
 
 **Status:** RULES_DRAFT / 2026-11-24. **Owner-confirmed 25T/Ø4.9mm SDS1601 spline and Bambu Lab A1 printer; additional mandatory [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).** **Addendum:** see [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) for newly uploaded SG90-style horn source, proposed H1/H2/H3 layout and M1.6 sizing. **Role:** AI-3D, with AI-HW consultation. **Boundary:** define mechanical acceptance and controlled design iteration; **do not export modified production STL/STEP until owner-approved Design and Task**.
 
+## Scope clarification — existing spline part vs bare servo shaft
+
+See [19_HORN_EXISTING_SPLINE_INTERFACE.md](19_HORN_EXISTING_SPLINE_INTERFACE.md). Owner has spline hardware available and wants **only the plastic horn continued**; **do not fabricate any separate male spline**. Previous instructions to reconstruct a female printed 25T spline are **conditional on bare-shaft Case A**. If an existing distinct coupler/hub is present (Case B), the printed horn must use its **actual measured** mounting face/fastener geometry, and the legacy printed-female-spline gates are replaced by coupler fit/retention verification. **J1 case remains unknown** until physical confirmation. Preserve H1–H2–H3 **3.5mm adjacent / 7mm outer** and 2 matching ARMV5 holes.
+
 ## 1. What has actually been observed
 
 - Owner has printed **ARMV5(1).STL**, reports a one-hole/undersized arm-horn interface and only 1 of 4 sockets accepting nominal 1.5mm carbon rod.
