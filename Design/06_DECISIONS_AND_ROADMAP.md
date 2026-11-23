@@ -11,7 +11,7 @@
 | ADR-002 | Arduino framework + PlatformIO, pinned build | PROPOSED | Repeatable ESP32 toolchain, host tests separate from hardware |
 | ADR-003 | Mobile-first local AP/web pilot concept | SUPERSEDED_DRAFT | Owner now intends ESP-NOW gamepad as M0 pilot; web may later support disarmed-only config/telemetry |
 | ADR-004 | WebSocket v1 as pilot source | SUPERSEDED_DRAFT | ESP-NOW TX/RX bind/session/version proposal now takes precedence; no second active pilot |
-| ADR-005 | Two SDS1601 servo wing actuation | OWNER_HARDWARE_REPORTED / VALIDATION_PENDING | SDS1601 present; 25T reference spline vs proposed metal horn 21T unresolved |
+| ADR-005 | Two SDS1601 servo wing actuation | OWNER_HARDWARE_REPORTED / FIT_VALIDATION_PENDING | SDS1601 nominal 25T Ø4.9 confirmed by owner; printed direct-mating plastic horn chosen, tooth geometry and fatigue not yet tested |
 | ADR-006 | Device-side fail-closed safety state machine, boot DISARMED | PROPOSED | Safety must not depend on phone, Wi-Fi or UI refresh |
 | ADR-007 | Separate flight-weight frame and optional removable aesthetic shell | PROPOSED | Reduce first prototype mass and simplify access |
 | ADR-008 | Phase 0 bench validation before tethered/free flight | PROPOSED | No assumption that working firmware produces flyable vehicle |
@@ -24,9 +24,9 @@
 | ADR-015 | No PCB power/print/coupling work without domain gates and physical evidence | PROPOSED | 14 and 15 gate physical assembly; owner authorization is separate from doc commits |
 | ADR-016 | **Fully 3D-printed** SG90-style derived horn directly mating SDS1601 spline; **3 collinear lever holes**, 2 aligned wing-arm holes, 2 installed bolts per wing | **OWNER_CONCEPT_CONFIRMED / DIMENSIONS_PENDING** | Owner explicitly selected all-plastic horn (no metal insert) and straight-line hole geometry; **25T/Ø4.9mm nominal & Bambu Lab A1 confirmed 2026-11-24**. Tentative H1/H3 7mm apart, M1.6/Ø1.8mm. Actual tooth form/fit, installed nozzle, filament, fatigue, retention screw and bolt length NOT approved; Design/16 and 17 |
 
-**Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
-
 | ADR-017 | Reuse research from mezger customizable servo arm with source-verified SDS1601 custom 25T/4.9 and explicit 3-hole count | SOURCE_RESEARCH_COMPLETE / HOLE_SPACING_OWNER_DECISION_PENDING | 3F source is 25T/5.92mm, SG90 is 21T/4.9mm; pictured adjacent pitch 6mm gives 12mm outer screws rather than earlier 7mm. License LGPL-2.1, Design/18. |
+
+**Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
 
 ## Agent team and design handoff gate
 
@@ -83,7 +83,7 @@ DESIGN_DRAFT -> DESIGN_REVIEW -> DESIGN_APPROVED -> TASK_READY -> AI_CODE_IN_PRO
 **Needed before marking DESIGN_APPROVED:**
 - Confirm or adjust current ESP-NOW gamepad primary M0 scope; two firmwares and optional web diagnostics only.
 - Exact gamepad MCU, button/joystick GPIO and currently installed firmware/source (currently unknown).
-- Servo spline/horn compatibility (reference SDS1601 25T Ø4.90 vs proposed 21T ~4.5) and actual two-fastener joint dimensions.
+- Printed horn spline geometry / retaining screw / tooth engagement and cyclic load validation (owner confirmed SDS1601 25T Ø4.9mm; old metal 21T concept superseded); actual two-fastener joint dimensions and P7/P12 spacing choice.
 - Four carbon socket fit measurement and print parameters; first physical FC Mount fit plan.
 - Gerber V1.1 schematic/BOM/assembly/net confirmation, 2S charge/balance and PCB power safety gate.
 - MVP target: stationary/showpiece, bench/tethered, or controlled free-flight ambition.
