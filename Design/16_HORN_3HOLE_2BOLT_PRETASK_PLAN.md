@@ -3,6 +3,10 @@
 **Status:** OWNER_APPROVED_P7_HOLE_PATTERN / MECHANICAL_DIMENSIONS_AND_PRINT_VALIDATION_PENDING. **Decision recorded 2026-11-24:** owner explicitly chose **Option B/P7**: exactly three collinear horn holes with **3.5mm adjacent center pitch**, **7.0mm outer H1-H3 bolt pitch**; ARMV5 has two matching holes at H1/H3 and uses only two bolts. **P12 (6mm adjacent, 12mm outer) is not selected**; screenshot remains reference evidence only. Fully printed direct SDS1601 horn, nominal 25T/Ø4.9mm and Bambu Lab A1 remain owner-confirmed. See [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md) and [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md). This decision does NOT approve the absolute radial location, hole diameter, print tolerance or powered operation.  **Date:** 2026-11-23 | **Author:** SA | **Agent consultation required:** AI-3D + AI-HW.  
 **This is a design discussion, NOT a Task or permission to print/energize the assembly.**
 
+## New clarification — existing physical spline hardware (2026-11-24)
+
+Owner states the spline already exists mechanically, and the work should continue on the **3D-printed plastic horn** only. Do not print a separate male servo spline. See [19_HORN_EXISTING_SPLINE_INTERFACE.md](19_HORN_EXISTING_SPLINE_INTERFACE.md) for the distinction: **bare SDS1601 output shaft** still requires a female mating spline in the horn; a **separate existing physical coupler** would require a measured mechanical adapter interface instead. The actual J1 coupling is **not yet distinguished**, so earlier unqualified printed-female-spline instructions are conditional on **Case A**. The P7 three-hole lever + two-hole ARM bolt pattern remains accepted and unchanged. Final printable horn central hub must not be guessed.
+
 ## 1. Owner-confirmed design intent
 
 - Use the **new uploaded STL** `SG90_one_horn_without_holes.stl` as the geometric reference for a horn to be 3D printed/modified.
