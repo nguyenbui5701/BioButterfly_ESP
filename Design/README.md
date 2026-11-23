@@ -21,13 +21,27 @@ Thiết kế bướm robot sử dụng ESP32 điều khiển hai cánh bằng se
 | [05_AI_WORK_RULES.md](05_AI_WORK_RULES.md) | SA and AI Code roles, branch/commit rules, PR workflow |
 | [06_DECISIONS_AND_ROADMAP.md](06_DECISIONS_AND_ROADMAP.md) | ADRs, roadmap, review ledger, design approval gates |
 | [07_REFERENCE_AUDIT.md](07_REFERENCE_AUDIT.md) | Findings from original firmware and Google Drive research |
+| **[AGENTS.md](AGENTS.md)** | **Điểm bắt đầu bắt buộc cho mọi AI: role, thứ tự đọc, reporting** |
+| [08_MULTI_AGENT_RULES.md](08_MULTI_AGENT_RULES.md) | Quy tắc phối hợp SA, AI-3D, AI-HW và AI-SW; interface và handoff |
+| [09_SENIOR_3D_AGENT.md](09_SENIOR_3D_AGENT.md) | Senior AI thiết kế cơ khí, cánh, CAD và in 3D |
+| [10_SENIOR_HARDWARE_AGENT.md](10_SENIOR_HARDWARE_AGENT.md) | Senior AI điện tử, nguồn, mạch, PCB và safety |
+| [11_SENIOR_SOFTWARE_AGENT.md](11_SENIOR_SOFTWARE_AGENT.md) | Senior AI firmware ESP32, UI, điều khiển và tests |
+
+## Đội ngũ AI chuyên trách
+
+- **SA (tôi):** điều phối thiết kế liên ngành, quản lý rules, tạo Task sau phê duyệt, review và comment PR.
+- **AI-3D:** thiết kế cơ cấu cánh/vỏ/frame, dựng CAD, đánh giá khối lượng và dung sai in.
+- **AI-HW:** định nghĩa sơ đồ mạch, nguồn, pin/sạc/bảo vệ, giao diện servo và điện tử.
+- **AI-SW:** phát triển ESP32 firmware, local web UI, state-machine và kiểm thử.
+
+Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó đọc rules chung và role-specific rules. Chúng là các **vai trò để giao cho những AI agent**; hiện không có ba phiên AI độc lập tự động chạy. Mọi AI chuyên môn chỉ triển khai sau khi được SA giao Task theo design đã duyệt. Không sửa chéo artifact của nhau.
 
 ## Quy trình làm việc
 
 1. SA đọc nguồn tham khảo và chỉ cập nhật Design/ trong giai đoạn design. Mỗi thay đổi cần commit trên GitHub.
 2. Product Owner duyệt phạm vi MVP, architecture, UI, phần cứng và quy tắc làm việc. SA ghi lại phiên bản thiết kế được duyệt bằng commit SHA.
 3. **Chỉ sau khi design được duyệt**, SA tạo file Task/TASK-NNN-*.md quy định AI Code phải đọc gì, sửa file nào, tiêu chí nào và các bằng chứng test cần nộp.
-4. AI Code làm việc trên nhánh riêng và mở PR. SA đọc Task + Design và review độc lập trong ReviewPR/PR-N, không thay đổi working tree của AI Code.
+4. AI-3D, AI-HW hoặc AI-SW được giao task riêng, làm việc trên nhánh riêng và mở PR. SA đọc Task + Design và review độc lập trong ReviewPR/PR-N, không thay đổi working tree của AI Code.
 5. SA post comment review lên PR. Nếu có BLOCKER/MAJOR: giữ checkout + task, bổ sung điểm cần sửa. Nếu không có blocker: review có thể APPROVE; dọn riêng checkout và xóa file task được giao (sau khi lưu vết PR + quyết định trong design ledger), theo 05_AI_WORK_RULES.md.
 6. Product Owner quyết định merge. Không suy luận có thể bay chỉ từ kết quả build phần mềm.
 
