@@ -95,4 +95,11 @@ Before coding, define **exact** endian, alignment, packed size, max frame length
 
 Unknown controller pinout/firmware; contradictory wiring vs PCB; non-working STOP; rising stale/control losses; unstable AP/ESP-NOW coexistence; open/provable replay hole; servo spline/limit unresolved; unsafe 2S power. Do **NOT** bypass failsafe for successful radio-demo video.
 
+## 11. Authoritative API references
+
+- Espressif ESP32-C3 ESP-NOW (peer setup, radio channel, encrypted unicast and callbacks): https://docs.espressif.com/projects/esp-idf/en/latest/esp32c3/api-reference/network/esp_now.html
+- Espressif Arduino-ESP32 ESP-NOW API: https://docs.espressif.com/projects/arduino-esp32/en/latest/api/espnow.html
+
+Consult documentation matching the **pinned ESP-IDF/Arduino core version** used by each firmware image. Avoid adopting example callbacks/struct layouts from a different version without compiler and test verification.
+
 **Current:** DESIGN_PROPOSED / CONTROLLER_FIRMWARE_UNKNOWN / TX_RX_PROTOCOL_UNAPPROVED / BENCH_NOT_RUN.
