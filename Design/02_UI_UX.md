@@ -1,6 +1,13 @@
 # 02 — UI/UX Design: Mobile Web Cockpit
 
-**State:** DRAFT; 2026-11-23. **Interface target:** mobile browser connected directly to the butterfly's local Wi-Fi AP; desktop responsive secondary. The UI is a **pilot instrument**, not decorative animation. Flight control must remain safe if the UI freezes.
+**State:** SUPERSEDED_PHONE_PILOT_DRAFT / 2026-11-23. **IMPORTANT:** Owner explicitly selected **ESP-NOW gamepad as M0 primary pilot**. The following phone pilot cockpit and WebSocket examples are preserved as historical concepts **ONLY**, not current M0 requirements, protocol or code authorization. An optional future web interface would be **DISARMED-only configuration/diagnostics** unless separately approved. Read 03_SYSTEM_ARCHITECTURE.md and 13_ESP_NOW_DUAL_FIRMWARE_RULES.md first.
+
+## New hierarchy for current build (supersedes pilot behavior below)
+
+1. **Physical gamepad:** verified joystick/buttons, explicit ARM/DISARM/STOP, transmitter on/off and bind. Actual gamepad model/firmware is unverified and needs inspection.
+2. **Receiver:** XIAO ESP32-C3 owns all state decisions and STOP/failsafe even without a phone UI. No dual-pilot arbitration in M0.
+3. **Future optional web UI:** read-only telemetry, configuration while DISARMED, diagnostic logs and safe calibration actions after approval. Any web server must not steal radio channel or control authority from active ESP-NOW pilot.
+4. **All fields/messages below are nonbinding historic examples.** Do not implement old browser control endpoint, joystick flight panel or browser-sent ARM messages for M0 unless SA and owner approve a new design.
 
 ## 1. Information hierarchy
 1. **Always visible:** connectivity, safety state, active control source, battery reading + validity, STOP button.
@@ -118,7 +125,7 @@ Protocol design gates:
 - Stop must work independently of UI display state, and a disconnected client cannot directly assert device outcome.
 - Credentials must not be the known public demo password. Device provisioning and local session protection are part of implementation design review.
 
-## 6. UI acceptance (demonstration)
+## 6. Historical UI acceptance (future proposal only; not an M0 gate)
 - 360px viewport, portrait/landscape: STOP visible without scrolling.
 - Joystick drag/release/cancel/phone lock, page reload: no ghost throttle. Device-side failsafe evidence required.
 - Simulated disconnect and stale telemetry: show disconnected/unknown, not ARMED_OK.
@@ -127,4 +134,4 @@ Protocol design gates:
 - Accessibility: touch targets, contrast and labels verified manually.
 
 ## 7. Delivery boundary
-This file defines a target UX only; **no code, binary UI bundle or API implementation is authorized** until owner design approval and a Task is issued.
+This file preserves an optional future web UX proposal. It does **not** define the current M0 pilot transport; **no web pilot code, binary bundle, or API implementation is authorized** without owner-approved new design and Task.
