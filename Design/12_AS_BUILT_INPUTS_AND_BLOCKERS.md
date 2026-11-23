@@ -42,7 +42,7 @@ Coordinates/units are interpreted as millimeters consistent with intended prints
 - **Historical superseded proposal:** metal horn 21T/~4.5mm. Owner rejected metal-horn architecture in favor of fully printed direct coupling. Do not use 21T geometry to model or print the chosen horn. Confirm actual SDS1601 spline tooth count/diameter and use accurately printed mating geometry.
 - Reference SDS1601 specification image says **25T, approx Ø4.90mm spline**. That differs in tooth count and nominal diameter from 21T/4.5mm. A photo of a blue horn does not prove its spline count or mounting geometry.
 - **Never force an imprecise printed bore onto SDS1601, drill its spline, or treat a simple Ø4.9mm round hole as a 25T tooth profile.** Confirm purchased servo tooth count, measured major/minor diameters, engagement depth and center retention screw before CAD freeze. Print separate spline-fit coupons and test without wing load.
-- Three different joints: (1) servo spline to **printed hub spline**, (2) original servo shaft-center retention fastener, (3) **two separate arm-to-horn bolts** at H1/H3 (H2 unused) and their 7mm provisional center spacing. The owner's two-bolt request concerns joint (3) unless explicitly clarified. Two arm-to-horn bolts do not replace the servo center retention screw.
+- Three different joints: (1) servo spline to **printed hub spline**, (2) original servo shaft-center retention fastener, (3) **two separate arm-to-horn bolts** at H1/H3 (H2 unused) and **7mm OWNER-APPROVED** center spacing, with adjacent hole spacing 3.5mm. The owner's two-bolt request concerns joint (3) unless explicitly clarified. Two arm-to-horn bolts do not replace the servo center retention screw.
 - Check metal horn lever length, thickness, sweep, arm load path, screw-head/washer clearance and receiver-side cable interference. No new weight/strength claim before assembling.
 
 ## 5. PCB Gerber V1.1 findings (NOT electrical signoff)
@@ -100,10 +100,17 @@ This file is a factual register and risk list. It **does not authorize** modifyi
 
 - Owner supplied screenshot of **mezger/customizable-servo-arm** with arm_count=1, arm_thickness=1.5mm, arm_hole_diameter=1.8mm, arm_hole_distance=6mm, servo_head_gap=0.1mm and preset Futaba 3F 25T. Screenshot SHA-256: `1d5ef494498f905fc86e343f065c700e5c4eab0188c006f607948f633c228adc`.
 - Verified generator source preset Futaba 3F has head OD **5.92mm, 25T**; SG90 has **4.90mm, 21T**. **Neither** is directly approved for owner's SDS1601 **4.90mm, 25T**. Exact 25T tooth profile still needs physical fitting.
-- Three holes with **6mm adjacent pitch** means outer H1/H3 screws **12mm apart**. Earlier design proposed **7mm**. This must be resolved with owner and actual ARMV5 geometry before drilling.
+- Three holes with **6mm adjacent pitch** means outer H1/H3 screws **12mm apart**. Earlier design proposed **7mm**. **OWNER DECISION RESOLVED**: selected P7 (3.5mm adjacent / 7mm between outer holes) instead of screenshot P12. Physical ARMV5 fit, absolute radial location and bolt size remain to be validated before producing STL.
 - Upstream source: https://github.com/mezger/customizable-servo-arm (LGPL-2.1). Screenshot and upstream source are not yet in target GitHub. Full source/pitch audit in [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md).
 
-## 11. Reference verification pointers (not an as-built measurement)
+## 11. Owner-approved horn hole interface — 2026-11-24
+
+- **OWNER_APPROVED Option B / P7**: exactly **three horn lever holes in one line**, **H1-H2=3.5mm**, **H2-H3=3.5mm**, **H1-H3=7.0mm**; bolt only **H1 and H3**. Wing arm gets **exactly two matching holes**, 7mm center-to-center. Do NOT use screenshot P12 (6mm adjacent / 12mm outer) or ask owner to choose again.
+- **Not yet approved:** absolute H1 radius from servo axis, hole diameter, M1.6 fastener size and length, wall strength, printed tolerances, SDS1601 internal spline shape and real engagement. Old radii 5/8.5/12mm are only an illustration, not a manufacturing coordinate.
+- Source generator automatically derives hole count from pitch and length; implement exactly three explicit hole centers or a bounded 3-element coordinate list. Never change only `arm_hole_distance` and accidentally generate extra holes.
+- Design source of truth: [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md), [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md).
+
+## 12. Reference verification pointers (not an as-built measurement)
 
 - SDS1601 reference spec image in original project Drive: 25T / Ø4.90mm, 1520us neutral, 333Hz refresh and 800–2200us pulses.
 - Independently published SDS1601 specifications: https://eriksen.co.th/index/product/detail/id/5314.html?lang=zh-cn
