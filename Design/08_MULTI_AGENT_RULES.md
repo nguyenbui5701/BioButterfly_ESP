@@ -110,14 +110,14 @@ This is a rules-first adaptation to owner-supplied build inputs, NOT an implemen
 | Contract | Owner | Consumer | New mandatory evidence |
 | --- | --- | --- | --- |
 | RF-IF-001 | AI-SW TX + RX, with AI-HW board evidence | SA + AI-HW | ESP32 gamepad exact board/firmware, ESP-NOW peer binding, protocol version, radio/channel plan, fail-safe timing, STOP, firmware provenance |
-| JOINT-IF-001 | AI-3D; AI-HW confirms actual SDS1601 batch | SA + AI-SW | Servo 25T vs proposed 21T compatibility physically resolved, shaft/retainer, real metal horn SKU and 2-bolt pattern, arm root loads/angles |
+| JOINT-IF-001 | AI-3D; AI-HW confirms actual SDS1601 batch | SA + AI-SW | **Owner-selected fully printed direct SDS1601 spline**; actual tooth geometry/center retainer, printed coupon fit/fatigue; 3 collinear horn holes with outer H1/H3 2-bolt pattern, arm root loads/angles |
 | ROD-IF-001 | AI-3D with owner print measurements | SA + AI-HW | Individual four carbon sockets, measured rod diameter, coupon trial results, material/orientation, mass impact |
 | PCB-IF-001 | AI-HW | AI-3D + AI-SW | Gerber V1.1 exact SHA, four-layer outline, drill-to-pad registration, schematic/BOM, component side/heights and electrical pins |
 | PWR-IF-001 | AI-HW | AI-SW + AI-3D | Actual 2S cells/charger/protection, separate servo/MCU rail, measured divider and safe startup state |
 
 - 12_AS_BUILT_INPUTS_AND_BLOCKERS.md defines source provenance and evidence tags; 13/14/15 define specialized validation gates.
 - If AI-SW has no gamepad exact MCU/joystick pin map, it may design abstract host-only protocol tests after assigned Task, **not** flash unknown TX firmware.
-- If AI-3D has no actual horn, it may propose dimensional study/test coupons after assigned Task, **not** approve a 21T production mount.
+- AI-3D must use the **owner-confirmed all-printed spline horn**. If real SDS1601 shaft measurements or printer capability are missing, propose measurement/test coupons after an approved Task, **not** a guessed 21T horn or arbitrary metal substitute.
 - If AI-HW has no revision-matched schematic/BOM, it may audit the supplied Gerber after assigned Task, **not** approve component selection or live power.
 - These contracts require a signed revision and evidence status before downstream AI acts. SA approves interface integration; owner authorizes powered or flight trials.
 
