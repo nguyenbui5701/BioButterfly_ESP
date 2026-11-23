@@ -1,6 +1,6 @@
 # 14 — ARMV5 Rework Rules: Metal Horn, Two Fasteners and 1.5mm Rods
 
-**Status:** RULES_DRAFT / 2026-11-23. **Role:** AI-3D, with AI-HW consultation. **Boundary:** define mechanical acceptance and controlled design iteration; **do not export modified production STL/STEP until owner-approved Design and Task**.
+**Status:** RULES_DRAFT / 2026-11-23. **Addendum:** see [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) for newly uploaded SG90-style horn source, proposed H1/H2/H3 layout and M1.6 sizing. **Role:** AI-3D, with AI-HW consultation. **Boundary:** define mechanical acceptance and controlled design iteration; **do not export modified production STL/STEP until owner-approved Design and Task**.
 
 ## 1. What has actually been observed
 
@@ -10,6 +10,10 @@
 - Metal horn target: user proposes **two arm fasteners**, metal horn **21T**, and approx **4.5mm servo-side diameter**. Those are not a measured horn drawing.
 - Reference SDS1601 datasheet (project Drive/SDS1601 Servo Specs.jpg) lists output **25T / Ø4.90mm**; **actual purchased part spline must be checked**.
 - Photo is a visual example only; it cannot determine exact bolt spacing, thread, tooth count, horn cross section, attachment depth or torque loads.
+
+## Newly specified three-hole horn / two-hole arm concept
+
+Owner requests **three available mounting holes on the printed horn**, but only **two bolts** installed per wing, with **two matching holes in ARMV5 wing root**. The SGS90-style new horn's 4mm hub and 1.5mm-thick tapering lever have been measured from STL; its central passage is stepped round, **not verified SDS1601 25T**. Do not confuse the servo center retention screw with these wing-arm connection bolts. Refer to Design/16 for provisional positions, 1.8mm M1.6 clearance, alternative coupling architectures and critical approval gate.
 
 ## 2. DO NOT DESIGN THE WRONG JOINT
 
