@@ -13,7 +13,7 @@
 
 ## Newly specified three-hole horn / two-hole arm concept
 
-Owner requests **three available mounting holes on the printed horn**, but only **two bolts** installed per wing, with **two matching holes in ARMV5 wing root**. The SGS90-style new horn's 4mm hub and 1.5mm-thick tapering lever have been measured from STL; its central passage is stepped round, **not verified SDS1601 25T**. Do not confuse the servo center retention screw with these wing-arm connection bolts. Refer to Design/16 for provisional positions, 1.8mm M1.6 clearance, alternative coupling architectures and critical approval gate.
+Owner requests **three available mounting holes on the printed horn**, but only **two bolts** installed per wing, with **two matching holes in ARMV5 wing root**. The SG90-style new horn's 4mm hub and 1.5mm-thick tapering lever have been measured from STL; its central passage is stepped round, **not verified SDS1601 25T**. Do not confuse the servo center retention screw with these wing-arm connection bolts. Refer to Design/16 for provisional positions, 1.8mm M1.6 clearance, alternative coupling architectures and critical approval gate.
 
 ## 2. DO NOT DESIGN THE WRONG JOINT
 
