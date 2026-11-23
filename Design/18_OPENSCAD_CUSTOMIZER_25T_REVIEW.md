@@ -1,6 +1,6 @@
 # 18 — Screenshot Review: Mezger Parametric Servo Arm vs SDS1601
 
-**Status:** RESEARCH_VERIFIED / PARAMETER_DECISION_PENDING — NOT A TASK.  
+**Status:** RESEARCH_VERIFIED / **P7_HOLE_PITCH_OWNER_APPROVED** — NOT A TASK. **Owner update 2026-11-24:** chose Option B/P7, **3.5mm between adjacent collinear holes**, **7.0mm between H1 and H3**, two installed bolts. Screenshot `arm_hole_distance=6mm` is historical source evidence, **not our target**.  
 **Date:** 2026-11-24. **SA role:** compare the user's screenshot with the verified source generator and prior horn/ARMV5 draft. Do not edit/build/print production CAD or issue implementation Task yet.
 
 ## 1. Source identity and license
@@ -68,15 +68,15 @@ For **three holes exactly** in the chosen source generator, `arm_length`, `head_
 - Do not treat the generator's "hole" as a threaded insert; M1.6 Ø1.8mm is through-clearance, requires measured screw/nut stack.
 - The center screw retaining the horn to the SDS1601 shaft remains a separate joint.
 
-## 5. Two viable geometric paths before CAD lock (not a request to revisit the all-plastic choice)
+## 5. P7 selected by owner; P12 retained only as historical comparison
 
-**Path P7 (previous proposal):** three collinear horn holes with **3.5mm adjacent pitch** and **7mm outer installed bolt spacing**. Must redesign the generator's hole loop to enforce exactly 3 holes and choose hole axis positions that clear the printed hub / ARMV5 geometry. The original 5mm innermost offset may be infeasible and is NOT approved.
+**Path P7 (OWNER-APPROVED Option B):** exactly **three collinear horn holes** with **3.5mm adjacent center pitch** and **7.0mm outer H1-H3 installed bolt pitch**. ARMV5 root receives exactly **two** corresponding holes. Build explicit three-hole geometry rather than using the original generator's auto hole count. Absolute inner-hole distance from hub axis is **not yet approved**; the previous 5mm illustration may be infeasible near hub/bolt heads.
 
-**Path P12 (as pictured):** three collinear horn holes at **6mm adjacent pitch**, **12mm installed bolt spacing**. It likely needs a longer horn and sufficiently large ARMV5 wing-root pad. Exact physical fit/strength not approved.
+**Path P12 (SCREENSHOT ONLY; NOT SELECTED):** 6mm adjacent / 12mm outer spacing. Retain as the meaning of the screenshot input, but **do not implement** unless the owner explicitly reverses the P7 decision.
 
-Neither P7 nor P12 is declared compatible with the existing printed ARMV5 until physical/measured overlay and screw-head clearance are checked. Both preserve owner's **fully printed SDS1601 horn, 3 inline holes, 2 outer bolts**, subject to verified 25T/4.9mm tooth geometry.
+**P7 is the only approved hole-pitch choice, but is not yet mechanically validated** against the printed ARMV5, hub/center screw, fastener heads or 25T/4.9mm spline. Verify fit and fatigue before production.
 
-**SA preliminary recommendation:** prefer **the shorter/lightweight feasible pair spacing** if mechanical measurements allow it. Do NOT freeze either 7mm or 12mm without owner's spacing preference and AI-3D collision/strength check.
+**SA implementation rule:** preserve owner-approved 3.5/3.5/7mm center pitch; determine an absolute hole offset `r` and required local reinforcement only after mechanical overlay. Any proposal to alter pitch must return to the owner as a new design decision.
 
 ## 6. Rules added for AI-3D
 
@@ -86,10 +86,10 @@ Neither P7 nor P12 is declared compatible with the existing printed ARMV5 until 
 4. Freeze `hole_count=3` in derived parameter model instead of assuming the generator auto-count remains three after pitch/length changes.
 5. Keep horn and ARM original STL and source SHA intact; do not produce derived STL/SCAD until Design + Task approval and source license compliance.
 6. Use sacrificial print samples on the actual Bambu A1 (installed nozzle/filament still unknown) before winged motion. Show tooth micro-profile at every sliced Z level.
-7. The current decision owner has NOT approved P7 or P12 based solely on a screenshot. Record their explicit answer to the spacing question.
+7. **Owner explicitly approved P7 on 2026-11-24**: 3.5mm adjacent / 7mm outer. **Do not re-ask**. Confirm absolute hole radial location, printable wall thickness, ARM root and bolt clearance separately.
 
-## 7. Single unresolved product decision
+## 7. Decision closure and remaining validation
 
-**Does the owner intend `Arm hole distance=6mm` from the screenshot as the final adjacent hole pitch (12mm between two installed outer screws), or retain the earlier two-screw total spacing of 7mm (3.5mm adjacent holes)?** Once chosen, geometry must be reconciled with actual ARMV5 and servo hub clearance before final dimensions.
+**CLOSED:** Owner chose **Option B/P7**: 3 collinear horn holes, adjacent pitch **3.5mm**, outer installed bolt center distance **7mm**; 2 corresponding ARMV5 holes and only 2 bolts. P12 from the screenshot is not our target. **OPEN:** distance of H1 from spline axis, bolt/nut/washer clearance, exact spline fit, print/process tolerances, fatigue and mechanical root reinforcement.
 
-**Current:** OWNER_HORN_MATERIAL_AND_TOOTH_COUNT_CONFIRMED / SCREENSHOT_ANALYZED / 3F_PRESET_MISMATCH_CONFIRMED / HOLE_PITCH_DECISION_PENDING / NO_TASK / NO_STL_EDIT.
+**Current:** OWNER_P7_PITCH_APPROVED / 3F_PRESET_MISMATCH_CONFIRMED / ABSOLUTE_HOLE_POSITION_PENDING / NO_TASK / NO_STL_EDIT.
