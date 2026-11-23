@@ -20,6 +20,7 @@
 | FC Mount V5(1).STL | 69731d0fd0ef55a2886767e6e1e19d8d1070319c90cfe897c15835fef9ed11a7 | Triangular surface geometry |
 | ESP-FLUTTER_PCB_GERBER_V1.1-Max_Imagination.rar | 55469956322e8fb065a52d4da7a66c9622db8eb9ebac841eed0d4491120ac345 | Gerber/Excellon file inventory, outline and drill metadata |
 | Servo/horn reference photo (image(20261123-134833).png) | 59cb17ffb4dc3a5223b30491d2f85b307bb416cd872b76a8eeb77813796fec74 | Photograph only; NOT a dimensioned drawing |
+| **SG90_one_horn_without_holes.stl** | **6b54afba5a9ba01da71d5fba9db7474e690e79ad3da17c99f72833280b02d161** | Single watertight 3,908-face mesh, ~7mm hub OD and ~19.65mm total length; no confirmed SDS1601 25T coupling; see Design/16 |
 
 The attachments exist in this conversation working environment, **not in GitHub**. Do not assume later AI sessions can open a local /mnt/data path or retrieve these bytes from this document. The owner must make source files available to assigned agent (reattach or supply explicitly approved reference access); verify hashes before editing. Do **not** upload copyrighted reference binaries to a public repo without permission.
 
@@ -35,6 +36,8 @@ Coordinates/units are interpreted as millimeters consistent with intended prints
 **Reported failure:** only one of the intended four nominal 1.5mm carbon-rod sockets accepts the actual rod; arm-horn attachment feels too small/has only one hole. **No exact local bore diameters, axis angles, print shrinkage, fastener thread, horn hole spacing or measured rod diameter are established yet.** The watertight-mesh check cannot establish these fit tolerances.
 
 ## 4. Servo/horn compatibility is a HARD BLOCKER
+
+Owner's newest desired joint: print a horn from the uploaded SG90-style STL with **three holes**, and modify ARMV5 root to have **two matching bolt holes**, with only **two installed bolts**. Initial SA candidate is M1.6 with Ø1.8mm clearance; **not a manufacturing approval**. See [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md).
 
 - Owner's proposed metal horn: **21T** and approximately **4.5mm** mating feature; two fasteners to anchor arm. Both values are proposals, not measured/approved compatible interface.
 - Reference SDS1601 specification image says **25T, approx Ø4.90mm spline**. That differs in tooth count and nominal diameter from 21T/4.5mm. A photo of a blue horn does not prove its spline count or mounting geometry.
