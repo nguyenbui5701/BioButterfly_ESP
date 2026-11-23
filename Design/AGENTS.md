@@ -20,7 +20,7 @@ These are **agent role specifications**, not automatically running assistant ins
 2. Read [05_AI_WORK_RULES.md](05_AI_WORK_RULES.md) and [08_MULTI_AGENT_RULES.md](08_MULTI_AGENT_RULES.md).
 3. Read the role-specific file from the table above.
 4. Read [01_REQUIREMENTS.md](01_REQUIREMENTS.md), [03_SYSTEM_ARCHITECTURE.md](03_SYSTEM_ARCHITECTURE.md), [04_HARDWARE_AND_SAFETY.md](04_HARDWARE_AND_SAFETY.md), [06_DECISIONS_AND_ROADMAP.md](06_DECISIONS_AND_ROADMAP.md). UI work additionally reads [02_UI_UX.md](02_UI_UX.md); reference-derived work reads [07_REFERENCE_AUDIT.md](07_REFERENCE_AUDIT.md).
-5. For this specific project, ALSO read [12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md) and the applicable gate documents: [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md), [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md), [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md). These take precedence where they explicitly mark an earlier DRAFT assumption as superseded; only SA/owner can approve a new contract.
+5. For this specific project, ALSO read [12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md) and the applicable gate documents: [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md), [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md), [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) and **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** for horn and wing-root work. These take precedence where they explicitly mark an earlier DRAFT assumption as superseded; only SA/owner can approve a new contract.
 6. **After design approval only:** read the assigned Task/TASK-*.md file, its exact approved design SHA, allowed edit paths and predecessor handoffs.
 7. Inspect Git branch/HEAD and repository status before any write; do not rely on this file alone if the Task points to another pinned approved baseline.
 
@@ -70,6 +70,7 @@ Do not mark `PASS` without reproducible evidence. Do not merge your own PR or pe
 ## Build-specific preflight (applies to every agent)
 
 - **Input provenance:** the Gerber RAR and two STL attachments have SHA-256 identities recorded in 12_AS_BUILT_INPUTS_AND_BLOCKERS.md; their bytes are NOT in GitHub, and /mnt/data is not a portable project source path. Re-acquire them via owner-approved attachment sharing; never invent a local file path.
+- **New horn proposal:** owner supplied SG90_one_horn_without_holes.stl; horn must offer three mounting holes, arm two matching holes, but only two arm bolts installed. The STL's round stepped bore is NOT a verified 25T spline. See Design/16.
 - **Highest-risk blockers:** SDS1601 source spec says 25T/4.90mm versus proposed metal horn 21T/~4.5mm; four 1.5mm carbon sockets do not all fit on actual print; the PCB Gerber/drill revisions and schematic/BOM must be reconciled before power.
 - **Software:** ESP-NOW needs TWO firmware sides (TX gamepad + RX XIAO ESP32-C3), explicit peer binding, neutral arm, receiver-side watchdog, STOP priority, no implicit dual-source takeover.
 - **Tasks:** the user specifically requested RULES FIRST. No Task files, CAD edits, PCB/firmware edits or tests are authorized yet.
