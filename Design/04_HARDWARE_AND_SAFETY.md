@@ -29,6 +29,8 @@ Reference source: https://github.com/maximagination1/ESP-FLUTTER. Original CAD/i
 
 ## 3. Existing build-specific stop gates
 
+New horn source and two-bolt coupling plan are recorded in [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md): three lever holes, two installed M1.6 candidate bolts, two matching wing-root holes and a separate center shaft retention screw. Source SG90 horn STL has no confirmed SDS1601 25T spline. This is NOT a powered-test authorization.
+
 - **SDS1601 horn:** reference datasheet image says **25T-Ø4.90mm**, but owner proposes metal **21T/~4.5mm**. Confirm real splines; never force mismatch or design root based on an assumed mating.
 - **ARMV5:** two disconnected watertight parts in source STL, not a single 79.68mm-long arm; owner reports 4 intended rod sockets with 3 unusable. Do a measurement table, coupon test and new two-fastener horn pattern per Design/14.
 - **PCB:** uploaded Gerber V1.1 contains four copper layers, but drill header and Gerber layer headers show different CAD-export tools. Require CAM drill-pad alignment and full component/BOM/net audit, not merely correct layer counts.
