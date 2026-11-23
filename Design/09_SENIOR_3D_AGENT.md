@@ -25,11 +25,15 @@ Design a **lightweight, mechanically serviceable, printable bionic butterfly**: 
 
 The current ARMV5 STL was inspected as **two disconnected watertight components** and the owner has printed it. Owner reports a one-hole/undersized horn mount and 3 of 4 1.5mm rod sockets failing fit. The proposed 21T/~4.5mm horn conflicts with reference SDS1601 25T/~4.90mm spline. You MUST resolve the actual mating spline, horn/retainer and two separate arm bolts before freezing CAD. Do not assume the blue plastic horn in the reference image defines hole spacing.
 
-Owner has now supplied SG90-style one-horn STL (SHA-256 recorded in Design/16); it has a **stepped circular bore but no verified SDS1601 25T spline**. The proposed initial mounting hole station pattern is H1/H2/H3 at Y=-5/-8.5/-12mm, with **two M1.6 screws H1+H3** matching two arm holes, pending owner decision and print tests. The metal 25T spline coupler is the SA-preferred safety option; if owner insists on printed spline, test actual 25T engagement first. Do not silently treat provisional dimensions as approved.
+Owner has now supplied SG90-style one-horn STL (SHA-256 recorded in Design/16); it has a **stepped circular bore but no verified SDS1601 25T spline**. The proposed initial mounting hole station pattern is H1/H2/H3 at Y=-5/-8.5/-12mm, with **two M1.6 screws H1+H3** matching two arm holes, pending owner decision and print tests. **OWNER-CONFIRMED:** use a fully printed plastic horn with internal spline directly coupling to SDS1601; NO metal horn/insert. All three bolt holes are collinear, and ARMV5 has two matching outer bolt holes. Print an isolated measured spline-fit coupon and inspect engagement/fatigue before declaring horn fit. If printed spline cannot meet tests, report BLOCKED and raise a change request; do not silently substitute a metal interface. Do not silently treat provisional dimensions as approved.
 
 Before any authorized final STL, follow the complete measurement, coupon, fit and rollback gates in **14_ARMV5_HORN_AND_CARBON_FIT_RULES.md**. FC Mount V5 is NOT printed; compare actual assembled PCB envelope/antenna/connector keepout before advising print. Do not treat a two-component print layout bbox as one arm.
 
 ## Engineering responsibilities
+
+### Newly confirmed horn interface (overrides prior alternatives)
+
+Read Design/16 for owner-confirmed direct **fully 3D-printed horn**. Use supplied SG90-style STL as a starting geometric reference only. The round stepped bore is NOT a functional 25T spline: design/mechanically verify a **new accurate internal mating spline** from the actual SDS1601 shaft; protect shaft teeth and retain the center securing screw. Ensure 3 straight-line lever holes (H1/H2/H3), 2 matching ARM holes (H1/H3) and **2 M1.6 candidate bolts installed per wing**. M1.6, Ø1.8mm CAD clearance and 7mm H1-H3 pitch are not yet fabrication-approved; check print-process capability, joint root strength, head clearance and repeat-cycle loosening. Print small coupons and test physical engagement **before** full moving-wing use.
 
 ### 3D and flight-weight architecture
 - Provide two candidate assembly concepts if trade-offs matter: (A) minimal lightweight core for flight testing; (B) removable decorative shell. Estimate mass difference and impacts on access/CG before selection.
