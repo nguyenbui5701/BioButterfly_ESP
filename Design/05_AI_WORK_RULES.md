@@ -1,6 +1,6 @@
 # 05 — AI Work Rules, SA Governance and PR Review
 
-**Version:** 1.0 DRAFT, 2026-11-23. **Repository:** nguyenbui5701/BioButterfly_ESP. **Primary authoritative working documents:** Design/. **Effective for all future agents after owner sign-off.**
+**Version:** 1.1 DRAFT, 2026-11-23. **Repository:** nguyenbui5701/BioButterfly_ESP. **Primary authoritative working documents:** Design/. **Effective for all future agents after owner sign-off.**
 
 ## 1. Roles and ownership
 
@@ -8,11 +8,25 @@
 | --- | --- | --- |
 | Product Owner (user) | Define vision, approve design and hardware risks, authorize implementation/merge | Assume test PASS from verbal claims |
 | Solution Architect (SA) | Own Design/ requirements, architecture, rules, design change decisions, task decomposition after approval; review PR and post findings | Modify AI Code worktree, silently merge unapproved changes, silently expand scope |
-| AI Code | Implement one approved Task at a time on its own feature branch; write tests and PR evidence | Change Design/ or start unassigned features; bypass safety gates |
+| AI-3D / Senior CAD & Printing | Own approved mechanical CAD, wing/linkage and 3D print deliverables; sign mechanical evidence | Edit hardware pins/PCB or firmware behavior; claim printed/measured without proof |
+| AI-HW / Senior Electronics | Own approved battery, power, schematic, wiring, PCB and electrical test deliverables | Edit CAD or application firmware; authorize powered test without owner |
+| AI-SW / Senior Embedded Software | Own approved firmware, web cockpit, protocol, control and test deliverables | Edit CAD/schematic, override electrical/mechanical limits or bypass safety gates |
 | Reviewer (SA) | Read rules, Task, base/head diff and relevant tests; use isolated review checkout; leave PR review comment | Review by reading PR title only; contaminate AI Code working tree |
 | Builder/tester | Verify actual hardware, execute approved bench procedures and record proof | Attempt flight based on software build PASS |
 
 The SA normally commits **only files under Design/**; exception: creating/updating/removing individually approved Task/*.md files **after design freeze**. SA does not modify firmware or UI production code by default. Any exception needs explicit owner authorization and separate scope.
+
+### Mandatory AI agent rule entrypoint
+
+**Every AI session MUST begin at [AGENTS.md](AGENTS.md)** and follow the read order and role declaration there. Shared multi-agent authority/handoff is defined by [08_MULTI_AGENT_RULES.md](08_MULTI_AGENT_RULES.md). The three specialist files are:
+
+- [09_SENIOR_3D_AGENT.md](09_SENIOR_3D_AGENT.md) — AI-3D, mechanical CAD, wing modeling and print verification.
+- [10_SENIOR_HARDWARE_AGENT.md](10_SENIOR_HARDWARE_AGENT.md) — AI-HW, schematic/power/PCB and physical electronics verification.
+- [11_SENIOR_SOFTWARE_AGENT.md](11_SENIOR_SOFTWARE_AGENT.md) — AI-SW, ESP32 firmware, web UI, state-machine and test evidence.
+
+These roles are **readable instructions**, not autonomous assistants already running. SA remains cross-domain design authority; Product Owner retains final approvals and merge/physical test decisions.
+
+All specialists may read Design/ but do not edit it. Assigned Task owns the exact writable path list. Mechanical/ and Hardware/ are future proposed artifact folders, not preapproved write access. Same PR review isolation/cleanup process applies to all three specialist agents.
 
 ## 2. Canonical folders
 
@@ -48,6 +62,8 @@ GitHub review may use API-based read-only file inspection **when no checkout is 
 
 Filename pattern: Task/TASK-<number>-<slug>.md. Every task includes:
 
+- **Assigned senior AI role:** AI-3D, AI-HW or AI-SW, plus required peer reviews/hand-off contract IDs; a mixed-domain task must be split or receive explicit SA exception.
+
 - Header: task ID, version, owner, status, priority, base branch, design baseline SHA, PR link (once created).
 - Goal / business value / phase.
 - **Read first:** exact Design/ documents plus specific source files to inspect; no wild undocumented assumptions.
@@ -77,7 +93,7 @@ AI Code must confirm design/task versions at start. If ambiguity changes behavio
 
 Every PR description has:
 
-1. Task ID and approved Design baseline SHA.
+1. Task ID, specialist AI role, approved Design baseline SHA and pinned inter-agent interface revisions.
 2. Summary of implementation and design compliance mapping.
 3. Files changed and impact.
 4. Build/test commands, raw result PASS/FAIL/NOT RUN, SHA, board/host environment.
@@ -99,7 +115,7 @@ When PR is supplied:
        git worktree add --detach ReviewPR/PR-<PR> refs/review/pr-<PR>
    
    If this tool session cannot create a local checkout, state that fact and do a read-only GitHub PR diff review **without claiming local test PASS**; preserve requested isolation next time local checkout is possible.
-3. Review full diff, all changed source, tests, attack surface, performance risks, licensing, telemetry and failure modes; inspect logs/test artifacts.
+3. Review full diff, all changed source/CAD/schematic, tests, mechanical/electrical/software interface contracts, attack surface, performance risks, licensing, telemetry and failure modes; inspect logs/test artifacts. For cross-domain changes request advisory peer evidence from the affected senior AIs. SA retains the final review decision.
 4. Run safe tests from the isolated review checkout only when tools and environment support it; do not energize servos or flash a board without hardware authorization.
 5. Assign severity per finding: BLOCKER (unsafe/broken core invariants), MAJOR (material requirement missing), MINOR (nonblocking), NIT (style).
 6. **Post substantive review on PR** with exact paths/lines and reproduction steps, plus explicit decision label. Never say reviewed without actually posting.
