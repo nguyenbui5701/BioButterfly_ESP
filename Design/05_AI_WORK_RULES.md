@@ -1,6 +1,6 @@
 # 05 — AI Work Rules, SA Governance and PR Review
 
-**Version:** 1.1 DRAFT, 2026-11-23. **Repository:** nguyenbui5701/BioButterfly_ESP. **Primary authoritative working documents:** Design/. **Effective for all future agents after owner sign-off.**
+**Version:** 1.2 DRAFT, 2026-11-23. **Repository:** nguyenbui5701/BioButterfly_ESP. **Primary authoritative working documents:** Design/. **Effective for all future agents after owner sign-off.**
 
 ## 1. Roles and ownership
 
@@ -40,13 +40,13 @@ GitHub review may use API-based read-only file inspection **when no checkout is 
 
 ## 3. Branch and commit strategy
 
-1. AI Code branches from fresh main, naming convention: feature/task-<ID>-<short-topic>.
+1. Each assigned specialist (AI-3D, AI-HW, AI-SW) branches from fresh main on its own isolated workspace. Branch convention: feature/task-<ID>-<3d|hw|sw>-<short-topic>. Never share the same working tree among agents.
 2. One Task -> one focused PR unless task explicitly authorizes a dependent series; each PR references its Task and target Design document revision.
 3. SA design commits directly to main during initial setup because repository is currently empty and user specifically requested immediate commit. After baseline/design freeze, prefer a separate docs branch + PR for cross-cutting changes where other agents are working.
 4. Never force-push, rewrite shared branch history, delete unrelated files, or commit secrets, batteries' proprietary downloads, CAD binaries or build artifacts without review.
 5. Each meaningful design or task change is committed immediately. Commit subject: docs(design): ..., task(...): ..., fix(...): ..., test(...): ...
 6. Always report actual **commit SHA** and GitHub link; do not claim committed if the write response failed.
-7. AI Code makes implementation commits; SA may post review comments or documentation/task commits but does not edit AI Code PR head by default.
+7. The assigned specialist owns implementation commits; SA may post review comments or documentation/task commits but does not edit a specialist PR head by default.
 
 ## 4. Design-before-task gate
 
@@ -149,7 +149,19 @@ When PR is supplied:
 - Promote a test gate only with full evidence; stop powered testing on any unsafe outcome.
 - Store no passwords, private tokens or personal account details in a public repository.
 
-## 10. SA review checklist
+## 10. New owner-reported physical baseline and precedence (2026-11-23)
+
+This is a **rules-only update BEFORE task creation**. New facts/observations and explicit owner pilot intent are recorded at [12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md). Mandatory gates:
+
+1. **AI-3D:** read [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) before modifying ARM or FC Mount. The 21T/~4.5mm proposed horn conflicts with the reference SDS1601 25T/4.90mm spline specification. Do NOT produce final fit geometry until real spline + horn SKU and two-fastener spacing are verified. Four rod sockets require per-hole fit analysis and test coupons.
+2. **AI-HW:** read [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) before advising component population or power-up of the 4-layer Gerber PCB. A RAR with Gerber/drill files is not an assembly BOM, netlist or power-safe schematic.
+3. **AI-SW:** read [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md) before protocol/firmware/UI work. Owner explicitly chose **ESP-NOW gamepad -> XIAO ESP32-C3** as primary pilot. TX and RX are separate firmware deliverables. The earlier WebSocket phone pilot is a draft assumption that must not be used for M0 implementation without new approval.
+4. **All roles:** verify attachment SHA and source availability in the active agent session. Do not assume files uploaded to this conversation are already mounted in another agent's environment or in GitHub.
+5. **No Task until design approval:** this rules commit does not approve physical dimensions, power circuit, ESP-NOW protocol, tests, new CAD or code. Unknowns are documented as blockers, not filled with guesses.
+
+For conflicts in DRAFT files, explicit current owner choice and the latest specific evidence/gate documents (12–15) inform the proposed design, while SA records a new ADR and owner formally approves the implementation baseline. Never silently treat a proposed dimension as accepted.
+
+## 11. SA review checklist
 
 - [ ] Task and approved design SHA linked.
 - [ ] Changed paths stay within task scope, no unauthorized code or license issues.
