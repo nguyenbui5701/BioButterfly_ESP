@@ -96,7 +96,14 @@ This file is a factual register and risk list. It **does not authorize** modifyi
 - The uploaded SG90-style mesh central bore is NOT 25T. Implement **new parametric female spline only after measurements and a measured-fit coupon**. See [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).
 - **Evidence distinction:** owner confirms nominal size; no caliper/microscope image or coupon fit has been provided. Keep real tooth form and durability **BLOCKED**.
 
-## 10. Reference verification pointers (not an as-built measurement)
+## 10. New 3D customizer screenshot evidence — 2026-11-24
+
+- Owner supplied screenshot of **mezger/customizable-servo-arm** with arm_count=1, arm_thickness=1.5mm, arm_hole_diameter=1.8mm, arm_hole_distance=6mm, servo_head_gap=0.1mm and preset Futaba 3F 25T. Screenshot SHA-256: `1d5ef494498f905fc86e343f065c700e5c4eab0188c006f607948f633c228adc`.
+- Verified generator source preset Futaba 3F has head OD **5.92mm, 25T**; SG90 has **4.90mm, 21T**. **Neither** is directly approved for owner's SDS1601 **4.90mm, 25T**. Exact 25T tooth profile still needs physical fitting.
+- Three holes with **6mm adjacent pitch** means outer H1/H3 screws **12mm apart**. Earlier design proposed **7mm**. This must be resolved with owner and actual ARMV5 geometry before drilling.
+- Upstream source: https://github.com/mezger/customizable-servo-arm (LGPL-2.1). Screenshot and upstream source are not yet in target GitHub. Full source/pitch audit in [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md).
+
+## 11. Reference verification pointers (not an as-built measurement)
 
 - SDS1601 reference spec image in original project Drive: 25T / Ø4.90mm, 1520us neutral, 333Hz refresh and 800–2200us pulses.
 - Independently published SDS1601 specifications: https://eriksen.co.th/index/product/detail/id/5314.html?lang=zh-cn
