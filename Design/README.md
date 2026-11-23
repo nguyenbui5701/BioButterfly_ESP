@@ -33,6 +33,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 | **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** | **Owner đã chốt horn in hoàn toàn nhựa, gắn trực tiếp spline SDS1601; 3 lỗ thẳng hàng, 2 lỗ ARM, 2 ốc M1.6 dự kiến** |
 | **[17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md)** | **25T Ø4,9mm + Bambu Lab A1: kiểm tra nozzle/material, in spline coupon và gate độ bền trước khi in horn thật** |
 | **[18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md)** | **Đã chốt P7: 3 lỗ horn thẳng hàng cách 3,5mm, 2 lỗ ngoài cách 7mm; preset Futaba 3F Ø5,92 không phù hợp SDS1601 Ø4,9** |
+| **[19_HORN_EXISTING_SPLINE_INTERFACE.md](19_HORN_EXISTING_SPLINE_INTERFACE.md)** | **Owner đã có phần spline cơ khí; tiếp tục thiết kế horn nhựa, phân biệt trục servo có răng với đầu nối spline rời để chọn lỗ tâm chính xác** |
 
 ## Đội ngũ AI chuyên trách
 
