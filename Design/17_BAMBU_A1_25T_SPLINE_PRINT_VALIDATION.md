@@ -4,6 +4,10 @@
 **Date:** 2026-11-24 | **Discipline:** AI-3D + AI-HW, SA sign-off  
 **Scope:** Only plan/review an **entirely 3D-printed horn** that mates directly with the SDS1601 servo spline. Three straight-line mounting holes on the horn; two matching holes on ARMV5; two arm-to-horn screws installed per wing. No Task, geometry changes, STL exports or powered tests are authorized by this document.
 
+## Applicability after owner's hardware clarification
+
+Owner says physical spline already exists. Read [19_HORN_EXISTING_SPLINE_INTERFACE.md](19_HORN_EXISTING_SPLINE_INTERFACE.md). This **female-spline printing validation plan applies ONLY IF** the user means the SDS1601's **bare 25T male shaft** (Case A). If a **separate existing coupler/hub** already provides spline engagement (Case B), instead verify that physical coupler and its horn mounting interface; do not require a pointless printed 25T spline coupon. Do not confuse the existing male spline with needing a separate printed male spline part. The P7 mounting pitch stays unchanged.
+
 ## 1. Owner-confirmed facts vs unverified details
 
 | Parameter | Current status | Implication |
