@@ -1,135 +1,103 @@
-# 03 — Firmware and System Architecture (SAD)
+# 03 — System Architecture: ESP-NOW Gamepad / XIAO Receiver (DRAFT)
 
-**State:** DRAFT / proposed architecture / 2026-11-23.  
-**Baseline concept:** a small, deterministic safety-first ESP32 firmware, not an unreviewed wholesale fork of ESP-FLUTTER. No firmware exists in the target repository at the time of this proposal.
+**State:** DESIGN_DRAFT / owner-proposed control path recorded 2026-11-23.  
+**Supersedes the original phone-first M0 proposal.** The owner has an ESP32 gamepad and explicitly plans **ESP-NOW** communication with XIAO ESP32-C3. Do not start implementation until design is approved and hardware/firmware Task is issued. Specific ESP-NOW, STL and PCB rules: [12](12_AS_BUILT_INPUTS_AND_BLOCKERS.md), [13](13_ESP_NOW_DUAL_FIRMWARE_RULES.md), [14](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md), [15](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md).
 
-## 1. System context
-~~~text
-[Phone Web Cockpit] -- local Wi-Fi AP --> [ESP32 Firmware] --> [Left HV Servo] --> [Left wing]
-                                            |             --> [Right HV Servo] --> [Right wing]
-                                            |
-                                     [Battery ADC]
-                                            |
-                                      [Fault/Telemetry]
-Future: [ESP-NOW / ELRS RC] --- ControlSource arbitration ---^
-~~~
+## 1. System actors and proposed block diagram
 
-**Trust boundaries:** phone/Wi-Fi is untrusted input; only the device may command actuators; power hardware is not controlled by HTTP; unsafe mechanical states cannot be fixed by UI alone.
+Text architecture:
 
-## 2. Component boundaries
-| Component | Responsibility | Explicitly does not own |
+**ESP32 Gamepad (TX)** -> joystick/buttons -> input filtering and explicit STOP/ARM -> versioned ESP-NOW unicast packets -> **XIAO ESP32-C3 (RX)** -> strict radio protocol decoder -> bound peer/session/sequence -> Safety Supervisor -> motion planner + final calibrated clamp -> two SDS1601 servo drivers -> wing-root assemblies.
+
+Battery pack (two actual 3.7V 220mAh cells, series connection still to be verified) -> protected wiring and regulator -> MCU/servo supply. Battery ADC and power faults feed **Safety Supervisor** and telemetry; a functional charging/balancing system is not demonstrated.
+
+An optional later web interface may offer **disarmed configuration and diagnostics**, but is not the primary pilot in M0 and must not take over control while ARMED/ACTIVE. Its use with ESP-NOW requires channel/coexistence evidence and a new accepted design decision.
+
+## 2. Two firmware images are mandatory
+
+| Firmware | Responsibilities | Must NOT do |
 | --- | --- | --- |
-| App/bootstrap | Initialize in safe order; boot DISARMED; version | Motion algorithm |
-| Board HAL | GPIO maps, ADC, PWM servo driver, monotonic clock | Flight business logic |
-| Input adapters | Decode/validate WebSocket messages; future RC packets | Write PWM directly |
-| Control session manager | One active owner, monotonic seq, packet freshness, authorization | Servo mixing |
-| Safety supervisor | Arm gate, STOP priority, watchdog, fault latches, battery health | HTML or wire packet parsing |
-| Flight state machine | Legal transitions between disarmed, armed idle, active and failsafe | GPIO |
-| Motion planner | Phase, waveform, amplitude/frequency, steering mix, soft transition | Network I/O, settings writes |
-| Actuator limiter | Mechanical endpoints, neutral, trim, pulse conversion; final clamp | User authentication |
-| Battery monitor | Filter and validate ADC reading, warnings, cutoff signaling | Charging or BMS hardware |
-| Settings repository | Schema/version, atomic valid save, factory-safe fallback | Live throttle authority |
-| Telemetry publisher | Snapshot device-truth + reason codes, rate limiting | Flight-critical scheduling |
-| Web UI assets | Responsive cockpit with ack-based state | Safety enforcement |
+| Gamepad TX | Identify exact ESP32 board and joystick/button GPIO, debouncing/deadzone/calibration, explicit ARM/STOP button intent, peer binding, send cadence, optional receive ACK/telemetry, safe TX reboot | Assume unknown gamepad wiring/firmware, send auto-ARM on startup, assume packet sent means action taken |
+| Butterfly RX | Strict ESP-NOW decode, bound-peer validation, sequence generation, source ownership, failsafe watchdog, battery monitor, state machine, wing motion planner, servo HAL, diagnostics | Accept arbitrary peers, treat web and RC as two concurrent pilots, write servo PWM from packet callbacks, replay stale throttle |
 
-**Rule:** no network callback, settings handler or UI request can write servo PWM or mutate the actuator driver directly. All commands pass through validation -> arbitration -> safety -> motion -> final limiter -> HAL.
+A **single versioned protocol contract** is maintained by AI-SW under SA approval. Both firmware images must have their own board-target build, version and test artifacts. Reuse of reference ESP-FLUTTER code subject to source/license review, not a blanket import.
 
-## 3. Data flow and timing
-~~~text
-Incoming bytes
-  -> strict decoder (size/type/finite/ranges)
-  -> authenticated control session / owner
-  -> monotonic sequence + freshness check
-  -> normalized intent queue (last valid pilot axes; priority STOP)
-  -> SafetySupervisor (mode/health/stop latch)
-  -> MotionPlanner (fixed-tick, elapsed time)
-  -> ActuatorLimiter (calibrated limits, polarity, pulse limits)
-  -> Servo HAL / wing mechanics
+## 3. Module ownership
 
-ADC -> BatteryMonitor -> SafetySupervisor -> Telemetry
-                      -> UI status + diagnostics
-~~~
+- **Hardware abstraction:** stable, verified GPIO/PWM/ADC API, board identification, safe defaults, monotonic clock.
+- **ESP-NOW RX adapter:** validate frame length, protocol revision, sender identity/cryptographic bind where supported, sequence, bounds and numeric finiteness.
+- **Pilot session / arbitration:** one bound gamepad, explicit pairing and session epoch; no concurrent WebSocket pilot.
+- **Safety supervisor / state machine:** central authority for ARM, STOP/DISARM, timeout, fault and recovery.
+- **Wing motion planner:** bounded sine/triangle phase, left/right mixing from verified mechanical travel; deterministic timing.
+- **Servo limiter / HAL:** last clamp after trim/mix; validated pulse range, polarity, neutral, travel and powered bench behavior.
+- **Battery monitor:** real Rtop/Rbottom divider, calibration and validity; never infer pack cell balancing from total-pack voltage.
+- **Settings storage:** versioned, integrity checked, safe migration; never restore ARM or nonzero throttle.
+- **Diagnostics/telemetry:** device-authoritative state, packet age, accepted control source and faults; logs with firmware SHA.
+- **TX input adapter:** local calibration of actual joystick/buttons; neutral on power-up, no sticky axis.
+- **Optional UI:** only explicit, lower-priority configuration/telemetry in DISARMED after separate approval.
 
-- **Control source:** M0 uses phone Wi-Fi only. Adding RC requires a new input adapter and source arbitration; no automatic source switching while ACTIVE.
-- **Scheduling proposal:** motion tick nominally 100 Hz, pilot messages 20–50 Hz, telemetry 5 Hz, battery polling 5–10 Hz, logs on state transitions. These values are engineering starting points, not demonstrated real-time guarantees.
-- **Frequency:** wing flap oscillation proposed up to 4 Hz **only after servo/mechanical characterization**; servo PWM refresh is a *different* parameter and must match servo datasheet. Do not confuse flap frequency with servo PWM rate.
-- **Clock:** use monotonic time; wrap-safe unsigned delta arithmetic; limit unusually large dt, avoid numerical instability; never reset phase due to unrelated packet arrival.
-- **Concurrency:** single authoritative state owner; queue or atomic snapshot of command intent. No unsynchronized servo command writers across Wi-Fi/ISR/task contexts.
-- **Backpressure:** drop stale redundant axis updates, not safety STOP; bound buffer sizes and processing time to prevent UI burst starving motion.
+No radio ISR/callback directly changes GPIO, sets active mode or performs file/NVS operations.
 
-## 4. Safety state machine
-~~~mermaid
-stateDiagram-v2
-  [*] --> DISARMED: boot/reset
-  DISARMED --> ARMED_IDLE: explicit ARM + healthy + neutral throttle
-  ARMED_IDLE --> ACTIVE: fresh valid nonzero throttle
-  ACTIVE --> ARMED_IDLE: valid zero throttle
-  ARMED_IDLE --> DISARMED: DISARM
-  ACTIVE --> DISARMED: DISARM
-  ARMED_IDLE --> FAILSAFE_STOP: timeout / STOP / invalid health
-  ACTIVE --> FAILSAFE_STOP: timeout / STOP / invalid health
-  FAILSAFE_STOP --> DISARMED: recovery checked + explicit reset
-  DISARMED --> FAULT_LATCHED: unrecoverable fault
-  FAILSAFE_STOP --> FAULT_LATCHED: persistent fault
-  FAULT_LATCHED --> DISARMED: fault cleared + explicit reset
-~~~
+## 4. Control state machine (proposed; under safety review)
 
-Note: BOOTING is a startup operational phase with PWM neutral/disabled until initialization confirms safe outputs; it is **not** a state in which commands can arm.
+- **BOOTING**: hardware outputs in safe state; no arm, no accepted axes.
+- **DISARMED**: no active flap; require valid calibration and healthy power to move.
+- **ARMED_IDLE**: intentionally armed, neutral throttle; wing flap stopped.
+- **ACTIVE**: fresh, authorized nonzero throttle, within safe envelope.
+- **FAILSAFE_STOP**: missing fresh valid RX packets, STOP, TX restart or critical fault; stop/neutral/torque-off behavior must be validated on real mechanism. Clear stale queued commands.
+- **FAULT_LATCHED**: persistent unsafe condition; recovery only after cause cleared and owner-approved reset/explicit rearm.
 
-### Transition invariants
-- STOP/DISARM is highest priority and *idempotent*. It invalidates the prior active session/control generation and its queued packets.
-- ARMED_IDLE never means auto-flapping. Enter ACTIVE only on new fresh pilot command.
-- On safety timeout: command zero flap and chosen validated neutral/torque-off behavior; latch until explicit recovery.
-- Reconnect and automatic firmware restart always require a **fresh explicit arm**, never implicit session restore.
-- A missing sensor/invalid voltage is UNKNOWN, and health policy blocks arm where battery monitoring is required.
-- No pending configuration write may delay STOP or the motion tick.
+Allowed nominal paths: BOOTING -> DISARMED -> ARMED_IDLE -> ACTIVE -> ARMED_IDLE. DISARM from any active state has priority. Timeout/critical fault -> FAILSAFE_STOP, never an automatic ACTIVE resume. Recovery -> DISARMED after explicit safe action and verified neutral. Boot/reconnect does not restore an ARMED state.
 
-## 5. Proposed v1 command/telemetry contract
-Full pilot JSON examples appear in 02_UI_UX.md. The following fields/behaviors are normative for implementation planning:
+**Caveat:** abrupt stop during free-flight may cause descent. Failsafe behavior has to be physically risk-assessed before free flight; this state machine is not an airworthiness certificate.
 
-| Field | Type and range | Validation |
+## 5. Critical invariants and protocol ownership
+
+1. **STOP wins:** highest-priority idempotent command, invalidates queued controls from previous generation; never overtaken by a later stale control packet.
+2. **Freshness:** count only valid received commands with monotonic receiver timestamp, bound peer, known session and increasing sequence. Invalid packets do not refresh watchdog.
+3. **Arm gate:** an explicit button action plus zero throttle, no known faults, verified battery state and calibration. Do not auto-arm when pairing or waking controller.
+4. **Link watchdog:** proposed target <=500ms from last valid accepted command on RX. Final timing, STOP pose and re-arm details require bench evidence; no claims of test PASS.
+5. **Single source:** ESP-NOW TX is sole M0 pilot. Any Wi-Fi AP UI, USB debug or other RC source cannot bypass safety or change active authority without separate ADR and DISARMED transition.
+6. **Parameter validation:** frame size/type and numeric range before motion; final output clamp after waveform+steering+trim.
+7. **Fault source:** battery/servo power errors cannot be fixed by web-interface state or joystick retry.
+8. **Reboot:** RX and TX boot into neutral safe state; sequence reset handled through new session bind epoch or equivalent anti-replay handshake.
+9. **No secrets in Git:** provisioning procedure for paired peer/key material; do not assume MAC address filtering alone proves authorization.
+10. **Settings:** safe physical limits changed only DISARMED; physical source of truth is verified MECH-IF-002 and ELEC-IF-001.
+
+## 6. Timing and throughput
+
+- ESP-NOW TX control cadence **20–50Hz proposed**, to be measured based on real gamepad input and radio performance.
+- RX motion planner tick **100Hz proposed**; servo PWM refresh is determined by actual SDS1601 unit electrical validation and is NOT flap frequency.
+- Telemetry can run at lower cadence; logging and NVS writes must never starve servo updates or watchdog.
+- Use a bounded queue/snapshot and monotonic clock with wrap-safe unsigned arithmetic. Avoid long blocking delays, allocations or burst logging in radio callbacks.
+- Validate RF coexistence/channel planning if later AP diagnostics are added; official Espressif ESP-NOW documentation notes peer channel must match local Wi-Fi channel and encryption requires configured keys.
+- Record loss, jitter, delay and reset evidence on real target with board/firmware version. No numerical performance assurance from architecture alone.
+
+## 7. Cross-domain interface readiness
+
+| Interface | Producer | Required before |
 | --- | --- | --- |
-| v | integer = 1 | Reject unsupported version |
-| type | fixed enum | Reject unknown control type |
-| session | opaque active-controller token | Reject absent/expired/other owner |
-| seq | unsigned increasing 32-bit | Prevent replay; handle rollover or re-establish session cleanly |
-| x | finite float -1..1 | No implicit parsing to zero |
-| y | finite float 0..1 | 0 is neutral; no sticky control |
-| state | device enum | Device emits; UI cannot choose directly |
-| battery_v | finite volts or null | Validity flag separate, no fabricated reading |
-| fault | enumerated reason or null | Retain transition evidence |
+| JOINT-IF-001, ROD-IF-001, MECH-IF-002 | AI-3D, owner physical measurements | Servo-arm coupling, physical flap limits and printed wing tests |
+| PCB-IF-001, ELEC-IF-001 | AI-HW, PCB V1.1 verification | GPIO assignment, ADC safety and powered RX servo driver |
+| PWR-IF-001 | AI-HW + owner | Battery power/charge/servo dynamic load |
+| RF-IF-001 | AI-SW (TX/RX) + AI-HW controller inspection | ESP-NOW pairing, bind, packet version and watchdog integration |
+| SYS-IF-001 | SA | Any Task creation/approval and cross-agent design freeze |
 
-Recommended message types: pilot.control, pilot.arm, pilot.disarm, pilot.stop, pilot.release, settings.get, settings.update, telemetry, command.ack, error. Control message max payload and rate limits are set before implementation.
+- Preserve supplied original STL and Gerber unchanged until a Task permits a derived revision and license/ownership allows its reuse.
+- If an interface field is TBD or only owner reported, mark BLOCKED for any downstream physical step. Host-only safety unit tests may later be authorized with mocks, not actual servos.
 
-**Transport decision (proposal):** WebSocket on local AP for pilot input and telemetry, optional HTTP only for delivering static assets; neither uses cloud services. Enforce a one-pilot lease, reject extra pilot sessions, and reject cross-session replay. The demo reference's UDP/HTTP control endpoints are **not automatically adopted**. WPA2 AP alone is not authorization if others share credentials; session + control authorization and safe defaults are required. Device secrets must not be committed.
+## 8. Required test sequence
 
-### Latency and timeout acceptance
-- Target failsafe: no fresh valid controls for 500ms -> transition and stop, independent of browser tab state.
-- UI can send immediate release/STOP, but firmware deadline is authoritative.
-- Log min/mean/max timing from target board under load; do not claim hard real-time by design alone.
+1. Host-only protocol and state-machine tests: wrong peer/version/size, nonfinite input, duplicate and stale seq, STOP/ARM race, TX reboot, watchdog, settings corruption and neutral/rearm.
+2. Firmware compile for **both TX and RX** using verified target board configs, with exact SHA and dependency pins.
+3. RX without servos: pins safe on reset/boot and regulator/ADC validated under AI-HW gate.
+4. TX/RX table-top link test: binding, channel, neutral, ACK and link loss.
+5. RX one servo with wings removed and current monitoring, after AI-HW and owner gate.
+6. Static linkage/wing-fit and then dual-wing bench, after AI-3D measured horn/rod verification.
+7. Tethered and then controlled flight trials only after all relevant independent gates and explicit owner GO.
 
-## 6. Settings contract and firmware lifecycle
-- Settings structure includes schema_rev, crc/integrity check (or equivalent), board_id, servo_left/right polarity, measured safe limits, battery topology and tuning.
-- Version migrations must be explicit; invalid persistent data falls back to **safe disarmed defaults** and blocks uncalibrated flight.
-- Pin assignments and battery chemistry are compile-time board-hardware profiles initially; changing these from UI is out of MVP.
-- Flash update and rollback are postponed until post-MVP. Avoid OTA while motion is active.
-- Firmware build info includes Git SHA, target board, dependency versions, settings schema and build timestamp.
+## 9. Documents retained for future work
 
-## 7. Architecture Decision Records (proposed)
-- **ADR-001:** target board candidate XIAO ESP32-C3; approve only after hardware identification.
-- **ADR-002:** ESP32 Arduino + PlatformIO (reuse tooling familiarity but pin deps); retain one verified target env.
-- **ADR-003:** browser-local AP cockpit and WebSocket v1; no cloud or Internet flight.
-- **ADR-004:** fail-closed state machine with one control owner and independent watchdog.
-- **ADR-005:** modular firmware; conceptual learning from ESP-FLUTTER, no direct copy without license decision.
-- **ADR-006:** mechanical angle envelope is *measured* on assembled prototype, not guessed from reference constants.
+[02_UI_UX.md](02_UI_UX.md) contains the *old phone pilot cockpit and illustrative WebSocket packet examples*; they are **not an M0 protocol or authorization source**. Any optional configuration UI must be redesigned with a new disarmed-only interface after this architecture is approved.
 
-All ADRs are provisional until recorded as ACCEPTED in 06_DECISIONS_AND_ROADMAP.md.
-
-## 8. Test architecture
-1. **Host unit tests:** input parsing, stale sequence, invalid numeric, control arbitration, arm gate, STOP precedence, recovery and settings migration with fake clock.
-2. **Target hardware tests:** GPIO/ADC/PWM pin verification, servo endpoints, AP reconnect, packet loss, memory usage, brownout behavior, actual control-loop timing.
-3. **Integration:** end-to-end Cockpit -> Device ACK -> command state -> telemetry and faults; simulate page hide and Wi-Fi loss.
-4. **Mechanical:** no-bind/no-strike, dynamic current, wing symmetry, vibrational stress, heat; later tethered lift/steering and optional free flight.
-5. **Evidence:** keep logs, videos, screenshots, test commands, SHA and board profile in PR; unsupported claims marked NOT TESTED.
-
-**Non-goal:** autonomous stabilization and safe free flight are not implemented merely by adding an IMU or a "Hover" profile.
+**Current:** DESIGN_DRAFT / OWNER_SELECTED_ESPNOW_INTENT / TX_RX_IMPLEMENTATION_NOT_AUTHORIZED / HW_AND_MECH_BLOCKERS_OPEN.
