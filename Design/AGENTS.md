@@ -24,6 +24,10 @@ These are **agent role specifications**, not automatically running assistant ins
 6. **After design approval only:** read the assigned Task/TASK-*.md file, its exact approved design SHA, allowed edit paths and predecessor handoffs.
 7. Inspect Git branch/HEAD and repository status before any write; do not rely on this file alone if the Task points to another pinned approved baseline.
 
+## Latest owner mechanical clarification — read before horn CAD
+
+Owner says the **spline hardware is already available** and wants to proceed with the **plastic horn only**. [19_HORN_EXISTING_SPLINE_INTERFACE.md](19_HORN_EXISTING_SPLINE_INTERFACE.md) governs this distinction. **Do NOT assume** the owner owns a separate spline adapter: identify whether they mean the SDS1601's bare toothed shaft (printed horn still needs a female 25T cavity) or a distinct premade coupler (printed horn would match that coupler's mounting geometry). Older direct-printed-spline instructions in 09/14/16/17 apply **only to bare-shaft Case A** pending this clarification. Do not ask again about approved P7 pitch.
+
 ## 3. First message / session checklist
 
 Every AI must report:
