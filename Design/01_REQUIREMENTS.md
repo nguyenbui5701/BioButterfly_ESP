@@ -80,7 +80,7 @@ Build an understandable, maintainable, testable bionic butterfly platform that s
 - Actual MCU and board revision, servo make/model and safe pulse/voltage range.
 - Battery chemistry/pack configuration (1S/2S), regulator, charging/BMS approach and maximum measured load.
 - Wingspan, approximate target total mass, mechanical linkages and whether priority is flying vs display animation.
-- Which files are inside the supplied Google Drive folder (not accessible in initial review).
+- The linked Google Drive reference folder was subsequently browsed: wing-outline PDFs, wiring images, SDS1601 datasheet image, PCB folders and app screenshots are identified in 07_REFERENCE_AUDIT.md. However, not all source CAD/PCB contents were validated, and **none** of the actual intended hardware assembly has yet been verified.
 - Whether noncommercial-only reference firmware use is acceptable for the intended distribution/licensing.
 
 These are **blocking for hardware pinout and final flight release**, but not for a preliminary software architecture.
