@@ -32,6 +32,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 | [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) | Rules kiểm tra Gerber PCB 4 lớp, linh kiện, pin/sạc và an toàn nguồn |
 | **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** | **Owner đã chốt horn in hoàn toàn nhựa, gắn trực tiếp spline SDS1601; 3 lỗ thẳng hàng, 2 lỗ ARM, 2 ốc M1.6 dự kiến** |
 | **[17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md)** | **25T Ø4,9mm + Bambu Lab A1: kiểm tra nozzle/material, in spline coupon và gate độ bền trước khi in horn thật** |
+| **[18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md)** | **Kiểm chứng mã customizer trong ảnh: Futaba 3F 25T Ø5,92 không phù hợp SDS1601 Ø4,9; 6mm giữa lỗ cạnh nhau = 12mm giữa hai ốc ngoài** |
 
 ## Đội ngũ AI chuyên trách
 
@@ -40,7 +41,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 - **AI-HW:** định nghĩa sơ đồ mạch, nguồn, pin/sạc/bảo vệ, giao diện servo và điện tử.
 - **AI-SW:** phát triển ESP32 firmware, local web UI, state-machine và kiểm thử.
 
-Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó đọc rules chung, role-specific rules và **file 12–17 liên quan trước khi thay đổi thiết kế**. Chúng là các **vai trò để giao cho những AI agent**; hiện không có ba phiên AI độc lập tự động chạy. Mọi AI chuyên môn chỉ triển khai sau khi được SA giao Task theo design đã duyệt. Không sửa chéo artifact của nhau.
+Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó đọc rules chung, role-specific rules và **file 12–18 liên quan trước khi thay đổi thiết kế**. Chúng là các **vai trò để giao cho những AI agent**; hiện không có ba phiên AI độc lập tự động chạy. Mọi AI chuyên môn chỉ triển khai sau khi được SA giao Task theo design đã duyệt. Không sửa chéo artifact của nhau.
 
 ## Quy trình làm việc
 
@@ -60,6 +61,12 @@ Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó 
 - **File nguồn gốc** (STL/Gerber) chỉ được đính kèm ở cuộc trò chuyện, **chưa có trong repository**; các AI cần xin lại file/hashes, không đoán đường dẫn.
 
 **Tình trạng:** RULES_UPDATED / DESIGN_DRAFT / NO_TASK / NO_IMPLEMENTATION.
+
+## Lưu ý quan trọng về ảnh tùy chỉnh horn mới
+
+Mã [mezger/customizable-servo-arm](https://github.com/mezger/customizable-servo-arm) được kiểm tra trực tiếp: preset Futaba 3F **25T Ø5,92mm**, khác spline SDS1601 **25T Ø4,90mm** (owner đã xác nhận). Preset SG90 trong cùng mã là **21T Ø4,90mm**, cũng không phù hợp. **Phải tạo spline SDS1601 tùy chỉnh** sau khi đo biên dạng và in coupon; không dùng ngay preset từ ảnh.
+
+Thông số **Arm hole distance=6mm** trong ảnh là khoảng cách **hai lỗ liên tiếp**, nên giữa hai lỗ ngoài (dùng 2 ốc) là **12mm**; không giống proposal cũ **7mm**. Đây là **P7/P12 DESIGN DECISION PENDING**, cần so với khung ARMV5, khả năng in và khối lượng. Chi tiết Design/18. Chưa sản xuất STL.
 
 ## Nguồn tham khảo
 
