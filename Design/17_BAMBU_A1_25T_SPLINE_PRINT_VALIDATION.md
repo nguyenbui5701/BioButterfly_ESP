@@ -19,7 +19,13 @@
 
 **Approximation for feature-scale discussion, not a printable tooth spec:** 4.9mm × π / 25 ≈ **0.616mm circumferential pitch at nominal 4.9mm OD**. This is **pitch along outside circumference**, not tooth thickness, tooth root size or permissible print error. Those require real tooth profile.
 
-## 2. Verified manufacturer printer data
+## 2. New verified parametric source constraint (2026-11-24)
+
+The user's screenshot shows **mezger/customizable-servo-arm**. Read [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md) and [upstream OpenSCAD source](https://github.com/mezger/customizable-servo-arm/blob/main/customizable-servo-arm.scad). Its Futaba 3F preset is **25T, Ø5.92mm**, while the SG90 preset is **21T, Ø4.90mm**. **Neither matches owner's 25T, Ø4.90mm SDS1601.** Do not print either preset directly. Use measured custom female tooth geometry; a nominal diameter parameter change alone cannot prove spline fit. LGPL-2.1 license applies if modifying/distributing the original OpenSCAD.
+
+Screenshot `arm_hole_distance=6mm` means **12mm between outer two installed screws** if three holes; prior P7 proposal uses 7mm outer pitch. Owner spacing decision remains PENDING. Source generator auto-counts holes based on arm length, so a changed pitch can create more than three holes unless explicitly constrained.
+
+## 3. Verified manufacturer printer data
 
 Source: Bambu Lab official A1 Quick Start Guide (specifications, not independent test of the user's machine):  
 https://cdn1.bambulab.com/documentation/quick-start-a75adcb1d5d5e/Quick%20Start%20Guide%20for%20A1.pdf
@@ -30,7 +36,7 @@ https://cdn1.bambulab.com/documentation/quick-start-a75adcb1d5d5e/Quick%20Start%
 - **Engineering recommendation:** compare 0.2mm nozzle for spline fidelity; 0.4mm nozzle can be attempted as a control specimen only if tiny inner teeth actually survive slicing. The current installed nozzle must be checked before making test profiles.
 - If no 0.2mm nozzle exists, do **not** promise successful spline printing from 0.4mm. Review Bambu Studio slice preview for missing/fused teeth; note actual current nozzle in report.
 
-## 3. Mandatory parametric geometry, not a circular drilled hole
+## 4. Mandatory parametric geometry, not a circular drilled hole
 
 1. Take the uploaded `SG90_one_horn_without_holes.stl` as a **shape reference** (source SHA in Design/16); keep unchanged and create native editable parametric spline model as a **derived** design only after permission/Task.
 2. Obtain/measure actual SDS1601 output: tooth count, shaft major/minor diameter, tooth height/shape or verified OEM matching horn reference, engagement depth, original center retention screw/head, axial stack and any undercut/shoulder.
@@ -40,7 +46,7 @@ https://cdn1.bambulab.com/documentation/quick-start-a75adcb1d5d5e/Quick%20Start%
 6. Keep hub axis oriented for high-fidelity XY tooth outline (test nominal hub-axis approximately vertical during coupon print), with entry chamfer/elephant-foot compensation; layer direction and lever attachment must also be checked for cyclic torque and root fatigue.
 7. Do not force a too-tight print onto the servo, heat the servo spline, cut the servo's teeth or use glue to conceal a failed mating design.
 
-## 4. Coupon-first print matrix (small test pieces)
+## 5. Coupon-first print matrix (small test pieces)
 
 **Do NOT start with the entire wing / horn.** Coupon is a short, sacrificial spline hub including center retainer clearance. An additional fastener-hole coupon can be printed separately.
 
@@ -71,7 +77,7 @@ For each print: save printer/nozzle/material/profile, model and sliced revision 
 - Shaft **center retention screw** remains necessary according to actual SDS1601 design; not counted among the 2 arm bolts.
 - No hard-coded screw length until measured stack and nut/washer/retainer clearance.
 
-## 5. Pass/Fail & design change rules
+## 6. Pass/Fail & design change rules
 
 - **HORN-P0_INPUT_CONFIRMED**: owner-confirmed 25T/4.9mm and Bambu A1 documented; nozzle/material/shaft profile still PENDING.
 - **HORN-P1_CAD_CHECK**: parametric 25T female geometry and tooth profile documented; no hidden smooth bore assumption.
@@ -85,8 +91,8 @@ For each print: save printer/nozzle/material/profile, model and sliced revision 
 
 If the Bambu A1 cannot make a printed 25T spline that **passes** P3/P5 with the available process, mark **FULL_PRINTED_SPLINE_NOT_PROVEN / BLOCKED**, propose alternative techniques but **do not change to metal coupling** without explicit owner authorization.
 
-## 6. Information to request next (one compact user question)
+## 7. Information to request next (one compact user question)
 
-**Ask exactly what is not already known:** *Which nozzle is currently installed on the Bambu Lab A1 (0.4mm or 0.2mm), and which filament (PLA, PETG or other)?* These are two missing manufacturing inputs and can be collected in one sentence.
+**Immediate product design decision:** confirm whether the pictured adjacent hole pitch **6mm -> outer screws 12mm** replaces earlier outer-pair **7mm** proposal. Only after resolving the pattern, request manufacturing inputs such as installed nozzle/filament for coupon testing. Avoid multiple competing questions.
 
 **Current release state:** OWNER_GEOMETRY_CHOICE_CONFIRMED / SPLINE_25T_4.9_OWNER_CONFIRMED / A1_OWNER_CONFIRMED / NOZZLE_UNKNOWN / MATERIAL_UNKNOWN / NO_TASK / NO_PRINT_PASS.
