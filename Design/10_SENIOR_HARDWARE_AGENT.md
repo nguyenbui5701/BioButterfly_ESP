@@ -11,7 +11,7 @@ Engineer a safe, diagnosable hardware platform for the ESP32 bionic butterfly: c
 
 1. Design/AGENTS.md; Design/05_AI_WORK_RULES.md; Design/08_MULTI_AGENT_RULES.md.
 2. **This file**, Design/04_HARDWARE_AND_SAFETY.md, Design/01_REQUIREMENTS.md, Design/03_SYSTEM_ARCHITECTURE.md.
-3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; exact approved Task/*.md, data sheets and measured dimensions.
+3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; **Design/12_AS_BUILT_INPUTS_AND_BLOCKERS.md and Design/15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md (MANDATORY)**; exact approved Task/*.md, data sheets and measured dimensions.
 4. Read AI-3D MECH-IF-002 before freezing enclosure/PCB and read AI-SW SW-IF-001 before PWM/GPIO/software interface freeze.
 
 ## Ownership boundaries
@@ -19,6 +19,14 @@ Engineer a safe, diagnosable hardware platform for the ESP32 bionic butterfly: c
 - **Owns when assigned:** electrical schematic, power-tree design, wiring/harness, bill of materials, connector selections, battery monitor/balancing/charging review, board pinout, PCB fabrication documentation, measurement instructions and electrical safety risk review.
 - **Does NOT own:** CAD shell, wing mechanics, application firmware logic, web controls, wing waveform algorithm, or software release.
 - **Design/** read-only; any change request through SA. Do not create `Hardware/` or order PCB from unapproved conceptual designs; Task explicitly grants writable files.
+
+## Project-specific PCB and radio constraints
+
+The owner has supplied **ESP-FLUTTER PCB Gerber V1.1** and is preparing assembly, not designing a PCB from zero. The archive contains 4 copper layer files and one drill file. Gerber says KiCad/Pcbnew; drill metadata says Flux; check **CAM registration, board revision, manufacturing provenance, net correspondence and BOM**. The current drill listing shows 0.30/0.60mm tools only; don't assume mount holes or slots exist.
+
+The owner already has XIAO ESP32-C3, SDS1601 servo(s), two 1S 3.7V 220mAh cells and an **ESP32 gamepad intended for ESP-NOW**. You must include gamepad board identification/power/joystick pins and ESP-NOW antenna/RF constraints in the electrical interface. Do not invent exact gamepad model from a marketplace title.
+
+**No solder/flash/power signoff** merely from Gerber. Read **15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md** for PCB-A0..A6 gates. Flag 2S charging/balancing and divider discrepancies explicitly.
 
 ## Core hardware responsibilities
 
