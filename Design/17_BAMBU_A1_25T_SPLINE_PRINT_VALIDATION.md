@@ -15,7 +15,7 @@
 | Filament | **UNKNOWN** (e.g. PLA or PETG) | Material strength/creep/fatigue and dimension compensation unknown |
 | Print profile | UNKNOWN: layer height, speed, flow, filament dryness, cooling, seam orientation | No manufacturability or fit pass yet |
 | Physical servo spline shape | UNKNOWN: true major/minor dimensions, tooth shape, engaged depth, center retention screw | Must measure/scan/check mating reference; no automatic 4.9mm smooth hole |
-| Desired horn mounting geometry | **OWNER_CONFIRMED:** 3 collinear holes, two outer holes used, 2 bolts, arm has two matching holes | Preliminary H1/H2/H3 lever centers at -5/-8.5/-12mm, M1.6 and 7mm outer separation remain PROPOSED |
+| Desired horn mounting geometry | **OWNER_CONFIRMED:** 3 collinear holes, two outer holes used, 2 bolts, arm has two matching holes | **Owner-approved P7:** 3.5mm adjacent and 7mm H1-H3 outer spacing, H2 unused; previous -5/-8.5/-12mm absolute locations are NOT approved; M1.6 remains a candidate |
 
 **Approximation for feature-scale discussion, not a printable tooth spec:** 4.9mm × π / 25 ≈ **0.616mm circumferential pitch at nominal 4.9mm OD**. This is **pitch along outside circumference**, not tooth thickness, tooth root size or permissible print error. Those require real tooth profile.
 
@@ -23,7 +23,7 @@
 
 The user's screenshot shows **mezger/customizable-servo-arm**. Read [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md) and [upstream OpenSCAD source](https://github.com/mezger/customizable-servo-arm/blob/main/customizable-servo-arm.scad). Its Futaba 3F preset is **25T, Ø5.92mm**, while the SG90 preset is **21T, Ø4.90mm**. **Neither matches owner's 25T, Ø4.90mm SDS1601.** Do not print either preset directly. Use measured custom female tooth geometry; a nominal diameter parameter change alone cannot prove spline fit. LGPL-2.1 license applies if modifying/distributing the original OpenSCAD.
 
-Screenshot `arm_hole_distance=6mm` means **12mm between outer two installed screws** if three holes; prior P7 proposal uses 7mm outer pitch. Owner spacing decision remains PENDING. Source generator auto-counts holes based on arm length, so a changed pitch can create more than three holes unless explicitly constrained.
+Screenshot `arm_hole_distance=6mm` would mean 12mm outer installed screw pitch, but **owner explicitly approved P7** on 2026-11-24: **3.5mm adjacent / 7mm outer (H1/H3)**. P12 is not selected. Source generator auto-counts holes based on arm length; implement **exactly three specified hole centers**, independent of overall arm length. Determine H1's offset from axis by CAD/physical collision review, not from the old 5mm illustration.
 
 ## 3. Verified manufacturer printer data
 
@@ -71,7 +71,7 @@ For each print: save printer/nozzle/material/profile, model and sliced revision 
 
 ### Screw-hole and wing-root plan (unchanged)
 
-- Candidate **two M1.6 bolts** per wing through H1 and H3; center-to-center ~**7mm proposed**, hole CAD **Ø1.8mm proposed** for through clearance.
+- Candidate **two M1.6 bolts** per wing through H1 and H3; center-to-center **7mm OWNER-APPROVED**, hole CAD **Ø1.8mm proposed** for through clearance.
 - Horn receives **three** collinear holes; middle H2 is **unused**. ARMV5 receives **two** mating holes at H1/H3.
 - These lever-hole sizes and locations remain tentative; 1.5mm-thick tapered horn lever can leave too little material at outer hole after three perforations. Check root fillets, local reinforcement, screw-head seats, total gram weight and dynamic load path before production.
 - Shaft **center retention screw** remains necessary according to actual SDS1601 design; not counted among the 2 arm bolts.
@@ -93,6 +93,6 @@ If the Bambu A1 cannot make a printed 25T spline that **passes** P3/P5 with the 
 
 ## 7. Information to request next (one compact user question)
 
-**Immediate product design decision:** confirm whether the pictured adjacent hole pitch **6mm -> outer screws 12mm** replaces earlier outer-pair **7mm** proposal. Only after resolving the pattern, request manufacturing inputs such as installed nozzle/filament for coupon testing. Avoid multiple competing questions.
+**Hole pattern decision CLOSED:** owner selected **3.5mm adjacent / 7mm H1-H3**, exactly three horn holes and two ARM holes. **Do not ask again** about P7 vs P12. Future manufacturing inputs: installed A1 nozzle and filament for coupon testing, actual tooth geometry and retained center screw dimensions.
 
 **Current release state:** OWNER_GEOMETRY_CHOICE_CONFIRMED / SPLINE_25T_4.9_OWNER_CONFIRMED / A1_OWNER_CONFIRMED / NOZZLE_UNKNOWN / MATERIAL_UNKNOWN / NO_TASK / NO_PRINT_PASS.
