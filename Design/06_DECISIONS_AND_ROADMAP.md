@@ -22,9 +22,9 @@
 | ADR-013 | Primary M0 radio control = ESP-NOW gamepad TX -> XIAO ESP32-C3 RX | OWNER_DIRECTION / TECH_DESIGN_PENDING | Actual TX board/firmware unknown; design/approval gates per 13; optional web is not active pilot |
 | ADR-014 | Preserve existing ARMV5, FC Mount V5 and PCB V1.1 as immutable source baselines | OWNER_INPUTS_RECORDED / DESIGN_PENDING | SHA and failures in 12; horn compatibility, rod-fit and PCB electrical audit blocked |
 | ADR-015 | No PCB power/print/coupling work without domain gates and physical evidence | PROPOSED | 14 and 15 gate physical assembly; owner authorization is separate from doc commits |
-| ADR-016 | **Fully 3D-printed** SG90-style derived horn directly mating SDS1601 spline; **3 collinear lever holes**, 2 aligned wing-arm holes, 2 installed bolts per wing | **OWNER_CONCEPT_CONFIRMED / DIMENSIONS_PENDING** | Owner explicitly selected all-plastic horn (no metal insert) and straight-line hole geometry; **25T/Ø4.9mm nominal & Bambu Lab A1 confirmed 2026-11-24**. Tentative H1/H3 7mm apart, M1.6/Ø1.8mm. Actual tooth form/fit, installed nozzle, filament, fatigue, retention screw and bolt length NOT approved; Design/16 and 17 |
+| ADR-016 | **Fully 3D-printed** SG90-style derived horn directly mating SDS1601 spline; **3 collinear lever holes**, 2 aligned wing-arm holes, 2 installed bolts per wing | **OWNER_CONCEPT_CONFIRMED / DIMENSIONS_PENDING** | Owner explicitly selected all-plastic horn (no metal insert) and straight-line hole geometry; **25T/Ø4.9mm nominal & Bambu Lab A1 confirmed 2026-11-24**. **Owner-approved H1/H3 7mm apart (3.5mm adjacent)**; M1.6/Ø1.8mm remains a proposed fastener/bore size. Actual tooth form/fit, installed nozzle, filament, fatigue, retention screw and bolt length NOT approved; Design/16 and 17 |
 
-| ADR-017 | Reuse research from mezger customizable servo arm with source-verified SDS1601 custom 25T/4.9 and explicit 3-hole count | SOURCE_RESEARCH_COMPLETE / HOLE_SPACING_OWNER_DECISION_PENDING | 3F source is 25T/5.92mm, SG90 is 21T/4.9mm; pictured adjacent pitch 6mm gives 12mm outer screws rather than earlier 7mm. License LGPL-2.1, Design/18. |
+| ADR-017 | Reuse research from mezger customizable servo arm with source-verified SDS1601 custom 25T/4.9 and explicit 3-hole count | **OWNER_APPROVED_P7 / CAD_VALIDATION_PENDING** | Owner selected **Option B/P7: 3 collinear holes, 3.5mm adjacent pitch, 7mm H1/H3**, with only H1/H3 bolted and two ARM holes. Screenshot P12 (6mm/12mm) is NOT selected. 3F source is 25T/5.92mm, SG90 21T/4.9mm; custom measured spline still required. License LGPL-2.1, Design/18. |
 
 **Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
 
@@ -83,7 +83,7 @@ DESIGN_DRAFT -> DESIGN_REVIEW -> DESIGN_APPROVED -> TASK_READY -> AI_CODE_IN_PRO
 **Needed before marking DESIGN_APPROVED:**
 - Confirm or adjust current ESP-NOW gamepad primary M0 scope; two firmwares and optional web diagnostics only.
 - Exact gamepad MCU, button/joystick GPIO and currently installed firmware/source (currently unknown).
-- Printed horn spline geometry / retaining screw / tooth engagement and cyclic load validation (owner confirmed SDS1601 25T Ø4.9mm; old metal 21T concept superseded); actual two-fastener joint dimensions and P7/P12 spacing choice.
+- Printed horn spline geometry / retaining screw / tooth engagement and cyclic load validation (owner confirmed SDS1601 25T Ø4.9mm; old metal 21T concept superseded); owner-approved P7 3.5mm/7mm two-fastener hole spacing; actual radial placement, bolt size, nut/head clearance and printed joint strength remain pending.
 - Four carbon socket fit measurement and print parameters; first physical FC Mount fit plan.
 - Gerber V1.1 schematic/BOM/assembly/net confirmation, 2S charge/balance and PCB power safety gate.
 - MVP target: stationary/showpiece, bench/tethered, or controlled free-flight ambition.
@@ -122,7 +122,7 @@ Review ledger entries are immutable audit facts; corrections append new records 
 
 - [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) records the new uploaded STL SHA, geometric analysis and two fastening alternatives.
 - SA preliminary candidate: two M1.6 through-bolts per wing with Ø1.8mm clearance and three provisioned horn holes. No physical strength or fit PASS.
-- **New screenshot clarification:** Futaba 3F 25T is actually **5.92mm** in the OpenSCAD source, not owner SDS1601 **4.9mm**. `arm_hole_distance=6mm` between adjacent holes means **12mm** between two installed outer screws; earlier **7mm** is provisional. Explicit P7 vs P12 decision pending; see [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md).
+- **Owner approved Option B/P7 on 2026-11-24:** 3 horn holes collinear with **3.5mm adjacent center pitch**, **7.0mm H1-H3 outer installed-bolt pitch**; ARM gets exactly 2 matching holes. Screenshot P12 (6mm adjacent, 12mm outer) is rejected as current target, retained for source audit only. Futaba 3F preset remains Ø5.92mm vs SDS1601 Ø4.9mm, so custom spline required. Absolute radial position, fastener and physical fit still pending. See [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md).
 - **Closed owner design-choice gate:** fully printed horn with direct SDS1601 mating spline and 3 collinear holes. Owner has confirmed **25T/Ø4.9mm** and **Bambu Lab A1**; do not ask these again. **Open technical gates:** actual internal tooth profile, installed nozzle & filament, printed micro-spline fit/fatigue, shaft-center retainer and real fastener stack. Detailed plan in [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).
 - **No Task** and no derived STL should be created just from this preliminary plan.
 
