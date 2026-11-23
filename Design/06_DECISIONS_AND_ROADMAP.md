@@ -22,7 +22,7 @@
 | ADR-013 | Primary M0 radio control = ESP-NOW gamepad TX -> XIAO ESP32-C3 RX | OWNER_DIRECTION / TECH_DESIGN_PENDING | Actual TX board/firmware unknown; design/approval gates per 13; optional web is not active pilot |
 | ADR-014 | Preserve existing ARMV5, FC Mount V5 and PCB V1.1 as immutable source baselines | OWNER_INPUTS_RECORDED / DESIGN_PENDING | SHA and failures in 12; horn compatibility, rod-fit and PCB electrical audit blocked |
 | ADR-015 | No PCB power/print/coupling work without domain gates and physical evidence | PROPOSED | 14 and 15 gate physical assembly; owner authorization is separate from doc commits |
-| ADR-016 | SG90-style printed horn with 3 hole stations, wing arm 2 aligned holes, 2 bolts per wing (candidate M1.6) | OWNER_REQUEST / INTERFACE_PENDING | Exact SDS1601 spline 25T coupling, horn vs metal insert, hole pattern, printed tolerance and bolt lengths are undecided; Design/16 |
+| ADR-016 | **Fully 3D-printed** SG90-style derived horn directly mating SDS1601 spline; **3 collinear lever holes**, 2 aligned wing-arm holes, 2 installed bolts per wing | **OWNER_CONCEPT_CONFIRMED / DIMENSIONS_PENDING** | Owner explicitly selected all-plastic horn (no metal insert) and straight-line hole geometry. Tentative H1/H3 7mm apart, M1.6/Ø1.8mm. Actual spline-tooth fit, print process, fatigue, retention screw and bolt length NOT approved; Design/16 |
 
 **Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
 
@@ -120,7 +120,7 @@ Review ledger entries are immutable audit facts; corrections append new records 
 
 - [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) records the new uploaded STL SHA, geometric analysis and two fastening alternatives.
 - SA preliminary candidate: two M1.6 through-bolts per wing with Ø1.8mm clearance and three provisioned horn holes. No physical strength or fit PASS.
-- Blocker: owner must specify fully printed horn **directly mating SDS1601 25T spline** versus a verified **metal 25T horn + printed arm/adapter**, and verify intended three-hole arrangement.
+- **Closed owner design-choice gate:** fully printed horn with a **direct SDS1601 mating spline** and 3 collinear holes. Do not ask whether to use metal or a triangular pattern again. **Open technical gates:** servo spline measurements, printer/nozzle/material capability, printed micro-spline fit/fatigue, shaft-center retainer and real fastener stack.
 - **No Task** and no derived STL should be created just from this preliminary plan.
 
 ## 9. Next SA checkpoint
