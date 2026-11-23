@@ -1,6 +1,6 @@
 # 12 — Current As-Built Inputs, Evidence Register and Blocking Unknowns
 
-**Revision:** DRAFT-1 / 2026-11-23. **Owner:** SA. **Type:** design evidence, NOT a manufacturing authorization or implementation Task. Read after Design/AGENTS.md.  
+**Revision:** DRAFT-2 / 2026-11-24. Owner updated nominal SDS1601 spline to **25T/Ø4.9mm** and printer to **Bambu Lab A1**. Nozzle/material/physical tooth form remain unknown. See Design/17. **Owner:** SA. **Type:** design evidence, NOT a manufacturing authorization or implementation Task. Read after Design/AGENTS.md.  
 **Scope of latest owner update:** Owner has XIAO ESP32-C3, an ESP32 gamepad, SDS1601 servo(s), two 3.7V 220mAh cells; intends ESP-NOW gamepad-to-butterfly; has a PCB from a supplied Gerber package; has printed ARMV5 but has not printed FC Mount V5; initially discussed a metal servo horn; **latest owner choice is fully 3D-printed horn with direct spline on SDS1601**, 3 collinear holes but 2 installed bolts, and more usable 1.5mm carbon sockets.
 
 ## 1. Evidence classification — DO NOT collapse these categories
@@ -61,7 +61,7 @@ Coordinates/units are interpreted as millimeters consistent with intended prints
 | --- | --- | --- |
 | XIAO ESP32-C3 | Physically available | Exact board revision, antenna configuration, boot GPIO, actual soldered footprint |
 | ESP32 DIY gamepad (Shopee link supplied) | Physically available, intended control transmitter | Exact chip/module, pin map, joystick/buttons/supply, preloaded firmware and ESP-NOW compatibility NOT inspected |
-| SDS1601 servo(s) | Physically available | Actual spline/shaft, two-servo count, electrical batch data, mounting hole pattern/current and PWM operating limits |
+| SDS1601 servo(s) | Physically available; **25T/Ø4.9mm nominal spline OWNER_CONFIRMED** | Actual tooth form/minor diameter/height/retainer, servo count, electrical batch data, mount/current and PWM operating limits |
 | Two 3.7V 220mAh cells | Available | Individual cell health, polarity, model/C rating, whether already wired 2S, charge/balance connector and protected power distribution |
 | Gerber V1.1 | Supplied, owner preparing PCB assembly | BOM/schematic/net verification, board revision/assembly side, safe power rail and ADC resistor validation |
 | ARMV5 printed | Printed, reported mechanical fit defects | Printed orientation/material/nozzle, true rod sizes, horn pattern measurements, caliper dimensions |
@@ -88,7 +88,15 @@ Coordinates/units are interpreted as millimeters consistent with intended prints
 
 This file is a factual register and risk list. It **does not authorize** modifying STL, fabrication outputs, PCB or firmware; do not create Task files until owner design approval. Design changes must reference provenance hash and distinguish measured, user-reported, inferred and proposed values.
 
-## 9. Reference verification pointers (not an as-built measurement)
+## 9. New printer and spline confirmation — 2026-11-24
+
+- **OWNER_CONFIRMED:** SDS1601 nominal output spline 25 teeth (25T), outside diameter 4.9mm; printer is **Bambu Lab A1**.
+- Bambu Lab official A1 guide lists **0.4mm nozzle supplied**, **0.2mm optional**. Exact nozzle currently installed and PLA/PETG/other filament **not specified**. This is NOT proof 25T female spline is printable, fatigue-resistant or fitted.
+- All-plastic direct spline coupling stays confirmed; no metal adapter substitutions. 3 collinear lever holes, H1/H3 two-bolt pattern.
+- The uploaded SG90-style mesh central bore is NOT 25T. Implement **new parametric female spline only after measurements and a measured-fit coupon**. See [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).
+- **Evidence distinction:** owner confirms nominal size; no caliper/microscope image or coupon fit has been provided. Keep real tooth form and durability **BLOCKED**.
+
+## 10. Reference verification pointers (not an as-built measurement)
 
 - SDS1601 reference spec image in original project Drive: 25T / Ø4.90mm, 1520us neutral, 333Hz refresh and 800–2200us pulses.
 - Independently published SDS1601 specifications: https://eriksen.co.th/index/product/detail/id/5314.html?lang=zh-cn
