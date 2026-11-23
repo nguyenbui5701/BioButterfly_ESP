@@ -30,7 +30,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 | [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md) | Rules ESP-NOW, gamepad TX/bướm RX, STOP, pairing, mất sóng |
 | [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) | Rules sửa ARMV5, horn kim loại 2 ốc, lỗ carbon 1.5mm |
 | [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) | Rules kiểm tra Gerber PCB 4 lớp, linh kiện, pin/sạc và an toàn nguồn |
-| **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** | **Kế hoạch sơ bộ cho horn 3 lỗ, ARM 2 lỗ, 2 ốc M1.6 và lựa chọn khớp trục SDS1601** |
+| **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** | **Owner đã chốt horn in hoàn toàn nhựa, gắn trực tiếp spline SDS1601; 3 lỗ thẳng hàng, 2 lỗ ARM, 2 ốc M1.6 dự kiến** |
 
 ## Đội ngũ AI chuyên trách
 
@@ -54,7 +54,7 @@ Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó 
 
 - **Có thật theo chủ sở hữu:** XIAO ESP32-C3, gamepad ESP32, SDS1601, hai pin 3.7V 220mAh, PCB Gerber V1.1, ARMV5 đã in và FC Mount V5 chưa in.
 - **Có thật theo dữ liệu file:** ARMV5 STL chứa 2 chi tiết lưới kín, FC Mount V5 chứa 1; Gerber có 4 lớp đồng, outline khoảng 18.5 x 45mm. Dữ liệu 3D/PCB chưa chứng minh fit hoặc an toàn cấp nguồn.
-- **Blocker nghiêm trọng:** đề xuất horn kim loại 21T (~4.5mm) khác thông số spline SDS1601 tham khảo 25T (~4.90mm); 3 trong 4 lỗ carbon của ARM in không vừa; PCB chưa có xác nhận BOM/schematic/nguồn.
+- **Owner đã chốt concept horn:** in nhựa 3D nguyên horn, trực tiếp lắp trục SDS1601, 3 lỗ thẳng hàng trên horn, 2 lỗ khung cánh tương ứng để gắn 2 ốc, lỗ giữa dự phòng. Spline 25T/Ø4.90mm theo datasheet mới là thông số tham khảo: cần đo servo thực tế và in coupon kiểm tra; **không** dùng lỗ tròn SG90 thay cho spline. 3 trong 4 lỗ carbon của ARM in vẫn chưa vừa; PCB chưa xác nhận BOM/schematic/nguồn.
 - **Điều khiển M0:** gamepad ESP-NOW là kế hoạch chủ sở hữu; UI WebSocket trên điện thoại trong design cũ hiện được xem như ý tưởng cũ, KHÔNG là nguồn điều khiển chính.
 - **File nguồn gốc** (STL/Gerber) chỉ được đính kèm ở cuộc trò chuyện, **chưa có trong repository**; các AI cần xin lại file/hashes, không đoán đường dẫn.
 
