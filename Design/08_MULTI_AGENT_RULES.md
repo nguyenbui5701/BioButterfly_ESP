@@ -110,7 +110,7 @@ This is a rules-first adaptation to owner-supplied build inputs, NOT an implemen
 | Contract | Owner | Consumer | New mandatory evidence |
 | --- | --- | --- | --- |
 | RF-IF-001 | AI-SW TX + RX, with AI-HW board evidence | SA + AI-HW | ESP32 gamepad exact board/firmware, ESP-NOW peer binding, protocol version, radio/channel plan, fail-safe timing, STOP, firmware provenance |
-| JOINT-IF-001 | AI-3D; AI-HW confirms actual SDS1601 batch | SA + AI-SW | **Owner-selected fully printed direct SDS1601 spline**; actual tooth geometry/center retainer, printed coupon fit/fatigue; 3 collinear horn holes with outer H1/H3 2-bolt pattern, arm root loads/angles |
+| JOINT-IF-001 | AI-3D; AI-HW confirms actual SDS1601 batch | SA + AI-SW | **Owner-selected fully printed direct SDS1601 spline**; actual tooth geometry/center retainer, printed coupon fit/fatigue; **3 collinear horn holes 3.5mm apart**, outer H1/H3 **7mm** 2-bolt pattern, **2 ARM root holes 7mm apart**, absolute hub clearance and root loads/angles |
 | ROD-IF-001 | AI-3D with owner print measurements | SA + AI-HW | Individual four carbon sockets, measured rod diameter, coupon trial results, material/orientation, mass impact |
 | PCB-IF-001 | AI-HW | AI-3D + AI-SW | Gerber V1.1 exact SHA, four-layer outline, drill-to-pad registration, schematic/BOM, component side/heights and electrical pins |
 | PWR-IF-001 | AI-HW | AI-SW + AI-3D | Actual 2S cells/charger/protection, separate servo/MCU rail, measured divider and safe startup state |
