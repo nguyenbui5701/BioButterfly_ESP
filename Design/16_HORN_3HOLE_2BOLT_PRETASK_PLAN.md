@@ -1,6 +1,6 @@
 # 16 — PRE-TASK Design Plan: SG90-Style 3-Hole Horn / 2-Bolt Wing Arm
 
-**Status:** OWNER_CONCEPT_CONFIRMED / MEASURED_SPLINE_AND_PRINT_VALIDATION_PENDING. Owner confirmed on 2026-11-23: fully 3D-printed horn directly mounted on SDS1601 (Option A), 3 straight-line holes, H1/H3 used with 2 screws. This confirmation **does not** approve spline geometry, screw sizes, material, tolerances or powered tests.  
+**Status:** OWNER_CONCEPT_AND_NOMINAL_SPLINE_CONFIRMED / PRINT_VALIDATION_PENDING. **2026-11-24 update:** Owner states SDS1601 spline is **25T, Ø4.9mm**, printer **Bambu Lab A1**. Exact tooth form, printer nozzle and filament are not yet known. Mandatory detailed validation: [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md). Owner confirmed on 2026-11-23: fully 3D-printed horn directly mounted on SDS1601 (Option A), 3 straight-line holes, H1/H3 used with 2 screws. This confirmation **does not** approve spline geometry, screw sizes, material, tolerances or powered tests.  
 **Date:** 2026-11-23 | **Author:** SA | **Agent consultation required:** AI-3D + AI-HW.  
 **This is a design discussion, NOT a Task or permission to print/energize the assembly.**
 
@@ -25,7 +25,7 @@
 | Round central hub | Approx. 7.0mm outer diameter, 4.0mm thick | FILE_INSPECTED |
 | Tapered lever | Approx. 1.5mm thick, narrows from about 4.8mm near Y=-5mm to 3.9mm at Y=-12mm | FILE_INSPECTED |
 | Central passage | Circular stepped bore; sections near Z=-3.5 or -1.5 show ~4.7mm diameter and narrower section near Z=-3 shows ~2.5mm. **No resolved internal 25T spline in this mesh.** | FILE_INSPECTED, not functional fitting |
-| Reference SDS1601 output | Reference sheet says **25T/Ø4.90mm** | REFERENCE_DATASHEET; actual servo to verify |
+| SDS1601 output | **25T/Ø4.90mm** | OWNER_CONFIRMED nominal spline specification (matches reference sheet); exact tooth profile, height/fit still require physical measurement |
 | ARMV5 | Two distinct watertight components (likely left/right print arrangement), with owner-reported prior carbon and horn fit issues | FILE_INSPECTED + OWNER_REPORTED |
 
 **Warning:** STL geometry and shape do not prove shaft fit, transfer of servo torque or safe 3D print strength. SG90 in a filename is not SDS1601 shaft compatibility.
@@ -43,8 +43,10 @@
 
 **Structural risk:** a printed micro-spline can shear, round off or creep under repeated high-cycle flapping even if it statically engages. At nominal 25T and Ø4.90mm, tooth pitch around the outer circumference is approximately 0.62mm (order-of-magnitude only); whether the chosen printer, nozzle, layer orientation and material can reproduce the engagement depends on real process capability. Any printed spline that is too coarse, fragile or slips **FAILS the mechanical gate**; do not hide the failure with excessive interference, glue, heating or an unapproved metal alternative.
 
+**New owner manufacturing input:** Bambu Lab A1 FDM. Official guide lists stock 0.4mm and optional 0.2mm nozzle; current installed nozzle and filament are UNKNOWN. For 25T at Ø4.9mm, outer-circumference tooth pitch ≈0.616mm (NOT tooth thickness). Prefer evaluating 0.2mm nozzle for spline micro-detail if available, but do not assert that printer can produce a load-bearing fit until the coupon passes. Full matrix in Design/17.
+
 **Minimum development sequence (before winged use):**
-1. Physically identify SDS1601 exact servo variant, output spline tooth count, major/minor diameters, effective spline engagement depth/height, shaft-center retaining screw dimensions and horn-installation direction. Separate manufacturer-advertised dimensions from actual measurements.
+1. Record the owner-confirmed **25T/Ø4.9mm nominal spline**, then physically inspect actual purchased servo tooth *form*, minor diameter, engagement depth/height, shaft-center retention screw and horn-installation direction. Never substitute nominal OD for tooth profile. Separate manufacturer-advertised dimensions from actual measurements.
 2. Select printer/process/material and print **small spline-fit test coupons**, not full horns first. Compare geometry with caliper/microscope where possible, inspect tooth resolution, orientation, hole shrink and internal tooth damage.
 3. Non-powered engagement test on the real servo with no wing load: fully seats with no forcing, no permanent damage to shaft teeth, acceptable backlash, secure separate center retention screw, removable for service; record tests/failed samples.
 4. Only after spline static engagement passes, combine hub and 3-hole lever in CAD, analyze root fillets, fatigue, layer orientation, stress concentrations and mass; print a single horn+ARM connection specimen.
@@ -122,11 +124,11 @@ HORN-G0..G6 are **NOT_RUN/BLOCKED** at time of design draft. Replacing plastic w
 
 ## 9. Remaining INPUT questions (not repeat owner-confirmed choices)
 
-1. **Printer capability:** exact machine/process (FDM or resin), nozzle diameter or resolution, actual material; this determines whether ~25T micro-spline is printable and durable.
+1. **Printer capability:** Bambu Lab **A1 FDM is confirmed**; only installed nozzle diameter (**0.4mm vs 0.2mm**) and actual filament (**PLA/PETG/other**) remain unknown. These determine coupon strategy; see Design/17.
 2. **Physical servo and fasteners:** close-up of SDS1601 shaft markings/spline and original retention screw, optionally caliper readings of shaft outer diameter and axial engagement depth. No fabricated spline dimensions.
 3. **Stackup:** original ARMV5 root thickness, printer profile, availability of M1.6 machine bolts/nuts/washers and usable lever head clearance. Final bolt length unknown until measured.
 4. **Verification method:** static no-wing test and later controlled fatigue cycling with builder present; no powered test without PCB/Battery gates.
 
 Owner's two core design decisions (fully printed direct horn; 3 holes collinear) are **CLOSED**. Do not ask them again unless the owner changes scope.
 
-Do not create Task files until other prerequisites are reviewed and SA records approved scope. **Current: CONCEPT_CONFIRMED / PRINT_PROCESS_UNKNOWN / HORN_G0_BLOCKED / NO_TASK / NO_NEW_CAD_CREATED.**
+Do not create Task files until other prerequisites are reviewed and SA records approved scope. **Current: CONCEPT_AND_25T_4.9_CONFIRMED / BAMBU_A1_CONFIRMED / NOZZLE_AND_FILAMENT_UNKNOWN / HORN_G0_BLOCKED / NO_TASK / NO_NEW_CAD_CREATED.**
