@@ -30,6 +30,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 | [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md) | Rules ESP-NOW, gamepad TX/bướm RX, STOP, pairing, mất sóng |
 | [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) | Rules sửa ARMV5, horn kim loại 2 ốc, lỗ carbon 1.5mm |
 | [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) | Rules kiểm tra Gerber PCB 4 lớp, linh kiện, pin/sạc và an toàn nguồn |
+| **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** | **Kế hoạch sơ bộ cho horn 3 lỗ, ARM 2 lỗ, 2 ốc M1.6 và lựa chọn khớp trục SDS1601** |
 
 ## Đội ngũ AI chuyên trách
 
@@ -38,7 +39,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 - **AI-HW:** định nghĩa sơ đồ mạch, nguồn, pin/sạc/bảo vệ, giao diện servo và điện tử.
 - **AI-SW:** phát triển ESP32 firmware, local web UI, state-machine và kiểm thử.
 
-Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó đọc rules chung, role-specific rules và **file 12–15 liên quan trước khi thay đổi thiết kế**. Chúng là các **vai trò để giao cho những AI agent**; hiện không có ba phiên AI độc lập tự động chạy. Mọi AI chuyên môn chỉ triển khai sau khi được SA giao Task theo design đã duyệt. Không sửa chéo artifact của nhau.
+Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó đọc rules chung, role-specific rules và **file 12–16 liên quan trước khi thay đổi thiết kế**. Chúng là các **vai trò để giao cho những AI agent**; hiện không có ba phiên AI độc lập tự động chạy. Mọi AI chuyên môn chỉ triển khai sau khi được SA giao Task theo design đã duyệt. Không sửa chéo artifact của nhau.
 
 ## Quy trình làm việc
 
