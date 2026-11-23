@@ -83,7 +83,20 @@ The shared Drive folder was accessible. Found and inventoried:
 - Rights to republish reference CAD/wing PDFs and schematic images.
 - Flight-ready mass, thrust/lift estimates and center of gravity.
 
-## 6. Research-to-task boundary
+## 6. As-built owner evidence vs original reference
+
+On 2026-11-23 the owner supplied a **Gerber V1.1 RAR and two STL files**, not the same thing as an approved editable source project. Their content and SHA-256 are recorded in [12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md).
+
+- Reference servo sheet also lists **spline 25T-Ø4.90mm**, potentially incompatible with the proposed **metal 21T/~4.5mm** horn. Actual purchased servo markings and mating test are required, not just the datasheet.
+- Uploaded ARMV5 STL is a print-layout mesh with **two disconnected closed components**; the owner's printed arm has horn and carbon-rod fit problems.
+- FC Mount V5 STL remains **unprinted**; no PCB-to-mount fit conclusion exists.
+- The Gerber bundle includes four copper layers; the PCB outline bounding rectangle is **~18.5 × 45.0mm**; the separate drill file includes 0.30/0.60mm tools. Layer and drill-file generator metadata differ, so perform real CAM alignment verification before assembly.
+- Supplied transmitter is an **ESP32 gamepad** but exact board/pins/firmware are unknown. Owner plans ESP-NOW primary pilot; former WebSocket phone pilot code is a reference pattern only.
+- Third-party file rights apply independently to Gerber/wing STL/CAD; DO NOT upload reference assets into public GitHub merely because the user has physical copies.
+
+See 13 for TX/RX protocol, 14 for the arm fit checks, 15 for the PCB assembly/power audit.
+
+## 7. Research-to-task boundary
 
 These references inform DRAFT architecture only. Any subsequent Task must name exact reference files and **state which content may be copied, adapted or merely studied**. AI Code must not import a complete third-party firmware or UI bundle merely to get the project running quickly.
 
