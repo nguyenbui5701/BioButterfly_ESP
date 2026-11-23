@@ -28,11 +28,11 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 | [11_SENIOR_SOFTWARE_AGENT.md](11_SENIOR_SOFTWARE_AGENT.md) | Senior AI firmware ESP32, UI, điều khiển và tests |
 | **[12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md)** | **Baseline thực tế, hash STL/Gerber, những kết quả đã xác minh và blocker** |
 | [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md) | Rules ESP-NOW, gamepad TX/bướm RX, STOP, pairing, mất sóng |
-| [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) | Rules sửa ARMV5, horn kim loại 2 ốc, lỗ carbon 1.5mm |
+| [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) | Rules sửa ARMV5, horn nhựa in 3D, 2 ốc và lỗ carbon 1.5mm |
 | [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) | Rules kiểm tra Gerber PCB 4 lớp, linh kiện, pin/sạc và an toàn nguồn |
 | **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** | **Owner đã chốt horn in hoàn toàn nhựa, gắn trực tiếp spline SDS1601; 3 lỗ thẳng hàng, 2 lỗ ARM, 2 ốc M1.6 dự kiến** |
 | **[17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md)** | **25T Ø4,9mm + Bambu Lab A1: kiểm tra nozzle/material, in spline coupon và gate độ bền trước khi in horn thật** |
-| **[18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md)** | **Kiểm chứng mã customizer trong ảnh: Futaba 3F 25T Ø5,92 không phù hợp SDS1601 Ø4,9; 6mm giữa lỗ cạnh nhau = 12mm giữa hai ốc ngoài** |
+| **[18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md)** | **Đã chốt P7: 3 lỗ horn thẳng hàng cách 3,5mm, 2 lỗ ngoài cách 7mm; preset Futaba 3F Ø5,92 không phù hợp SDS1601 Ø4,9** |
 
 ## Đội ngũ AI chuyên trách
 
@@ -66,7 +66,7 @@ Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó 
 
 Mã [mezger/customizable-servo-arm](https://github.com/mezger/customizable-servo-arm) được kiểm tra trực tiếp: preset Futaba 3F **25T Ø5,92mm**, khác spline SDS1601 **25T Ø4,90mm** (owner đã xác nhận). Preset SG90 trong cùng mã là **21T Ø4,90mm**, cũng không phù hợp. **Phải tạo spline SDS1601 tùy chỉnh** sau khi đo biên dạng và in coupon; không dùng ngay preset từ ảnh.
 
-Thông số **Arm hole distance=6mm** trong ảnh là khoảng cách **hai lỗ liên tiếp**, nên giữa hai lỗ ngoài (dùng 2 ốc) là **12mm**; không giống proposal cũ **7mm**. Đây là **P7/P12 DESIGN DECISION PENDING**, cần so với khung ARMV5, khả năng in và khối lượng. Chi tiết Design/18. Chưa sản xuất STL.
+Thông số **Arm hole distance=6mm** trong ảnh là khoảng cách **hai lỗ liên tiếp**, nên giữa hai lỗ ngoài (dùng 2 ốc) là **12mm**; không giống proposal cũ **7mm**. **Owner đã chọn phương án B/P7 (ngày 2026-11-24)**: khoảng cách hai lỗ kế tiếp **3,5mm**, hai lỗ ngoài dùng để bắt **2 ốc** cách nhau **7mm**. ARMV5 có **2 lỗ trùng H1/H3**. P12 từ ảnh không được chọn. Vẫn cần xác minh vị trí H1 so với hub, độ dày và dung sai khi in trên Bambu A1. Chi tiết Design/18. Chưa sản xuất STL.
 
 ## Nguồn tham khảo
 
