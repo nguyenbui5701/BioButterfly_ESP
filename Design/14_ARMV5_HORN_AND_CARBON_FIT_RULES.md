@@ -1,4 +1,4 @@
-# 14 — ARMV5 Rework Rules: Metal Horn, Two Fasteners and 1.5mm Rods
+# 14 — ARMV5 Rework Rules: Fully Printed SDS1601 Horn, Two Fasteners and 1.5mm Rods
 
 **Status:** RULES_DRAFT / 2026-11-24. **Owner-confirmed 25T/Ø4.9mm SDS1601 spline and Bambu Lab A1 printer; additional mandatory [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).** **Addendum:** see [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) for newly uploaded SG90-style horn source, proposed H1/H2/H3 layout and M1.6 sizing. **Role:** AI-3D, with AI-HW consultation. **Boundary:** define mechanical acceptance and controlled design iteration; **do not export modified production STL/STEP until owner-approved Design and Task**.
 
@@ -13,14 +13,14 @@
 
 ## Newly specified three-hole horn / two-hole arm concept
 
-Owner **CONFIRMED** **three collinear mounting holes on the fully plastic 3D-printed horn**, with only **two bolts** (outer holes H1+H3) installed per wing, and **two matching holes in ARMV5 wing root**. The SG90-style new horn's 4mm hub and 1.5mm-thick tapering lever have been measured from STL; its central passage is stepped round, **not verified SDS1601 25T**. Do not confuse the servo center retention screw with these wing-arm connection bolts. Refer to Design/16 for provisional positions, 1.8mm M1.6 clearance, **the selected all-printed internal spline architecture** and critical test gates.
+Owner **CONFIRMED** **three collinear mounting holes on the fully plastic 3D-printed horn**, with only **two bolts** (outer holes H1+H3) installed per wing, and **two matching holes in ARMV5 wing root**. The SG90-style new horn's 4mm hub and 1.5mm-thick tapering lever have been measured from STL; its central passage is stepped round, **not verified SDS1601 25T**. Do not confuse the servo center retention screw with these wing-arm connection bolts. Owner **approved P7 spacing**: H1-H2 = H2-H3 = **3.5mm**, H1-H3 = **7.0mm**; mount two screws only at H1 and H3, with exactly two ARM holes 7mm apart. Refer to Design/16 for absolute radial location **pending hub/head clearance check**, M1.6/Ø1.8mm **provisional**, fully printed internal spline and test gates. The screenshot's 6/12mm pattern is NOT selected.
 
 ## 2. DO NOT DESIGN THE WRONG JOINT
 
 Separate:
 1. **Spline coupling:** the SDS1601 output spline to **newly designed printed internal mating teeth**. Source SG90-style STL has a round stepped bore, not a verified 25T spline. Measure actual shaft tooth count, major/minor diameters and effective engagement before modeling; no force fit, heat-fit, or glue to bypass a failed print.
 2. **Center retention screw:** horn retained to servo shaft as designed by servo maker; not eliminated by two outer fasteners.
-3. **Arm-to-horn connection:** two fasteners holding printed wing arm to the **fully printed horn lever** for bending/torsion resistance. Use outer collinear positions H1+H3 and corresponding two holes on ARM; third middle horn hole is unused. Locate exact coordinates from final approved print/screw design.
+3. **Arm-to-horn connection:** two fasteners holding printed wing arm to the **fully printed horn lever** for bending/torsion resistance. Use outer collinear positions H1+H3 and corresponding two holes on ARM; third middle horn hole is unused. **Keep approved 3.5mm adjacent / 7mm outer center spacing**, while choosing absolute H1 offset after measured hub and screw-head clearance; physical fit and material integrity remain pending.
 4. **Rod sockets:** four intended carbon rod sockets whose diameter, direction, insertion depth, strain and adhesive method are independent from horn/spline geometry.
 
 Before geometry changes, physically measure servo spline and center retainer (1)(2), assess printed micro-tooth resolution and repeat-cycle fatigue, then verify H1/H3 hole pitch, screw dimensions and clearance on joint (3) and all four socket IDs/axes (4). The selected direct plastic coupling is owner confirmed, but fit remains unproven.
@@ -54,7 +54,7 @@ Before geometry changes, physically measure servo spline and center retainer (1)
 ## 5. Dual-bolt horn joint methodology
 
 1. Build parametric **printed internal spline** from confirmed SDS1601 shaft geometry; check print resolution, engagement depth and retention screw; coupon-test compatible spline first.
-2. Create parametric geometry around a defined joint datum and rotation axis; provide three **collinear** horn mounting coordinates H1/H2/H3 with only H1+H3 bolted to the two-hole ARM root, and bolt-axis normals.
+2. Create parametric geometry with **exactly three** collinear horn holes at **3.5mm adjacent center pitch** (outer H1-H3 **7.0mm**) and **exactly two** ARM root holes matching H1 and H3. Do not carry forward the old H1=5mm radial assumption without validating center screw/head clearance. Report absolute hole coordinates, bolt-axis normals and remaining wall thickness.
 3. Evaluate **two bolts plus center retaining screw** for tool accessibility, bolt head clearance, total thickness and torquing.
 4. Ensure both fasteners engage meaningful material and metal; avoid slots too close to root edge/rod sockets. Check wall thickness, layer anisotropy, crush/creep from bolts, washer/backing requirement and screw retention.
 5. Consider at least **two joint design variants** only if trade-offs are unresolved: screw through printed arm into tapped horn vs captured nuts/insert system. Do not invent thread sizes.
