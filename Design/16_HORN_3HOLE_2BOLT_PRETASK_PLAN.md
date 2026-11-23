@@ -1,6 +1,6 @@
 # 16 — PRE-TASK Design Plan: SG90-Style 3-Hole Horn / 2-Bolt Wing Arm
 
-**Status:** OWNER_CONCEPT_AND_NOMINAL_SPLINE_CONFIRMED / PRINT_VALIDATION_PENDING. **2026-11-24 update:** Owner states SDS1601 spline is **25T, Ø4.9mm**, printer **Bambu Lab A1**. Exact tooth form, printer nozzle and filament are not yet known. Mandatory detailed validation: [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md). Owner confirmed on 2026-11-23: fully 3D-printed horn directly mounted on SDS1601 (Option A), 3 straight-line holes, H1/H3 used with 2 screws. This confirmation **does not** approve spline geometry, screw sizes, material, tolerances or powered tests.  
+**Status:** OWNER_CONCEPT_AND_NOMINAL_SPLINE_CONFIRMED / CUSTOMIZER_PRESET_MISMATCH_AND_HOLE_PITCH_DECISION_PENDING. **New screenshot review:** [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md) confirms mezger Futaba 3F preset is Ø5.92mm (25T), incompatible by nominal diameter with owner SDS1601 25T Ø4.90mm. Screenshot's 6mm adjacent hole pitch means **12mm** between H1/H3, not the earlier proposed 7mm. No CAD freeze before choosing one pattern. **2026-11-24 update:** Owner states SDS1601 spline is **25T, Ø4.9mm**, printer **Bambu Lab A1**. Exact tooth form, printer nozzle and filament are not yet known. Mandatory detailed validation: [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md). Owner confirmed on 2026-11-23: fully 3D-printed horn directly mounted on SDS1601 (Option A), 3 straight-line holes, H1/H3 used with 2 screws. This confirmation **does not** approve spline geometry, screw sizes, material, tolerances or powered tests.  
 **Date:** 2026-11-23 | **Author:** SA | **Agent consultation required:** AI-3D + AI-HW.  
 **This is a design discussion, NOT a Task or permission to print/energize the assembly.**
 
@@ -77,6 +77,8 @@
 M2 would leave less than 1mm nominal at the outermost hole before print tolerance and fatigue. Even M1.6 leaves only ~1mm at the outermost station; **local widening, radiused reinforcement or a shorter usable pair may be required** after structural review. Three holes have a strength penalty regardless of only using two bolts.
 
 ## 5. Confirmed straight-line layout / provisional dimensions
+
+**Important correction following screenshot:** Owner's screenshot shows parametric servo-arm customizer with 3 collinear holes and **Arm hole distance=6mm** (adjacent hole spacing). With H2 unused, **H1-H3=12mm**, whereas the below earlier H1/H2/H3 proposal gives **H1-H3=7mm**. These are mutually exclusive draft hole patterns. The screenshot does not explicitly approve replacing the 7mm pattern, and the final geometry must match printed ARMV5. See Design/18 and ask owner to pick **P7 or P12**. Original H1 at radius5mm may collide with actual hub and must be re-evaluated.
 
 Coordinate convention for the supplied STL: central hub rotation axis **O = (X=0, Y=0)**, lever extends toward **negative Y**, through-holes drilled along **Z**. All proposed positions must be validated on physically measured, printable geometry.
 
