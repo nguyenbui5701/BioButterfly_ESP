@@ -161,6 +161,10 @@ This is a **rules-only update BEFORE task creation**. New facts/observations and
 
 For conflicts in DRAFT files, explicit current owner choice and the latest specific evidence/gate documents (12–15) inform the proposed design, while SA records a new ADR and owner formally approves the implementation baseline. Never silently treat a proposed dimension as accepted.
 
+## Horn design pre-task addendum
+
+[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) is a **design proposal before Task**: three selectable holes on a printed servo-horn lever, two matching holes in wing root, and **two installed screws per wing**. Candidate is M1.6 with Ø1.8mm nominal through-clearance; final bolt length and head/nut clearance require measured stack. The supplied SG90-style STL has a round stepped bore, **not a proven mating SDS1601 25T spline**. Do not produce/print a final load-bearing part until the owner decides printed vs certified metal spline interface and measurements resolve HORN-G0.
+
 ## 11. SA review checklist
 
 - [ ] Task and approved design SHA linked.
