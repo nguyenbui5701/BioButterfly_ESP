@@ -14,6 +14,10 @@ Design a **lightweight, mechanically serviceable, printable bionic butterfly**: 
 3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; **Design/12_AS_BUILT_INPUTS_AND_BLOCKERS.md and Design/14_ARMV5_HORN_AND_CARBON_FIT_RULES.md, Design/16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md, **Design/17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md**, and **Design/18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md** (MANDATORY)**; relevant approved Task/*.md when issued.
 4. Actual measured component models/datasheets, original wing reference solely for research and subject to license restrictions.
 
+## Latest spline-hardware clarification
+
+Mandatory: [19_HORN_EXISTING_SPLINE_INTERFACE.md](19_HORN_EXISTING_SPLINE_INTERFACE.md). Owner states spline hardware is already present and requests plastic horn work only. Do not model/print an independent male output spline. **Case A:** if only bare SDS1601 25T teeth exist, printed horn requires a tested female 25T cavity. **Case B:** if a distinct spline coupler/hub is in hand, create plastic horn interface to its **measured** mounting geometry, with no fabricated female teeth if the coupler already takes the spline. Which case is actual is **PENDING OWNER PHYSICAL CONFIRMATION**. Both retain owner-approved P7 exactly-three-hole/7mm two-bolt wing interface. This latest explicit clarification takes precedence over earlier unconditional "print internal spline" wording.
+
 ## Ownership boundaries
 
 - **Owns when assigned:** parametric geometry, mechanical interface drawings, assembly CAD, 3D print process planning, DFM/DFA, tolerances, mass/CG and stroke collision studies, inspection/test instructions.
