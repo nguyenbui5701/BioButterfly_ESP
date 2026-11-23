@@ -9,16 +9,19 @@
 | --- | --- | --- | --- |
 | ADR-001 | Start with XIAO ESP32-C3 | PROPOSED | Default target in reference; physical board/pins not yet verified |
 | ADR-002 | Arduino framework + PlatformIO, pinned build | PROPOSED | Repeatable ESP32 toolchain, host tests separate from hardware |
-| ADR-003 | Mobile-first on-device web UI hosted from local Wi-Fi AP | PROPOSED | Zero cloud dependency and easy smartphone control |
-| ADR-004 | One pilot control source and WebSocket v1 | PROPOSED | Deterministic authority/telemetry; session + anti-replay required |
-| ADR-005 | Two digital servo wing actuation | PROPOSED | Reference concept; SDS1601 datasheet seen but part not confirmed |
+| ADR-003 | Mobile-first local AP/web pilot concept | SUPERSEDED_DRAFT | Owner now intends ESP-NOW gamepad as M0 pilot; web may later support disarmed-only config/telemetry |
+| ADR-004 | WebSocket v1 as pilot source | SUPERSEDED_DRAFT | ESP-NOW TX/RX bind/session/version proposal now takes precedence; no second active pilot |
+| ADR-005 | Two SDS1601 servo wing actuation | OWNER_HARDWARE_REPORTED / VALIDATION_PENDING | SDS1601 present; 25T reference spline vs proposed metal horn 21T unresolved |
 | ADR-006 | Device-side fail-closed safety state machine, boot DISARMED | PROPOSED | Safety must not depend on phone, Wi-Fi or UI refresh |
 | ADR-007 | Separate flight-weight frame and optional removable aesthetic shell | PROPOSED | Reduce first prototype mass and simplify access |
 | ADR-008 | Phase 0 bench validation before tethered/free flight | PROPOSED | No assumption that working firmware produces flyable vehicle |
 | ADR-009 | Reimplement modular firmware contracts rather than wholesale copying ESP-FLUTTER | PROPOSED | Reference license is noncommercial and original code has broad coupling |
 | ADR-010 | Use original wing reference as study material, create original approved CAD for our geometry | PROPOSED | Mass/scale and asset licensing decisions remain open |
-| ADR-011 | No other control transports (ESP-NOW, ELRS/CRSF) in M0 | PROPOSED | Minimize initial safety/latency/control arbitration risk |
+| ADR-011 | Phone-only M0, defer ESP-NOW/ELRS | SUPERSEDED_DRAFT | ESP-NOW selected by owner; ELRS and other controllers remain out of M0 |
 | ADR-012 | SA + 3 senior specialist AI roles (3D/HW/SW), shared interface/handoff contracts and isolated PR ownership | PROPOSED | Design/AGENTS.md and 08–11 define working protocols; no specialists automatically instantiated |
+| ADR-013 | Primary M0 radio control = ESP-NOW gamepad TX -> XIAO ESP32-C3 RX | OWNER_DIRECTION / TECH_DESIGN_PENDING | Actual TX board/firmware unknown; design/approval gates per 13; optional web is not active pilot |
+| ADR-014 | Preserve existing ARMV5, FC Mount V5 and PCB V1.1 as immutable source baselines | OWNER_INPUTS_RECORDED / DESIGN_PENDING | SHA and failures in 12; horn compatibility, rod-fit and PCB electrical audit blocked |
+| ADR-015 | No PCB power/print/coupling work without domain gates and physical evidence | PROPOSED | 14 and 15 gate physical assembly; owner authorization is separate from doc commits |
 
 **Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
 
@@ -35,10 +38,10 @@
 | Phase | Outcome | Hard gate before advancing |
 | --- | --- | --- |
 | D0: Discovery / design | Requirements, UI, architecture, power and safety design reviewed | Owner design approval, reference/license decision |
-| D1: Host-only logic foundation | Build skeleton, shared types, input schema, state machine, fake clock tests | Unit-test proofs incl STOP, timeout, stale sequence and invalid input |
-| D2: ESP32 board bootstrap | Pinned PlatformIO build, HAL, safe disarmed boot, serial diagnostics | Valid actual board/pin map; boot no-motion evidence |
-| D3: Power/servo integration | Servo neutral/endpoints, battery monitor, calibration storage | HW-G0 to HW-G3, measured servo current/voltage/temperature |
-| D4: Control communications + UI | AP, WebSocket, pilot session, mobile cockpit, telemetry | End-to-end timeout, disconnect and emergency STOP proofs |
+| D1: Host-only logic foundation | **TX/RX ESP-NOW wire contract** + fake-clock state machine + invalid/replay test vectors | Unit-test proof STOP, timeout, pairing/replay, version and numeric validation |
+| D2: Dual ESP32 bootstrap | **Two separate builds**: real gamepad TX and XIAO ESP32-C3 RX; safe receiver boot | Both actual board pin maps/versions and no-motion reset evidence |
+| D3: PCB/arm input verification then power/servo | Inspect four-layer Gerber V1.1 + BOM/net and horn/rod fit; only then servo neutral/endpoints, battery monitor | PCB-A0..A4, MECH-G0..G3, HW-G0..G3 and measured servo current/voltage/temperature |
+| D4: ESP-NOW control link | TX/RX pairing, peer/session, joystick and button mapping, telemetry/diagnostics (web optional later) | Radio mismatch/restart/loss, duplicate seq, watchdog and STOP proofs |
 | D5: Two-wing bench tuning | Flap waveform, bounded steering, tuning UI and profiles | HW-G4 + repeatability, no overload, control evidence |
 | D6: Tethered flight investigation | Lift/steering/CG/weight measurements and hypothesis log | HW-G5; reject unsafe combinations, revise mechanical design |
 | D7: Controlled free-flight candidate | Limited flight trials and tuning | HW-G6 owner approval and completed risk review |
@@ -75,6 +78,11 @@ DESIGN_DRAFT -> DESIGN_REVIEW -> DESIGN_APPROVED -> TASK_READY -> AI_CODE_IN_PRO
 ## 5. Required owner design sign-off input
 
 **Needed before marking DESIGN_APPROVED:**
+- Confirm or adjust current ESP-NOW gamepad primary M0 scope; two firmwares and optional web diagnostics only.
+- Exact gamepad MCU, button/joystick GPIO and currently installed firmware/source (currently unknown).
+- Servo spline/horn compatibility (reference SDS1601 25T Ø4.90 vs proposed 21T ~4.5) and actual two-fastener joint dimensions.
+- Four carbon socket fit measurement and print parameters; first physical FC Mount fit plan.
+- Gerber V1.1 schematic/BOM/assembly/net confirmation, 2S charge/balance and PCB power safety gate.
 - MVP target: stationary/showpiece, bench/tethered, or controlled free-flight ambition.
 - Actual board, servo model, pack and buck, if already purchased.
 - License intent: hobby/noncommercial only, or possibly commercial distribution.
@@ -100,6 +108,13 @@ If hardware remains unknown, owner may approve **software design only** and expl
 
 Review ledger entries are immutable audit facts; corrections append new records rather than quietly overwriting previous outcome.
 
-## 8. Next SA checkpoint
+## 8. Rules-first update log — 2026-11-23
+
+- Owner-reported available hardware and uploaded source hashes recorded in [12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md).
+- New domain gate rules: [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md), [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md), [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md).
+- This updates the DRAFT architecture and agent rules; it **does not count as approval of final dimensions, firmware, electronics or powered testing**.
+- Explicit user instruction: **WRITE/PUSH RULES FIRST, DO NOT CREATE TASK YET**. Task/ remains absent. This instruction is independent of eventual design approval.
+
+## 9. Next SA checkpoint
 
 Present current Design draft to owner for approval. On explicit approval, commit updated ADR states and approved baseline, then create the **first** implementation Task file under Task/ with exact files-to-read, scope, expected files, test evidence and stop conditions. Do not issue Task at this draft stage.
