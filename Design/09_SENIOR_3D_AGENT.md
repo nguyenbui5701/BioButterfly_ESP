@@ -11,7 +11,7 @@ Design a **lightweight, mechanically serviceable, printable bionic butterfly**: 
 
 1. Design/AGENTS.md; Design/05_AI_WORK_RULES.md; Design/08_MULTI_AGENT_RULES.md.
 2. **This file**, Design/01_REQUIREMENTS.md, Design/04_HARDWARE_AND_SAFETY.md, Design/03_SYSTEM_ARCHITECTURE.md.
-3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; **Design/12_AS_BUILT_INPUTS_AND_BLOCKERS.md and Design/14_ARMV5_HORN_AND_CARBON_FIT_RULES.md, Design/16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md and **Design/17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md** (MANDATORY)**; relevant approved Task/*.md when issued.
+3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; **Design/12_AS_BUILT_INPUTS_AND_BLOCKERS.md and Design/14_ARMV5_HORN_AND_CARBON_FIT_RULES.md, Design/16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md, **Design/17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md**, and **Design/18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md** (MANDATORY)**; relevant approved Task/*.md when issued.
 4. Actual measured component models/datasheets, original wing reference solely for research and subject to license restrictions.
 
 ## Ownership boundaries
@@ -34,6 +34,12 @@ Before any authorized final STL, follow the complete measurement, coupon, fit an
 ### Newly confirmed horn interface (overrides prior alternatives)
 
 Read Design/16 for owner-confirmed direct **fully 3D-printed horn**. Use supplied SG90-style STL as a starting geometric reference only. The round stepped bore is NOT a functional 25T spline: design/mechanically verify a **new accurate internal mating spline** from the actual SDS1601 shaft; protect shaft teeth and retain the center securing screw. Ensure 3 straight-line lever holes (H1/H2/H3), 2 matching ARM holes (H1/H3) and **2 M1.6 candidate bolts installed per wing**. M1.6, Ø1.8mm CAD clearance and 7mm H1-H3 pitch are not yet fabrication-approved; check print-process capability, joint root strength, head clearance and repeat-cycle loosening. Print small coupons and test physical engagement **before** full moving-wing use.
+
+### Critical source-model discrepancy — read before using screenshot customizer
+
+Screenshot shows mezger OpenSCAD customizable horn. Verified upstream arrays: **FUTABA_3F_SPLINE = [5.92mm, 25T]**; **SG90_SPLINE = [4.90mm, 21T]**. The owner's SDS1601 is nominal **4.90mm, 25T**, so NO standard dropdown option is a verified fit. Modifying head diameter alone does not prove tooth height/width or retention fit. Never publish a horn using unmodified 3F 5.92mm preset.
+
+The screenshot's `arm_hole_distance=6mm` is between **adjacent** holes, giving **12mm** for the two outside fasteners across three holes. Earlier 7mm outside-pair pattern is distinct. The generator uses an **automatic hole-count loop**, so changing hole spacing with fixed arm length may add holes. Create a deterministic exactly-three-hole arrangement and align ARM two-hole pattern to the **owner-selected** pitch, not screenshot inference. Until selected, HOLE_PATTERN_PENDING. Use Design/18 as authoritative source audit.
 
 ### 3D and flight-weight architecture
 - Provide two candidate assembly concepts if trade-offs matter: (A) minimal lightweight core for flight testing; (B) removable decorative shell. Estimate mass difference and impacts on access/CG before selection.
