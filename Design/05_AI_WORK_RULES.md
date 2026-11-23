@@ -165,6 +165,10 @@ For conflicts in DRAFT files, explicit current owner choice and the latest speci
 
 [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) is a **design proposal before Task**: three selectable holes on a printed servo-horn lever, two matching holes in wing root, and **two installed screws per wing**. Candidate is M1.6 with Ø1.8mm nominal through-clearance; final bolt length and head/nut clearance require measured stack. **Owner confirmed fully 3D-printed direct SDS1601 horn (no metal insert) and 3 collinear horn holes with two matching arm holes.** The supplied SG90-style STL has a round stepped bore, **not a proven mating SDS1601 25T spline**. The owner design-choice gate is now CLOSED; **do not ask to select metal vs plastic or inline vs triangular again**. Do not produce/print a final load-bearing part until actual spline dimensions, printer process and coupon tests resolve HORN-G0. If printed spline fails, report BLOCKED and seek fresh owner approval to change architecture.
 
+## Specific additive manufacturing gate — owner-confirmed A1 and nominal spline
+
+Owner has confirmed **SDS1601 25T/Ø4.9mm nominal spline** and **Bambu Lab A1 FDM**. For all printed-horn work, AI-3D must read [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md), identify **installed** nozzle and filament, verify fine features in Bambu Studio and conduct **unpowered, no-wing micro-spline fit coupon** before any full horn or actuated test. Manufacturer stock 0.4mm nozzle does not prove the owner's current configuration. No direct metal coupling substitution. No Task authorized by this rules update.
+
 ## 11. SA review checklist
 
 - [ ] Task and approved design SHA linked.
