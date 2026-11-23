@@ -31,6 +31,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 | [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) | Rules sửa ARMV5, horn kim loại 2 ốc, lỗ carbon 1.5mm |
 | [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) | Rules kiểm tra Gerber PCB 4 lớp, linh kiện, pin/sạc và an toàn nguồn |
 | **[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md)** | **Owner đã chốt horn in hoàn toàn nhựa, gắn trực tiếp spline SDS1601; 3 lỗ thẳng hàng, 2 lỗ ARM, 2 ốc M1.6 dự kiến** |
+| **[17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md)** | **25T Ø4,9mm + Bambu Lab A1: kiểm tra nozzle/material, in spline coupon và gate độ bền trước khi in horn thật** |
 
 ## Đội ngũ AI chuyên trách
 
@@ -39,7 +40,7 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 - **AI-HW:** định nghĩa sơ đồ mạch, nguồn, pin/sạc/bảo vệ, giao diện servo và điện tử.
 - **AI-SW:** phát triển ESP32 firmware, local web UI, state-machine và kiểm thử.
 
-Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó đọc rules chung, role-specific rules và **file 12–16 liên quan trước khi thay đổi thiết kế**. Chúng là các **vai trò để giao cho những AI agent**; hiện không có ba phiên AI độc lập tự động chạy. Mọi AI chuyên môn chỉ triển khai sau khi được SA giao Task theo design đã duyệt. Không sửa chéo artifact của nhau.
+Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó đọc rules chung, role-specific rules và **file 12–17 liên quan trước khi thay đổi thiết kế**. Chúng là các **vai trò để giao cho những AI agent**; hiện không có ba phiên AI độc lập tự động chạy. Mọi AI chuyên môn chỉ triển khai sau khi được SA giao Task theo design đã duyệt. Không sửa chéo artifact của nhau.
 
 ## Quy trình làm việc
 
@@ -54,7 +55,7 @@ Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó 
 
 - **Có thật theo chủ sở hữu:** XIAO ESP32-C3, gamepad ESP32, SDS1601, hai pin 3.7V 220mAh, PCB Gerber V1.1, ARMV5 đã in và FC Mount V5 chưa in.
 - **Có thật theo dữ liệu file:** ARMV5 STL chứa 2 chi tiết lưới kín, FC Mount V5 chứa 1; Gerber có 4 lớp đồng, outline khoảng 18.5 x 45mm. Dữ liệu 3D/PCB chưa chứng minh fit hoặc an toàn cấp nguồn.
-- **Owner đã chốt concept horn:** in nhựa 3D nguyên horn, trực tiếp lắp trục SDS1601, 3 lỗ thẳng hàng trên horn, 2 lỗ khung cánh tương ứng để gắn 2 ốc, lỗ giữa dự phòng. Spline 25T/Ø4.90mm theo datasheet mới là thông số tham khảo: cần đo servo thực tế và in coupon kiểm tra; **không** dùng lỗ tròn SG90 thay cho spline. 3 trong 4 lỗ carbon của ARM in vẫn chưa vừa; PCB chưa xác nhận BOM/schematic/nguồn.
+- **Owner đã chốt concept horn:** in nhựa 3D nguyên horn, trực tiếp lắp trục SDS1601, 3 lỗ thẳng hàng trên horn, 2 lỗ khung cánh tương ứng để gắn 2 ốc, lỗ giữa dự phòng. **Owner đã xác nhận spline 25T/Ø4,9mm và máy Bambu Lab A1**; vẫn phải đo biên dạng răng và in coupon kiểm tra, **không** dùng lỗ tròn SG90 thay spline. Cần biết nozzle đang lắp và vật liệu. 3 trong 4 lỗ carbon của ARM in vẫn chưa vừa; PCB chưa xác nhận BOM/schematic/nguồn.
 - **Điều khiển M0:** gamepad ESP-NOW là kế hoạch chủ sở hữu; UI WebSocket trên điện thoại trong design cũ hiện được xem như ý tưởng cũ, KHÔNG là nguồn điều khiển chính.
 - **File nguồn gốc** (STL/Gerber) chỉ được đính kèm ở cuộc trò chuyện, **chưa có trong repository**; các AI cần xin lại file/hashes, không đoán đường dẫn.
 
