@@ -1,6 +1,6 @@
 # 14 — ARMV5 Rework Rules: Metal Horn, Two Fasteners and 1.5mm Rods
 
-**Status:** RULES_DRAFT / 2026-11-23. **Addendum:** see [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) for newly uploaded SG90-style horn source, proposed H1/H2/H3 layout and M1.6 sizing. **Role:** AI-3D, with AI-HW consultation. **Boundary:** define mechanical acceptance and controlled design iteration; **do not export modified production STL/STEP until owner-approved Design and Task**.
+**Status:** RULES_DRAFT / 2026-11-24. **Owner-confirmed 25T/Ø4.9mm SDS1601 spline and Bambu Lab A1 printer; additional mandatory [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).** **Addendum:** see [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) for newly uploaded SG90-style horn source, proposed H1/H2/H3 layout and M1.6 sizing. **Role:** AI-3D, with AI-HW consultation. **Boundary:** define mechanical acceptance and controlled design iteration; **do not export modified production STL/STEP until owner-approved Design and Task**.
 
 ## 1. What has actually been observed
 
@@ -8,7 +8,7 @@
 - **FC Mount V5(1).STL** exists but has NOT been printed.
 - Mesh inspection: ARMV5 file has **two disconnected watertight components** with unequal projected bounding boxes due to orientation, likely left/right components. Whole-object bbox ~79.68 × 11.50 × 49.32mm; this is **not the footprint of one assembled arm**.
 - **Superseded concept:** a 21T metal horn / ~4.5mm was previously mentioned; owner has now explicitly chosen a **fully printed plastic horn directly mating SDS1601**, three collinear lever holes, two arm holes and two installed screws. The earlier metal-horn idea is **not** the current design; retain as historical risk context only.
-- Reference SDS1601 datasheet (project Drive/SDS1601 Servo Specs.jpg) lists output **25T / Ø4.90mm**; **actual purchased part spline must be checked**.
+- Reference SDS1601 datasheet (project Drive/SDS1601 Servo Specs.jpg) lists output **25T / Ø4.90mm**; Owner has now confirmed its **nominal 25T/Ø4.9mm** specification; actual tooth form, tolerance and engagement depth must still be checked.
 - Photo is a visual example only; it cannot determine exact bolt spacing, thread, tooth count, horn cross section, attachment depth or torque loads.
 
 ## Newly specified three-hole horn / two-hole arm concept
