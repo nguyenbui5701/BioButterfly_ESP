@@ -5,13 +5,13 @@
 
 ## Mission
 
-Produce safe, maintainable ESP32 firmware and a mobile cockpit for an experimental bionic butterfly: nonblocking wing-motion synthesis, pilot session management, disarm/stop/failsafe, battery telemetry, persistent calibration and robust test/evidence. The device, not the phone, owns safety and actuator decisions.
+Produce safe, maintainable **two-sided ESP32 ESP-NOW firmware** (gamepad transmitter + XIAO ESP32-C3 butterfly receiver) and optional future diagnostics cockpit for an experimental bionic butterfly: nonblocking wing-motion synthesis, pilot session management, disarm/stop/failsafe, battery telemetry, persistent calibration and robust test/evidence. The device, not the phone, owns safety and actuator decisions.
 
 ## Must read (in order)
 
 1. Design/AGENTS.md; Design/05_AI_WORK_RULES.md; Design/08_MULTI_AGENT_RULES.md.
 2. **This file**, Design/01_REQUIREMENTS.md, Design/02_UI_UX.md, Design/03_SYSTEM_ARCHITECTURE.md, Design/04_HARDWARE_AND_SAFETY.md.
-3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; exact approved Task/TASK-*.md, its pinned design SHA and allowed files.
+3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; **Design/12_AS_BUILT_INPUTS_AND_BLOCKERS.md and Design/13_ESP_NOW_DUAL_FIRMWARE_RULES.md (MANDATORY)**; exact approved Task/TASK-*.md, its pinned design SHA and allowed files.
 4. AI-HW `ELEC-IF-001` revision and AI-3D `MECH-IF-002` revision before touching real servo output, battery calibration or safety ranges.
 
 ## Ownership boundaries
@@ -24,7 +24,7 @@ Produce safe, maintainable ESP32 firmware and a mobile cockpit for an experiment
 ## Required software architecture
 
 ```text
-AP / Web UI -> strict decoder -> pilot session & seq/rate guard
+ESP32 Gamepad TX -> ESP-NOW -> XIAO ESP32-C3 RX decoder -> bound peer/seq/rate guard
                         -> immutable normalized commands
                         -> SafetySupervisor + StateMachine -> MotionPlanner
                         -> final ServoLimiter -> GPIO/PWM HAL
@@ -45,6 +45,14 @@ AP / Web UI -> strict decoder -> pilot session & seq/rate guard
 - Do not introduce cloud services, arbitrary remote HTTP PWM endpoints, RC source mixing, OTA or IMU autopilot without separate accepted ADR/Task.
 - No copied ESP-FLUTTER 4.7k-line Wi-Fi module, UI bundle or motion code unless reuse rights and exact scope were approved.
 
+## Mandatory change from prior phone-pilot concept
+
+The owner has explicitly selected ESP-NOW gamepad as **primary M0 control**. The previously drafted phone WebSocket cockpit is NOT the approved primary controller. Implement TX and RX as separate binaries/projects sharing one versioned schema only after the architecture is approved. The exact gamepad MCU, joystick/button map and factory firmware are unknown; audit them rather than presuming a product URL proves compatibility.
+
+Follow **13_ESP_NOW_DUAL_FIRMWARE_RULES.md**: deliberate pairing, peer/key policy, neutral-arm gate, controller reboot behavior, stale packet rejection, RX-owned 500ms *proposed* watchdog, STOP priority, battery faults, RF channel coexistence and test matrix. Web UI may be considered for disarmed configuration/telemetry only, and must not contend with gamepad pilot authority.
+
+Before flashing moving hardware, receive AI-HW's ELEC-IF-001 (verified PCB 4-layer Gerber V1.1, pins/power/divider) and AI-3D's MECH-IF-002 (real horn/servo compatibility and safe travel). Host-only protocol logic can be scoped without these physical dependencies after owner design approval.
+
 ## Test plan and expected proofs
 
 | Level | What to prove | No false claims |
@@ -55,7 +63,11 @@ AP / Web UI -> strict decoder -> pilot session & seq/rate guard
 | Hardware bench | Servo pulse output against ELEC-IF-001, endpoints against MECH-IF-002, current/temp under HW oversight | Require owner-authorized hardware gate |
 | System | 5-minute (if safe) dual-wing test, packet loss, brownout response, low battery, stop/re-arm | No free-flight claim |
 
-MVP critical regression set: cold boot, voltage invalid, malformed/NaN/inf payload, replay seq, cross-client commands, jammed network, browser hidden, lost phone Wi-Fi, lost controls at ACTIVE and ARMED_IDLE, STOP during rate burst, corrupt NVS, servo max clamp. Tests must be parameterized and reproducible.
+MVP critical regression set: gamepad TX reboot, RX reboot, ESP-NOW wrong peer/MAC, unbound TX, channel mismatch, controller power-off during motion, STOP/ARM race, duplicate and replay sequence, joystick drift, cold boot, voltage invalid, malformed/NaN/inf payload, replay seq, cross-client commands, jammed network, browser hidden, lost phone Wi-Fi, lost controls at ACTIVE and ARMED_IDLE, STOP during rate burst, corrupt NVS, servo max clamp. Tests must be parameterized and reproducible.
+
+## Optional future UI rules — NOT primary M0 pilot
+
+The existing 02_UI_UX.md is a **historical draft cockpit proposal**; do not build WebSocket pilot controls for M0 from it. Any web server is optional, should be non-authoritative for motion and requires accepted ADR and explicit Task.
 
 ## UI-specific rules
 
