@@ -163,7 +163,7 @@ For conflicts in DRAFT files, explicit current owner choice and the latest speci
 
 ## Horn design pre-task addendum
 
-[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) is a **design proposal before Task**: three selectable holes on a printed servo-horn lever, two matching holes in wing root, and **two installed screws per wing**. Candidate is M1.6 with Ø1.8mm nominal through-clearance; final bolt length and head/nut clearance require measured stack. The supplied SG90-style STL has a round stepped bore, **not a proven mating SDS1601 25T spline**. Do not produce/print a final load-bearing part until the owner decides printed vs certified metal spline interface and measurements resolve HORN-G0.
+[16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) is a **design proposal before Task**: three selectable holes on a printed servo-horn lever, two matching holes in wing root, and **two installed screws per wing**. Candidate is M1.6 with Ø1.8mm nominal through-clearance; final bolt length and head/nut clearance require measured stack. **Owner confirmed fully 3D-printed direct SDS1601 horn (no metal insert) and 3 collinear horn holes with two matching arm holes.** The supplied SG90-style STL has a round stepped bore, **not a proven mating SDS1601 25T spline**. The owner design-choice gate is now CLOSED; **do not ask to select metal vs plastic or inline vs triangular again**. Do not produce/print a final load-bearing part until actual spline dimensions, printer process and coupon tests resolve HORN-G0. If printed spline fails, report BLOCKED and seek fresh owner approval to change architecture.
 
 ## 11. SA review checklist
 
