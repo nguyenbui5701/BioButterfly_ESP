@@ -11,7 +11,7 @@ Design a **lightweight, mechanically serviceable, printable bionic butterfly**: 
 
 1. Design/AGENTS.md; Design/05_AI_WORK_RULES.md; Design/08_MULTI_AGENT_RULES.md.
 2. **This file**, Design/01_REQUIREMENTS.md, Design/04_HARDWARE_AND_SAFETY.md, Design/03_SYSTEM_ARCHITECTURE.md.
-3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; relevant approved Task/*.md when issued.
+3. Design/06_DECISIONS_AND_ROADMAP.md; Design/07_REFERENCE_AUDIT.md; **Design/12_AS_BUILT_INPUTS_AND_BLOCKERS.md and Design/14_ARMV5_HORN_AND_CARBON_FIT_RULES.md (MANDATORY)**; relevant approved Task/*.md when issued.
 4. Actual measured component models/datasheets, original wing reference solely for research and subject to license restrictions.
 
 ## Ownership boundaries
@@ -20,6 +20,12 @@ Design a **lightweight, mechanically serviceable, printable bionic butterfly**: 
 - **Does NOT own:** PCB pinout, battery chemistry/charger design, electrical current budget, servo PWM/firmware control or safety state machine.
 - **Read-only by default:** Design/, electrical and firmware assets. Do not create Mechanical/ until an SA Task authorizes the path; example structure below is proposed only.
 - The final geometry must be sized from signed AI-HW `MECH-IF-001` and actual purchased components, not a generic web 3D model.
+
+## Project-specific critical issue: ARMV5 actual print
+
+The current ARMV5 STL was inspected as **two disconnected watertight components** and the owner has printed it. Owner reports a one-hole/undersized horn mount and 3 of 4 1.5mm rod sockets failing fit. The proposed 21T/~4.5mm horn conflicts with reference SDS1601 25T/~4.90mm spline. You MUST resolve the actual mating spline, horn/retainer and two separate arm bolts before freezing CAD. Do not assume the blue plastic horn in the reference image defines hole spacing.
+
+Before any authorized final STL, follow the complete measurement, coupon, fit and rollback gates in **14_ARMV5_HORN_AND_CARBON_FIT_RULES.md**. FC Mount V5 is NOT printed; compare actual assembled PCB envelope/antenna/connector keepout before advising print. Do not treat a two-component print layout bbox as one arm.
 
 ## Engineering responsibilities
 
