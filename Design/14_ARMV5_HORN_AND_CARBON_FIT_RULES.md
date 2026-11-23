@@ -7,23 +7,23 @@
 - Owner has printed **ARMV5(1).STL**, reports a one-hole/undersized arm-horn interface and only 1 of 4 sockets accepting nominal 1.5mm carbon rod.
 - **FC Mount V5(1).STL** exists but has NOT been printed.
 - Mesh inspection: ARMV5 file has **two disconnected watertight components** with unequal projected bounding boxes due to orientation, likely left/right components. Whole-object bbox ~79.68 × 11.50 × 49.32mm; this is **not the footprint of one assembled arm**.
-- Metal horn target: user proposes **two arm fasteners**, metal horn **21T**, and approx **4.5mm servo-side diameter**. Those are not a measured horn drawing.
+- **Superseded concept:** a 21T metal horn / ~4.5mm was previously mentioned; owner has now explicitly chosen a **fully printed plastic horn directly mating SDS1601**, three collinear lever holes, two arm holes and two installed screws. The earlier metal-horn idea is **not** the current design; retain as historical risk context only.
 - Reference SDS1601 datasheet (project Drive/SDS1601 Servo Specs.jpg) lists output **25T / Ø4.90mm**; **actual purchased part spline must be checked**.
 - Photo is a visual example only; it cannot determine exact bolt spacing, thread, tooth count, horn cross section, attachment depth or torque loads.
 
 ## Newly specified three-hole horn / two-hole arm concept
 
-Owner requests **three available mounting holes on the printed horn**, but only **two bolts** installed per wing, with **two matching holes in ARMV5 wing root**. The SG90-style new horn's 4mm hub and 1.5mm-thick tapering lever have been measured from STL; its central passage is stepped round, **not verified SDS1601 25T**. Do not confuse the servo center retention screw with these wing-arm connection bolts. Refer to Design/16 for provisional positions, 1.8mm M1.6 clearance, alternative coupling architectures and critical approval gate.
+Owner **CONFIRMED** **three collinear mounting holes on the fully plastic 3D-printed horn**, with only **two bolts** (outer holes H1+H3) installed per wing, and **two matching holes in ARMV5 wing root**. The SG90-style new horn's 4mm hub and 1.5mm-thick tapering lever have been measured from STL; its central passage is stepped round, **not verified SDS1601 25T**. Do not confuse the servo center retention screw with these wing-arm connection bolts. Refer to Design/16 for provisional positions, 1.8mm M1.6 clearance, **the selected all-printed internal spline architecture** and critical test gates.
 
 ## 2. DO NOT DESIGN THE WRONG JOINT
 
 Separate:
-1. **Spline coupling:** servo output gear teeth to mating metal horn; must match exact number of teeth, diameter, fit and shaft engagement. A 21T horn does **not** automatically fit a 25T output.
+1. **Spline coupling:** the SDS1601 output spline to **newly designed printed internal mating teeth**. Source SG90-style STL has a round stepped bore, not a verified 25T spline. Measure actual shaft tooth count, major/minor diameters and effective engagement before modeling; no force fit, heat-fit, or glue to bypass a failed print.
 2. **Center retention screw:** horn retained to servo shaft as designed by servo maker; not eliminated by two outer fasteners.
-3. **Arm-to-horn connection:** two fasteners holding printed wing arm to metal lever/hub for bending/torsion resistance. This is the owner's requested improvement; locate both holes from real horn drawing or physical measurement.
+3. **Arm-to-horn connection:** two fasteners holding printed wing arm to the **fully printed horn lever** for bending/torsion resistance. Use outer collinear positions H1+H3 and corresponding two holes on ARM; third middle horn hole is unused. Locate exact coordinates from final approved print/screw design.
 4. **Rod sockets:** four intended carbon rod sockets whose diameter, direction, insertion depth, strain and adhesive method are independent from horn/spline geometry.
 
-Before geometry changes, physically verify horn and servo joint (1), inspect center retainer (2), measure hole center distance, hole diameter, screw length and clearance on joint (3), and separately inspect all four socket IDs/axes (4).
+Before geometry changes, physically measure servo spline and center retainer (1)(2), assess printed micro-tooth resolution and repeat-cycle fatigue, then verify H1/H3 hole pitch, screw dimensions and clearance on joint (3) and all four socket IDs/axes (4). The selected direct plastic coupling is owner confirmed, but fit remains unproven.
 
 ## 3. Required measurement sheet, units = mm
 
@@ -31,7 +31,7 @@ Before geometry changes, physically verify horn and servo joint (1), inspect cen
 | --- | --- | --- |
 | Exact servo product marking and spline teeth | High-resolution photo + datasheet/bare spline examination; test-fit known horn non-destructively | Exact spline compatibility recorded as MEASURED or VERIFIED |
 | Spline outside diameter, engagement height | Caliper/microscope where practical; do not damage teeth | Dimensional drawing with uncertainty |
-| Metal horn exact model, mating teeth, thickness and center-retainer screw | Supplier drawing and actual caliper measurement | 3D envelope and engagement agreement |
+| Fully printed horn internal spline and retention screw | Physical SDS1601 spline characterization + parametric CAD + printer process verification | Engagement coupon, no shaft damage/slip and center retainer verified |
 | Two arm mounting bolt centers and drill diameters | Measure center-to-center, hole diameter, thread/pitch and head clearance | Pattern defined including tolerance |
 | Servo-to-arm distance and rotational plane | Actual dry assembly and coordinates | No mechanical collision at neutral and swept extremes |
 | Carbon rod actual diameter (multiple readings) | Caliper at several points, note ovality | Dimension and variability per rod batch |
@@ -53,13 +53,13 @@ Before geometry changes, physically verify horn and servo joint (1), inspect cen
 
 ## 5. Dual-bolt horn joint methodology
 
-1. Capture horn CAD/photogrammetry/measurement and confirm **compatible spline first**.
-2. Create parametric geometry around a defined joint datum and rotation axis; provide explicit mounting coordinates and bolt-axis normals.
+1. Build parametric **printed internal spline** from confirmed SDS1601 shaft geometry; check print resolution, engagement depth and retention screw; coupon-test compatible spline first.
+2. Create parametric geometry around a defined joint datum and rotation axis; provide three **collinear** horn mounting coordinates H1/H2/H3 with only H1+H3 bolted to the two-hole ARM root, and bolt-axis normals.
 3. Evaluate **two bolts plus center retaining screw** for tool accessibility, bolt head clearance, total thickness and torquing.
 4. Ensure both fasteners engage meaningful material and metal; avoid slots too close to root edge/rod sockets. Check wall thickness, layer anisotropy, crush/creep from bolts, washer/backing requirement and screw retention.
 5. Consider at least **two joint design variants** only if trade-offs are unresolved: screw through printed arm into tapped horn vs captured nuts/insert system. Do not invent thread sizes.
 6. Record projected mass difference, torsional alignment, backlash, service/replacement procedure and no-contact clearance through permitted servo travel.
-7. Freeze geometry only against specific signed horn SKU and servo spline revision.
+7. Freeze geometry only against verified **servo spline measurements, printer/material process and coupon outcomes**, not a guessed 25T bore or old 21T horn SKU.
 
 ## 6. FC Mount V5 review — do not print speculatively
 
@@ -73,7 +73,7 @@ Before geometry changes, physically verify horn and servo joint (1), inspect cen
 - **MECH-G0 INPUT_MATCH:** exact source SHA + provenance, servo/horn/rod/printer real measurements available; compatibility signed.
 - **MECH-G1 CAD_REVIEW:** native editable model, parametric mating dimensions, left/right orientation, min wall thickness and swept collision checks; no unapproved changes outside arm/mount.
 - **MECH-G2 PRINT_COUPON:** fit coupon printed with actual material/nozzle/profile; measured hole result table for each socket direction.
-- **MECH-G3 ARM_TEST:** revised physical print; both bolts fit compatible metal horn without forced spline; center retention remains; all four rods fit with defined retention; no cracks or collision.
+- **MECH-G3 ARM_TEST:** fully printed 25T-compatible horn (if actual shaft verifies 25T) mates without forcing or damaging the servo; both bolts fasten horn to matching ARM holes; separate center retention remains; all four rods fit; no slip, cracks or collision.
 - **MECH-G4 FC_MOUNT_FIT:** board/module mock-up fit, connector/service/antenna clearance and mass constraints verified before mounting powered assembly.
 - **MECH-G5 INTEGRATED_STATIC:** assembly inspected after wiring (NO POWER); servo rotation requires separately approved bench safety gate.
 
@@ -86,6 +86,6 @@ Before geometry changes, physically verify horn and servo joint (1), inspect cen
 - If retest fails, record actual fit and cause; **do not keep increasing holes or weakening the root without analysis**. Change only one fit variable per coupon/test to isolate effect.
 - Before claiming done, handoff **MECH-IF-002** with horn SKU, mating pattern, rod hole spec, safe angle envelope, mass and fit status. AI-HW and AI-SW review corresponding changes.
 
-**STOP:** unknown spline teeth/diameter, forced metal horn, cracks, missing center retaining screw, insufficient bolt engagement, rod fit requiring destructive force, PCB/frame collision or untested load-bearing print.
+**STOP:** unknown spline teeth/diameter, printed spline tooth rounding/shear/slip, attempted forced engagement, cracks, missing center retaining screw, insufficient bolt engagement, rod fit requiring destructive force, PCB/frame collision or untested load-bearing print.
 
 **Current gate:** ARM_REWORK_RULES_READY / MECH_G0_BLOCKED / NO_CAD_CHANGE_AUTHORIZED.
