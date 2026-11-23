@@ -70,7 +70,7 @@ Do not mark `PASS` without reproducible evidence. Do not merge your own PR or pe
 ## Build-specific preflight (applies to every agent)
 
 - **Input provenance:** the Gerber RAR and two STL attachments have SHA-256 identities recorded in 12_AS_BUILT_INPUTS_AND_BLOCKERS.md; their bytes are NOT in GitHub, and /mnt/data is not a portable project source path. Re-acquire them via owner-approved attachment sharing; never invent a local file path.
-- **New horn proposal:** owner supplied SG90_one_horn_without_holes.stl; horn must offer three mounting holes, arm two matching holes, but only two arm bolts installed. The STL's round stepped bore is NOT a verified 25T spline. See Design/16.
+- **Owner-CONFIRMED horn concept:** fully 3D-printed direct-mating SDS1601 horn from SG90_one_horn_without_holes.stl geometric reference, **three collinear horn holes** but **two installed bolts at outer positions H1/H3**, with two corresponding ARM root holes. No metal horn/insert without new owner decision. The STL's round stepped bore is NOT a verified 25T spline, so measure real shaft and test printed tooth engagement/retention first. See Design/16.
 - **Highest-risk blockers:** SDS1601 source spec says 25T/4.90mm versus proposed metal horn 21T/~4.5mm; four 1.5mm carbon sockets do not all fit on actual print; the PCB Gerber/drill revisions and schematic/BOM must be reconciled before power.
 - **Software:** ESP-NOW needs TWO firmware sides (TX gamepad + RX XIAO ESP32-C3), explicit peer binding, neutral arm, receiver-side watchdog, STOP priority, no implicit dual-source takeover.
 - **Tasks:** the user specifically requested RULES FIRST. No Task files, CAD edits, PCB/firmware edits or tests are authorized yet.
