@@ -1,7 +1,7 @@
 # 12 — Current As-Built Inputs, Evidence Register and Blocking Unknowns
 
 **Revision:** DRAFT-1 / 2026-11-23. **Owner:** SA. **Type:** design evidence, NOT a manufacturing authorization or implementation Task. Read after Design/AGENTS.md.  
-**Scope of latest owner update:** Owner has XIAO ESP32-C3, an ESP32 gamepad, SDS1601 servo(s), two 3.7V 220mAh cells; intends ESP-NOW gamepad-to-butterfly; has a PCB from a supplied Gerber package; has printed ARMV5 but has not printed FC Mount V5; wants two fasteners to a metallic servo horn and more usable 1.5mm carbon sockets.
+**Scope of latest owner update:** Owner has XIAO ESP32-C3, an ESP32 gamepad, SDS1601 servo(s), two 3.7V 220mAh cells; intends ESP-NOW gamepad-to-butterfly; has a PCB from a supplied Gerber package; has printed ARMV5 but has not printed FC Mount V5; initially discussed a metal servo horn; **latest owner choice is fully 3D-printed horn with direct spline on SDS1601**, 3 collinear holes but 2 installed bolts, and more usable 1.5mm carbon sockets.
 
 ## 1. Evidence classification — DO NOT collapse these categories
 
@@ -37,12 +37,12 @@ Coordinates/units are interpreted as millimeters consistent with intended prints
 
 ## 4. Servo/horn compatibility is a HARD BLOCKER
 
-Owner's newest desired joint: print a horn from the uploaded SG90-style STL with **three holes**, and modify ARMV5 root to have **two matching bolt holes**, with only **two installed bolts**. Initial SA candidate is M1.6 with Ø1.8mm clearance; **not a manufacturing approval**. See [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md).
+**Owner-confirmed latest design:** a completely **3D-printed plastic horn including its own SDS1601-mating internal spline** made from the supplied SG90-style STL; **three holes straight in a line**, ARMV5 root **two matching outer holes**, **two installed bolts**. No metal horn/insert by default. Initial SA candidate is M1.6 with Ø1.8mm clearance; **not a manufacturing approval**. See [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md).
 
-- Owner's proposed metal horn: **21T** and approximately **4.5mm** mating feature; two fasteners to anchor arm. Both values are proposals, not measured/approved compatible interface.
+- **Historical superseded proposal:** metal horn 21T/~4.5mm. Owner rejected metal-horn architecture in favor of fully printed direct coupling. Do not use 21T geometry to model or print the chosen horn. Confirm actual SDS1601 spline tooth count/diameter and use accurately printed mating geometry.
 - Reference SDS1601 specification image says **25T, approx Ø4.90mm spline**. That differs in tooth count and nominal diameter from 21T/4.5mm. A photo of a blue horn does not prove its spline count or mounting geometry.
-- **Never force 21T onto 25T, drill the servo output spline, guess a shaft adapter, or solve tooth-count incompatibility by simply enlarging the print.** Confirm actual purchased servo spline tooth count, outside diameter, shaft engagement depth, center retention screw and actual metal horn internal tooth count before CAD freeze.
-- Clarify three different joints: (1) servo shaft/spline-to-metal horn, (2) horn center retention fastener, (3) **two separate arm-to-horn bolts** and their bolt circle/center spacing. The owner's two-bolt request concerns joint (3) unless explicitly clarified. Two arm-to-horn bolts do not replace the servo center retention screw.
+- **Never force an imprecise printed bore onto SDS1601, drill its spline, or treat a simple Ø4.9mm round hole as a 25T tooth profile.** Confirm purchased servo tooth count, measured major/minor diameters, engagement depth and center retention screw before CAD freeze. Print separate spline-fit coupons and test without wing load.
+- Three different joints: (1) servo spline to **printed hub spline**, (2) original servo shaft-center retention fastener, (3) **two separate arm-to-horn bolts** at H1/H3 (H2 unused) and their 7mm provisional center spacing. The owner's two-bolt request concerns joint (3) unless explicitly clarified. Two arm-to-horn bolts do not replace the servo center retention screw.
 - Check metal horn lever length, thickness, sweep, arm load path, screw-head/washer clearance and receiver-side cable interference. No new weight/strength claim before assembling.
 
 ## 5. PCB Gerber V1.1 findings (NOT electrical signoff)
@@ -73,8 +73,8 @@ Owner's newest desired joint: print a horn from the uploaded SG90-style STL with
 
 | ID | Severity | Missing evidence | Owner/role that must validate |
 | --- | --- | --- | --- |
-| B-3D-01 | BLOCKER | Actual servo spline (25T? 21T?), metal horn tooth count, engagement and retaining screw | Owner physical check; AI-3D + AI-HW |
-| B-3D-02 | BLOCKER | 2-bolt metal horn hole center spacing, screw size, horn thickness, arm joint stiffness | Owner measurement; AI-3D |
+| B-3D-01 | BLOCKER | Actual SDS1601 spline/retention dimensions and printer ability to reproduce **matching printed internal micro-spline**, engagement and fatigue | Owner physical check; AI-3D + AI-HW |
+| B-3D-02 | BLOCKER | Three collinear horn holes (H1/H2/H3), two corresponding ARM root holes, M1.6 candidate screw stack, horn/root wall strength | Owner measurement; AI-3D |
 | B-3D-03 | MAJOR | Actual carbon rods diameter and fit by hole, machine/material/print orientation; calibration coupon | Owner measurement; AI-3D |
 | B-3D-04 | MAJOR | Mounted PCB physical orientation vs FC Mount, connector keep-outs and all-up mass | Owner/AI-3D + AI-HW |
 | B-HW-01 | BLOCKER | PCB 4-layer Gerber/drill registration and assembly BOM/schematic/net verification | AI-HW |
@@ -92,7 +92,7 @@ This file is a factual register and risk list. It **does not authorize** modifyi
 
 - SDS1601 reference spec image in original project Drive: 25T / Ø4.90mm, 1520us neutral, 333Hz refresh and 800–2200us pulses.
 - Independently published SDS1601 specifications: https://eriksen.co.th/index/product/detail/id/5314.html?lang=zh-cn
-- Despite documentation consistency, the owner must verify the **physical purchased unit** and metal horn with a harmless hand fit before ordering/redesigning.
+- Despite documentation consistency, the owner must verify the **physical purchased unit** and **printed spline coupon** with a harmless unpowered hand-fit before adopting printed horn; do not force or damage shaft.
 - Exact Shopee gamepad product listing was not directly accessible for verification; do not assume joystick/buttons, module revision or shipping firmware from its URL alone.
 
 **SA gate:** BASELINE_RECORDED / HORN_COMPATIBILITY_BLOCKED / PCB_ASSEMBLY_UNVERIFIED / ESP_NOW_INTERFACE_DESIGN_REQUIRED.
