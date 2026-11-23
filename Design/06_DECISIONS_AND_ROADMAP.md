@@ -26,6 +26,8 @@
 
 **Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
 
+| ADR-017 | Reuse research from mezger customizable servo arm with source-verified SDS1601 custom 25T/4.9 and explicit 3-hole count | SOURCE_RESEARCH_COMPLETE / HOLE_SPACING_OWNER_DECISION_PENDING | 3F source is 25T/5.92mm, SG90 is 21T/4.9mm; pictured adjacent pitch 6mm gives 12mm outer screws rather than earlier 7mm. License LGPL-2.1, Design/18. |
+
 ## Agent team and design handoff gate
 
 - Read [AGENTS.md](AGENTS.md) before assigning an agent.
@@ -120,6 +122,7 @@ Review ledger entries are immutable audit facts; corrections append new records 
 
 - [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) records the new uploaded STL SHA, geometric analysis and two fastening alternatives.
 - SA preliminary candidate: two M1.6 through-bolts per wing with Ø1.8mm clearance and three provisioned horn holes. No physical strength or fit PASS.
+- **New screenshot clarification:** Futaba 3F 25T is actually **5.92mm** in the OpenSCAD source, not owner SDS1601 **4.9mm**. `arm_hole_distance=6mm` between adjacent holes means **12mm** between two installed outer screws; earlier **7mm** is provisional. Explicit P7 vs P12 decision pending; see [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md).
 - **Closed owner design-choice gate:** fully printed horn with direct SDS1601 mating spline and 3 collinear holes. Owner has confirmed **25T/Ø4.9mm** and **Bambu Lab A1**; do not ask these again. **Open technical gates:** actual internal tooth profile, installed nozzle & filament, printed micro-spline fit/fatigue, shaft-center retainer and real fastener stack. Detailed plan in [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).
 - **No Task** and no derived STL should be created just from this preliminary plan.
 
