@@ -1,18 +1,18 @@
 # 04 — Hardware, Mechanics, Power and Safety
 
-**State:** DESIGN_DRAFT, 2026-11-23. Distinguish REFERENCE_VERIFIED (seen in original ESP-FLUTTER files), LOCAL_VERIFIED (measured on our assembled hardware) and PROPOSED (SA choice). No local hardware has been verified yet.
+**State:** DESIGN_DRAFT, 2026-11-23; updated owner-hardware inputs in [12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md) and mandatory PCB rules [15](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md). Distinguish REFERENCE_VERIFIED (seen in original ESP-FLUTTER files), LOCAL_VERIFIED (measured on our assembled hardware) and PROPOSED (SA choice). Owner **reports physically possessing** XIAO ESP32-C3, SDS1601 servo(s), two 3.7V 220mAh cells, ESP32 gamepad and Gerber-derived PCB; owner-printed ARMV5 has mechanical fit issues. **No local powered/assembly/horn measurements have been verified yet**.
 
 ## 1. Hardware reference and decision status
 
 | Subsystem | Reference evidence | Our decision |
 | --- | --- | --- |
-| MCU | Seeed XIAO ESP32-C3 | Candidate, confirm exact physical board |
-| Actuation | 2x SDS1601 metal-gear digital coreless servos | Candidate, inspect actual purchased model |
-| Pack | 2x Tattu 1S 3.7V, 220mAh, 45C in series, nominal 7.4V, full 8.4V | Not yet confirmed; charging/balancing must be designed |
+| MCU | Seeed XIAO ESP32-C3 | Owner reports has board; confirm revision, GPIO and antenna |
+| Actuation | 2x SDS1601 reference | Owner reports SDS1601 present; exact count, **25T reference vs proposed 21T horn** and measured electrical/mechanical parameters remain pending |
+| Pack | Reference depicts 2x Tattu 1S 3.7V 220mAh in series | Owner reports two **3.7V 220mAh** cells, not a verified Tattu/assembled 2S pack; charging/balancing/harness must be designed |
 | Logic regulator | Buck 8.4V -> 5V shown in modular diagram | Candidate, measured load and transient validation required |
-| Flight controller | Reference PCB uses an MP2307 buck | Do not fabricate PCB without full schematic review |
-| Wing architecture | Mirrored Left Wing and Right Wing PDF outlines | Reference-only; mass/geometry may change |
-| Optional RC | ELRS receiver wiring exists | Phase M2, not MVP |
+| Flight controller | Owner supplied **ESP-FLUTTER Gerber V1.1 RAR** for PCB currently being prepared for component assembly; reference PCB uses MP2307 | Four copper layers and approx 18.5 × 45mm outline observed. Gerber/drill registration, matched BOM/netlist and power tree NOT verified; see [15](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) |
+| Wing architecture | Mirrored Left/Right wing outlines | Owner supplied **ARMV5 printed** (horn and 3 of 4 rod socket fit issues) and **FC Mount V5 STL unprinted**; follow [14](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) |
+| Radio pilot | ESP-NOW gamepad (owner's explicit plan); optional ELRS reference | **M0 TX gamepad + RX XIAO**; other RC sources deferred. See [13](13_ESP_NOW_DUAL_FIRMWARE_RULES.md) |
 
 ## 2. Evidence from the original Drive folder
 
@@ -27,7 +27,15 @@ Original reference: https://drive.google.com/drive/folders/1XTTW8Ez_hmZl5E6mPUDX
 
 Reference source: https://github.com/maximagination1/ESP-FLUTTER. Original CAD/image assets and source may be licensed separately. Do not copy files into our repo without permission/license audit.
 
-## 3. Proposed body and packaging
+## 3. Existing build-specific stop gates
+
+- **SDS1601 horn:** reference datasheet image says **25T-Ø4.90mm**, but owner proposes metal **21T/~4.5mm**. Confirm real splines; never force mismatch or design root based on an assumed mating.
+- **ARMV5:** two disconnected watertight parts in source STL, not a single 79.68mm-long arm; owner reports 4 intended rod sockets with 3 unusable. Do a measurement table, coupon test and new two-fastener horn pattern per Design/14.
+- **PCB:** uploaded Gerber V1.1 contains four copper layers, but drill header and Gerber layer headers show different CAD-export tools. Require CAM drill-pad alignment and full component/BOM/net audit, not merely correct layer counts.
+- **FC Mount:** no real print or fit validation; board outline and 3D bounding-box numbers alone do not establish connector/antenna clearance.
+- **Battery:** user has two cells, but 2S topology, charging/balancing, protection and servo-current budget are not yet signed off.
+
+## 4. Proposed body and packaging
 
 - Two side-by-side servo mounts, symmetric film wings and carbon spars; small central frame mounts MCU, regulator, battery connector and pack securely.
 - Minimize mass and moment of inertia; place center of gravity near flight-relevant centerline. Define dimensions from purchased parts, not guesses.
@@ -36,7 +44,7 @@ Reference source: https://github.com/maximagination1/ESP-FLUTTER. Original CAD/i
 - Record actual wingspan, total mass, center of gravity, wing area, servo torque reserve, linkage travel and safe clearance after first mock-up.
 - Mechanical calibration must use real endpoints, not advertised 0–180-degree travel.
 
-## 4. Proposed electrical block
+## 5. Proposed electrical block
 
 Battery 2S -> keyed connector -> accessible switch and suitable fuse/protection -> two isolated design branches:
 
@@ -47,7 +55,7 @@ All control and power grounds share reference where required. Pack -> verified d
 
 **Battery safety:** A 2S configuration requires a compatible CC/CV charger with suitable cell balancing and protection. Two series cells cannot be charged safely by assuming a USB supply, a resistor or an arbitrary 8.4V-only module will control per-cell charge current/voltage. Do not run without correct pack assembly, per-cell monitoring plan, protected connectors and thermal observations.
 
-## 5. Servo and electrical bench procedure
+## 6. Servo and electrical bench procedure
 
 1. Disconnect pack. Inspect polarity, wiring, fuse, regulator, connector orientation and electrical continuity.
 2. Test regulated rails with current-limited source and DMM; check undervoltage, startup, servo transients and possible USB backfeed.
@@ -57,7 +65,7 @@ All control and power grounds share reference where required. Pack -> verified d
 6. STOP for stall, binding, overheat, cells swelling, unexpected motion or uncommanded restarts.
 7. Only after bench acceptance, run tethered tests. Free-flight requires additional risk review.
 
-## 6. Hardware gates
+## 7. Hardware gates
 
 | Gate | Evidence / action | Status |
 | --- | --- | --- |
@@ -71,7 +79,7 @@ All control and power grounds share reference where required. Pack -> verified d
 
 **No compile PASS implies physical safety.** Flight tests remain blocked until all relevant earlier gates pass.
 
-## 7. Owner decisions needed for hardware freeze
+## 8. Owner decisions needed for hardware freeze
 
 - Exact ESP board, servos, cells and regulator on hand.
 - The priority: stationary animation, tethered prototype, or free flight.
