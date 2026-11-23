@@ -22,6 +22,7 @@
 | ADR-013 | Primary M0 radio control = ESP-NOW gamepad TX -> XIAO ESP32-C3 RX | OWNER_DIRECTION / TECH_DESIGN_PENDING | Actual TX board/firmware unknown; design/approval gates per 13; optional web is not active pilot |
 | ADR-014 | Preserve existing ARMV5, FC Mount V5 and PCB V1.1 as immutable source baselines | OWNER_INPUTS_RECORDED / DESIGN_PENDING | SHA and failures in 12; horn compatibility, rod-fit and PCB electrical audit blocked |
 | ADR-015 | No PCB power/print/coupling work without domain gates and physical evidence | PROPOSED | 14 and 15 gate physical assembly; owner authorization is separate from doc commits |
+| ADR-016 | SG90-style printed horn with 3 hole stations, wing arm 2 aligned holes, 2 bolts per wing (candidate M1.6) | OWNER_REQUEST / INTERFACE_PENDING | Exact SDS1601 spline 25T coupling, horn vs metal insert, hole pattern, printed tolerance and bolt lengths are undecided; Design/16 |
 
 **Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
 
@@ -114,6 +115,13 @@ Review ledger entries are immutable audit facts; corrections append new records 
 - New domain gate rules: [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md), [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md), [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md).
 - This updates the DRAFT architecture and agent rules; it **does not count as approval of final dimensions, firmware, electronics or powered testing**.
 - Explicit user instruction: **WRITE/PUSH RULES FIRST, DO NOT CREATE TASK YET**. Task/ remains absent. This instruction is independent of eventual design approval.
+
+## Horn pre-task design review checkpoint
+
+- [16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md](16_HORN_3HOLE_2BOLT_PRETASK_PLAN.md) records the new uploaded STL SHA, geometric analysis and two fastening alternatives.
+- SA preliminary candidate: two M1.6 through-bolts per wing with Ø1.8mm clearance and three provisioned horn holes. No physical strength or fit PASS.
+- Blocker: owner must specify fully printed horn **directly mating SDS1601 25T spline** versus a verified **metal 25T horn + printed arm/adapter**, and verify intended three-hole arrangement.
+- **No Task** and no derived STL should be created just from this preliminary plan.
 
 ## 9. Next SA checkpoint
 
