@@ -1,7 +1,6 @@
 # 16 — PRE-TASK Design Plan: SG90-Style 3-Hole Horn / 2-Bolt Wing Arm
 
-**Status:** OWNER_CONCEPT_AND_NOMINAL_SPLINE_CONFIRMED / CUSTOMIZER_PRESET_MISMATCH_AND_HOLE_PITCH_DECISION_PENDING. **New screenshot review:** [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md) confirms mezger Futaba 3F preset is Ø5.92mm (25T), incompatible by nominal diameter with owner SDS1601 25T Ø4.90mm. Screenshot's 6mm adjacent hole pitch means **12mm** between H1/H3, not the earlier proposed 7mm. No CAD freeze before choosing one pattern. **2026-11-24 update:** Owner states SDS1601 spline is **25T, Ø4.9mm**, printer **Bambu Lab A1**. Exact tooth form, printer nozzle and filament are not yet known. Mandatory detailed validation: [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md). Owner confirmed on 2026-11-23: fully 3D-printed horn directly mounted on SDS1601 (Option A), 3 straight-line holes, H1/H3 used with 2 screws. This confirmation **does not** approve spline geometry, screw sizes, material, tolerances or powered tests.  
-**Date:** 2026-11-23 | **Author:** SA | **Agent consultation required:** AI-3D + AI-HW.  
+**Status:** OWNER_APPROVED_P7_HOLE_PATTERN / MECHANICAL_DIMENSIONS_AND_PRINT_VALIDATION_PENDING. **Decision recorded 2026-11-24:** owner explicitly chose **Option B/P7**: exactly three collinear horn holes with **3.5mm adjacent center pitch**, **7.0mm outer H1-H3 bolt pitch**; ARMV5 has two matching holes at H1/H3 and uses only two bolts. **P12 (6mm adjacent, 12mm outer) is not selected**; screenshot remains reference evidence only. Fully printed direct SDS1601 horn, nominal 25T/Ø4.9mm and Bambu Lab A1 remain owner-confirmed. See [18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md) and [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md). This decision does NOT approve the absolute radial location, hole diameter, print tolerance or powered operation.  **Date:** 2026-11-23 | **Author:** SA | **Agent consultation required:** AI-3D + AI-HW.  
 **This is a design discussion, NOT a Task or permission to print/energize the assembly.**
 
 ## 1. Owner-confirmed design intent
@@ -11,7 +10,7 @@
 - Choose fastener size and attachment spacing appropriate for lightweight, high-cycle bionic butterfly wings. The servo is **SDS1601**, NOT a confirmed SG90. Existing ARMV5 and FC Mount V5 originals must be preserved.
 - **Separate the servo central retention screw** from the two arm-to-horn screws. A total of two connection bolts **per wing** plus the shaft-center retention screw (if required by compatible horn design) is intended.
 - **No metal horn, 25T insert or adapter is to be silently substituted.** Owner chooses an entirely 3D-printed horn with its **own internal mating spline** and bolt-lever. An alternative coupler would require a fresh owner design change.
-- **Three holes in one straight line** along the horn lever. Initial proposed use H1 (inner) and H3 (outer), leave H2 unbolted; ARMV5 gets just two aligned holes.
+- **Owner-approved pattern P7:** three hole centers in one straight line along the horn lever, **3.5mm between adjacent holes** (H1-H2 and H2-H3), **7mm between H1 and H3**. Mount with **two screws only**, through H1 (inner) and H3 (outer); H2 is left empty. ARMV5 wing root gets exactly two matching holes at 7mm pitch.
 - No Task until remaining design prerequisites and owner sign-off. Source STL is NOT stored in GitHub; other AI sessions require byte-identical attachment, not just filename.
 
 ## 2. Exact inspected source geometry
@@ -76,23 +75,35 @@
 
 M2 would leave less than 1mm nominal at the outermost hole before print tolerance and fatigue. Even M1.6 leaves only ~1mm at the outermost station; **local widening, radiused reinforcement or a shorter usable pair may be required** after structural review. Three holes have a strength penalty regardless of only using two bolts.
 
-## 5. Confirmed straight-line layout / provisional dimensions
+## 5. Owner-approved P7 hole pattern; absolute location still to validate
 
-**Important correction following screenshot:** Owner's screenshot shows parametric servo-arm customizer with 3 collinear holes and **Arm hole distance=6mm** (adjacent hole spacing). With H2 unused, **H1-H3=12mm**, whereas the below earlier H1/H2/H3 proposal gives **H1-H3=7mm**. These are mutually exclusive draft hole patterns. The screenshot does not explicitly approve replacing the 7mm pattern, and the final geometry must match printed ARMV5. See Design/18 and ask owner to pick **P7 or P12**. Original H1 at radius5mm may collide with actual hub and must be re-evaluated.
+**Decision:** The owner explicitly selected **Option B/P7** over screenshot P12. Treat this as the **one canonical horn-to-ARM mounting hole pattern**:
 
-Coordinate convention for the supplied STL: central hub rotation axis **O = (X=0, Y=0)**, lever extends toward **negative Y**, through-holes drilled along **Z**. All proposed positions must be validated on physically measured, printable geometry.
-
-| Hole | Proposed center (X, Y) mm | Role |
+| Parameter | Requirement | Decision state |
 | --- | --- | --- |
-| H1 (inner) | (0, -5.0) | **Bolt A** |
-| H2 (middle) | (0, -8.5) | Optional alternative; normally **unused** |
-| H3 (outer) | (0, -12.0) | **Bolt B** |
+| Number of horn lever holes | **Exactly 3**, H1/H2/H3, collinear on lever centerline | OWNER_APPROVED |
+| Adjacent center pitch | **H1-H2 = 3.5mm**, **H2-H3 = 3.5mm** | OWNER_APPROVED |
+| Outer fastener center pitch | **H1-H3 = 7.0mm** | OWNER_APPROVED |
+| Which holes fastened | **H1 and H3**; H2 stays empty | OWNER_APPROVED |
+| ARMV5 matching holes | **Exactly 2**, aligned with horn H1/H3 at **7.0mm** pitch | OWNER_APPROVED |
+| Bolt size | 2x M1.6 machine screws per wing (candidate) | PROPOSED — not yet strength/print-validated |
+| Through clearance bore | Nominal CAD Ø1.8mm for M1.6 (candidate) | PROPOSED — requires actual printed-fit coupon |
+| Shaft-retaining center screw | Separate from two arm bolts, preserve real SDS1601 retainer | REQUIRED FUNCTION; actual size/mechanical details pending |
 
-Center-to-center spacing: H1-H2 = **3.5mm**, H2-H3 = **3.5mm**, H1-H3 = **7.0mm**. Use **H1 + H3** on wing arm, with two matching holes spaced **7.0mm**. H2 remains an adjustment/reconfiguration candidate and does not carry a bolt in the initial assembly.
+**Shared parametric coordinate frame:** set servo output axis at `O=(0,0)`, horn lever along negative Y. Let `r` be the **undetermined** distance from servo output axis to the inner H1 center; then the three horn-hole centers are:
 
-**All coordinates are a DRAFT CONCEPT, not manufacturing dimensions.** They are selected from the supplied mesh envelope to make the layout tangible. The inner hole must clear the hub and central retainer, while outer hole still has sufficient edge and tip margins after screw-head and required arm shape. If head/washer clearance or root strength fails, shift/reinforce geometry and report changes for SA approval.
+```text
+H1 = (0, -r)
+H2 = (0, -(r + 3.5 mm))
+H3 = (0, -(r + 7.0 mm))
+ARMV5 holes = H1 and H3 only
+```
 
-Screw holes: CAD nominal **1.8mm for M1.6 through clearance** in both horn and wing root, **subject to printed calibration**. Do not assume the as-printed hole is 1.8mm. Consider a thin test coupon and controlled reaming, and measure center-to-center pitch tolerance on both parts.
+**Do not lock `r` yet.** The previous illustration used `r=5.0mm` (hole radii 5.0/8.5/12.0mm), but this is **NOT an approved mechanical coordinate**. It may interfere with the printed horn hub, its shaft-center retention screw, bolt heads/nuts, ARM root or structural wall. AI-3D must select and justify `r`, the lever envelope and head/washer clearance after overlaying the real SDS1601 spline/hub and ARMV5 root. Keep the 3.5/3.5/7.0mm spacing fixed unless owner explicitly changes the product decision.
+
+**Source customizer warning:** the screenshot's `arm_hole_distance=6mm` would generate **12mm** outer-screw spacing; it is **superseded as a target**. The upstream OpenSCAD auto-calculates the number of holes from length and pitch. **Do not simply change 6 to 3.5 while retaining the old 25mm arm length**, because it may generate more than three holes. Author an explicit exactly-three-hole station array/loop, independent of overall arm length, with one shared parameter or datum for the two ARM matching holes.
+
+A P7 pattern alone does not prove strength. Three 1.8mm-class perforations on a 1.5mm-thick tapered arm can leave too little plastic; check thin-wall ligaments, bolt-head/nut clearance, localized root reinforcement, stiffness, tool access, print anisotropy, mass and no-contact servo rotation. No production STL until coupon/fit and design gates pass.
 
 ## 6. Why two bolts and not three?
 
@@ -131,6 +142,6 @@ HORN-G0..G6 are **NOT_RUN/BLOCKED** at time of design draft. Replacing plastic w
 3. **Stackup:** original ARMV5 root thickness, printer profile, availability of M1.6 machine bolts/nuts/washers and usable lever head clearance. Final bolt length unknown until measured.
 4. **Verification method:** static no-wing test and later controlled fatigue cycling with builder present; no powered test without PCB/Battery gates.
 
-Owner's two core design decisions (fully printed direct horn; 3 holes collinear) are **CLOSED**. Do not ask them again unless the owner changes scope.
+Owner's core design choices (fully printed direct horn; **P7 3.5mm adjacent / 7mm outer**, three collinear holes) are **CLOSED**. Do not ask them again unless the owner changes scope.
 
-Do not create Task files until other prerequisites are reviewed and SA records approved scope. **Current: CONCEPT_AND_25T_4.9_CONFIRMED / BAMBU_A1_CONFIRMED / NOZZLE_AND_FILAMENT_UNKNOWN / HORN_G0_BLOCKED / NO_TASK / NO_NEW_CAD_CREATED.**
+Do not create Task files until other prerequisites are reviewed and SA records approved scope. **Current: OWNER_APPROVED_P7_3.5MM_7MM / ABSOLUTE_HOLE_OFFSET_AND_FASTENER_NOT_APPROVED / NOZZLE_AND_FILAMENT_UNKNOWN / HORN_G0_BLOCKED / NO_TASK / NO_NEW_CAD_CREATED.**
