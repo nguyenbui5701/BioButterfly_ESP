@@ -85,4 +85,11 @@ Coordinates/units are interpreted as millimeters consistent with intended prints
 
 This file is a factual register and risk list. It **does not authorize** modifying STL, fabrication outputs, PCB or firmware; do not create Task files until owner design approval. Design changes must reference provenance hash and distinguish measured, user-reported, inferred and proposed values.
 
+## 9. Reference verification pointers (not an as-built measurement)
+
+- SDS1601 reference spec image in original project Drive: 25T / Ø4.90mm, 1520us neutral, 333Hz refresh and 800–2200us pulses.
+- Independently published SDS1601 specifications: https://eriksen.co.th/index/product/detail/id/5314.html?lang=zh-cn
+- Despite documentation consistency, the owner must verify the **physical purchased unit** and metal horn with a harmless hand fit before ordering/redesigning.
+- Exact Shopee gamepad product listing was not directly accessible for verification; do not assume joystick/buttons, module revision or shipping firmware from its URL alone.
+
 **SA gate:** BASELINE_RECORDED / HORN_COMPATIBILITY_BLOCKED / PCB_ASSEMBLY_UNVERIFIED / ESP_NOW_INTERFACE_DESIGN_REQUIRED.
