@@ -153,7 +153,7 @@ When PR is supplied:
 
 This is a **rules-only update BEFORE task creation**. New facts/observations and explicit owner pilot intent are recorded at [12_AS_BUILT_INPUTS_AND_BLOCKERS.md](12_AS_BUILT_INPUTS_AND_BLOCKERS.md). Mandatory gates:
 
-1. **AI-3D:** read [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) before modifying ARM or FC Mount. The 21T/~4.5mm proposed horn conflicts with the reference SDS1601 25T/4.90mm spline specification. Do NOT produce final fit geometry until real spline + horn SKU and two-fastener spacing are verified. Four rod sockets require per-hole fit analysis and test coupons.
+1. **AI-3D:** read [14_ARMV5_HORN_AND_CARBON_FIT_RULES.md](14_ARMV5_HORN_AND_CARBON_FIT_RULES.md) before modifying ARM or FC Mount. The former 21T metal horn concept is superseded. Owner confirms a fully printed SDS1601 25T/Ø4.9mm direct spline and P7 3.5mm/7mm pitch; do NOT produce final geometry until tooth profile, printed spline fit, absolute screw stations and structural strength are verified. Four rod sockets require per-hole fit analysis and test coupons.
 2. **AI-HW:** read [15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md](15_PCB_V11_ASSEMBLY_AND_POWER_RULES.md) before advising component population or power-up of the 4-layer Gerber PCB. A RAR with Gerber/drill files is not an assembly BOM, netlist or power-safe schematic.
 3. **AI-SW:** read [13_ESP_NOW_DUAL_FIRMWARE_RULES.md](13_ESP_NOW_DUAL_FIRMWARE_RULES.md) before protocol/firmware/UI work. Owner explicitly chose **ESP-NOW gamepad -> XIAO ESP32-C3** as primary pilot. TX and RX are separate firmware deliverables. The earlier WebSocket phone pilot is a draft assumption that must not be used for M0 implementation without new approval.
 4. **All roles:** verify attachment SHA and source availability in the active agent session. Do not assume files uploaded to this conversation are already mounted in another agent's environment or in GitHub.
@@ -168,6 +168,12 @@ For conflicts in DRAFT files, explicit current owner choice and the latest speci
 ## Specific additive manufacturing gate — owner-confirmed A1 and nominal spline
 
 Owner has confirmed **SDS1601 25T/Ø4.9mm nominal spline** and **Bambu Lab A1 FDM**. For all printed-horn work, AI-3D must read [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md), identify **installed** nozzle and filament, verify fine features in Bambu Studio and conduct **unpowered, no-wing micro-spline fit coupon** before any full horn or actuated test. Manufacturer stock 0.4mm nozzle does not prove the owner's current configuration. No direct metal coupling substitution. No Task authorized by this rules update.
+
+## Owner-approved horn hole pitch and source of truth (2026-11-24)
+
+The owner chose **Option B/P7**: fully printed SDS1601 25T/Ø4.9mm direct horn with **exactly three collinear lever holes** at **3.5mm adjacent center spacing**; **7.0mm** between outer H1 and H3, **two installed bolts only at H1/H3**, and **exactly two matching ARMV5 holes** at 7.0mm pitch. This product geometry choice is **closed**. The screenshot's `arm_hole_distance=6mm` / 12mm outer spacing is rejected for the new design.
+
+AI-3D must preserve P7 in the interface contract and enforce an **explicit three-hole count** when adapting the OpenSCAD generator. The absolute location from servo center (`r`), M1.6/Ø1.8mm candidate bolt and through-hole sizes, fastener stack, strength, printable tooth geometry and carbon sockets are still pending engineering checks. Do not invent a safe H1 offset based on the earlier 5mm example. No Task or production STL is authorized by this documentation-only approval.
 
 ## 11. SA review checklist
 
