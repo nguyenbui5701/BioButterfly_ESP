@@ -18,8 +18,17 @@
 | ADR-009 | Reimplement modular firmware contracts rather than wholesale copying ESP-FLUTTER | PROPOSED | Reference license is noncommercial and original code has broad coupling |
 | ADR-010 | Use original wing reference as study material, create original approved CAD for our geometry | PROPOSED | Mass/scale and asset licensing decisions remain open |
 | ADR-011 | No other control transports (ESP-NOW, ELRS/CRSF) in M0 | PROPOSED | Minimize initial safety/latency/control arbitration risk |
+| ADR-012 | SA + 3 senior specialist AI roles (3D/HW/SW), shared interface/handoff contracts and isolated PR ownership | PROPOSED | Design/AGENTS.md and 08–11 define working protocols; no specialists automatically instantiated |
 
 **Approval mechanics:** Owner explicitly approves/rejects each major decision, SA updates state to ACCEPTED, DEFERRED or REJECTED, includes date and approval note, then commits Design baseline SHA. Approval of a draft is NOT inferred from silence or Git commits.
+
+## Agent team and design handoff gate
+
+- Read [AGENTS.md](AGENTS.md) before assigning an agent.
+- **AI-3D** mechanical/print; **AI-HW** electrical/power; **AI-SW** firmware/UI; **SA** coordinates and reviews all.
+- All three agents follow [08_MULTI_AGENT_RULES.md](08_MULTI_AGENT_RULES.md) with MECH-IF-001/002, ELEC-IF-001, SW-IF-001 versioned handoffs.
+- Agent rules creation **does not approve MVP, hardware, interface revisions, tests, PRs or new Task**.
+- Cross-domain changes must go to SA for impact analysis before code/CAD/schematic change.
 
 ## 2. Proposed project phases and implementation order
 
