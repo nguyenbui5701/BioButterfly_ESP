@@ -3,8 +3,15 @@
 #include <cstdlib>
 #include <cstring>
 using namespace link;
+#ifdef LINK_USE_UNITY
+#include <unity.h>
+void setUp() {}
+void tearDown() {}
+#define CHECK(x) TEST_ASSERT_TRUE(x)
+#else
 #define CHECK(x) do { if (!(x)) { std::fprintf(stderr, "FAIL line %d: %s\n", __LINE__, #x); std::exit(1); } } while (0)
-int main() {
+#endif
+static void test_contract() {
     const uint8_t peer[6] = {2,0,0,0,0,1}, other[6] = {2,0,0,0,0,2};
     const uint32_t run = 0x11223344;
     const uint8_t golden[] = {0x7e,0xb1,1,1,0x44,0x33,0x22,0x11,1,0,0,0,0xa4,0xa5,0xa5,0xa5};
@@ -64,4 +71,14 @@ int main() {
     CHECK(c.scheduled==c.skipped+c.attempted);
     std::puts("PASS TX bounded accounting, ACK uniqueness, skipped/error/late");
     std::puts("HOST TESTS PASS");
+}
+int main() {
+#ifdef LINK_USE_UNITY
+    UNITY_BEGIN();
+    RUN_TEST(test_contract);
+    return UNITY_END();
+#else
+    test_contract();
+    return 0;
+#endif
 }
