@@ -1,6 +1,6 @@
 # BioButterfly_ESP — AGENT ENTRYPOINT
 
-**Status:** RULES_DRAFT, pending owner design approval. **Last update:** 2026-11-23. **Baseline extension:** owner-supplied real STL/Gerber/ESP-NOW plan.  
+**Status:** RULES_DRAFT for full product; TASK-001 scoped approval recorded 2026-11-24. **Last update:** 2026-11-23. **Baseline extension:** owner-supplied real STL/Gerber/ESP-NOW plan.  
 **Read this file FIRST in every new AI working session.** All paths are relative to repository root.
 
 ## 1. Select exactly one working role
@@ -42,7 +42,7 @@ Every AI must report:
 
 The owner has already selected ESP-NOW gamepad as the intended pilot control path. Do NOT continue treating phone/WebSocket as the M0 primary pilot. Do not automatically infer exact gamepad firmware, horn 21T compatibility or a soldered PCB that passed tests.
 
-If no Task exists or design remains DRAFT: **study, propose and report ONLY**; don't begin code, CAD, schematic or other production implementation. SA may continue editing design documents with commits.
+If no active Task and exact approved design scope exist: **study, propose and report ONLY**. An explicitly owner-approved scoped Task may proceed only within its allowlist even while full product Design remains DRAFT. SA may continue editing design documents with commits.
 
 ## 4. Immutable boundaries
 
@@ -78,12 +78,12 @@ Do not mark `PASS` without reproducible evidence. Do not merge your own PR or pe
 - **Screenshot-specific warning:** mezger's Futaba 3F preset is 25T/**5.92mm**, not owner's SDS1601 25T/**4.9mm**. The screenshot's 6mm adjacent / 12mm outer arrangement **was NOT selected**. **P7 (3.5mm adjacent / 7mm outer) is OWNER-APPROVED**; source auto-generates hole count, so explicitly generate exactly three hole centers. Absolute H1 distance from spline axis remains unapproved. Design/18 contains verified source code and rules.
 - **Highest-risk blockers:** the chosen fully printed 25T/Ø4.90mm SDS1601 mating spline is untested (metal horn 21T proposal is historical and superseded); four 1.5mm carbon sockets do not all fit on actual print; the PCB Gerber/drill revisions and schematic/BOM must be reconciled before power.
 - **Software:** ESP-NOW needs TWO firmware sides (TX gamepad + RX XIAO ESP32-C3), explicit peer binding, neutral arm, receiver-side watchdog, STOP priority, no implicit dual-source takeover.
-- **Tasks:** the user specifically requested RULES FIRST. No Task files, CAD edits, PCB/firmware edits or tests are authorized yet.
+- **Tasks:** rules-first requirement satisfied. Only TASK-001 isolated radio experiment is approved; other implementation scopes remain blocked. No CAD, PCB or flight firmware edits authorized.
 
-## First communication experiment — pending scoped owner approval
+## First communication experiment — scoped owner approval recorded
 
-AI-SW and SA must read [20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md](20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md) when preparing TASK-001. This is a pre-task design, not permission to implement. It isolates USB-powered board-to-board radio DATA/ACK testing from all mechanical and flight power work. After explicit approval and SA-issued Task, only that bounded scope may proceed; all other design gates remain unchanged.
+AI-SW and SA must read the [approved immutable plan](https://github.com/nguyenbui5701/BioButterfly_ESP/blob/5f133d4e63fd2aa14085600e6742a847f151ea4e/Design/20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md). Owner approval is recorded in [06_DECISIONS_AND_ROADMAP.md](06_DECISIONS_AND_ROADMAP.md), commit 0cac45ae57ab9534911f239d3a526e7497de9681. Read the active assignment [TASK-001](../Task/TASK-001-espnow-link-smoke.md) once issued; if absent, do not implement. Only standalone USB-powered board-to-board radio DATA/ACK testing is authorized, subject to preflight. All other gates remain unchanged.
 
 ## 6. Current reality
 
-Repository Design is **DESIGN_DRAFT**; specialist roles are ready as readable instructions, but no agents were launched, no Task assigned, and no hardware performance verified. The first implementation may start **only after explicit owner approval** documented by SA.
+Full product Design is **DESIGN_DRAFT**. TASK-001 alone is **SCOPED_DESIGN_APPROVED**; implementation may start when the SA-issued assignment exists. No physical result has been verified. Specialist roles are not independently running agents.
