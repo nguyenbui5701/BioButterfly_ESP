@@ -1,12 +1,12 @@
 # TASK-001 — ESP-NOW Bidirectional Communication Smoke Test
 
 **Version:** 1.0 | **Issued:** 2026-11-24 | **Owner:** AI-SW | **SA:** design/review owner | **Priority:** P0  
-**Status:** TASK_READY / IMPLEMENTATION_AUTHORIZED_WITHIN_SCOPE  
+**Status:** SA_BLOCKED / S04_OWNER_BUILD_PASS / S05_REQUIRED  
 **Base branch:** main (fetch latest containing this task)  
 **Feature branch:** feature/task-001-sw-espnow-link-smoke  
 **Approved design SHA:** 5f133d4e63fd2aa14085600e6742a847f151ea4e  
 **Owner approval record:** 0cac45ae57ab9534911f239d3a526e7497de9681 (Design/06_DECISIONS_AND_ROADMAP.md, ADR-019)  
-**PR:** pending; one focused PR, title [TASK-001][AI-SW] ESP-NOW bidirectional link smoke test.  
+**PR:** [#1](https://github.com/nguyenbui5701/BioButterfly_ESP/pull/1); one focused PR, title [TASK-001][AI-SW] ESP-NOW bidirectional link smoke test.  
 **Peer consultation:** AI-HW for board identity, USB/programming safety and factory-firmware preservation; AI-3D not required.
 
 ## 1. Goal
@@ -88,3 +88,12 @@ These are proposed commands, not claims of successful build/upload. Never guess 
 - SA reviews exact head in isolated ReviewPR/PR-N, posts review decision and findings. If missing required evidence, keep Task open; if BLOCKER/MAJOR, retain review checkout and append remediation to this task. If approved with all required RF gates supported, clean exact review checkout and remove assigned task via SA commit, preserving audit history. Owner decides merge.
 
 Next task planning only after SA review and LINK_TEST_PASS. Mechanical/PCB/battery/flight gates remain blocked regardless of RF result.
+
+## 9. SA checkpoint review and AI-HW handoff — 2026-11-24
+
+Reviewed PR head f06a9c855cfad1adcd4edc1ed6c932dd9cb51c07, build source 1076bfbc9fb20f05560339d9010205ac4b130207. [SA comment](https://github.com/nguyenbui5701/BioButterfly_ESP/pull/1#issuecomment-7124465544). Verdict SA_BLOCKED / S05_REQUIRED, not approved for merge. RF1/RF2 owner-reported PASS; RF0 final local check pending, RF3–RF6 NOT_RUN. Git clone to isolated ReviewPR failed DNS; API source review only, no SA rerun. Keep task and draft PR. Do not repeat validated steps unless source/config/artifacts change or evidence contradicts.
+
+- SA-001: AI-HW assists RF0/S05 as consultant, not code owner. Check standalone USB-only bench, RX antenna, actual ports, existing private TX backup and unchanged shared local provisioning and binary hashes without exposing secrets. Owner overwrite consent already recorded conditional on RF0; no repeated consent request for same scope. Respect documented TX reset/strapping and 57600 upload, no eFuse changes or flash-wide erase. Verify runtime role/build/channel/encryption after safe upload. Stop on mismatch/error.
+- SA-002: AI-SW retains implementation, instructions and evidence/PR ownership; owner runs physical RF3–RF6, AI-HW supports setup/troubleshooting. Resume the exact checkpoint at the reviewed head, preserve existing artifacts, collect separate raw TX/RX logs and computed summaries, reconcile skipped/attempted/ACKs, RTT p95, loss detection and invalid frame rejection. Distinguish terminal cessation from in-run LINK_LOST. Retest only affected gate if needed. No LINK_TEST_PASS until all gates supported.
+- SA-003: AI-SW updates PR description and evidence/status.json to match latest results and exact tested source SHA, commits sanitized evidence, requests SA re-review. No merge or cleanup before SA review.
+- AI-HW may study existing PCB documentation in read-only mode independently, but no new Task, PCB assembly/power, joystick mapping, servo or battery integration authorized by this handoff.
