@@ -1,0 +1,140 @@
+{
+  "task": "TASK-001",
+  "role": "AI-SW",
+  "design_sha": "5f133d4e63fd2aa14085600e6742a847f151ea4e",
+  "protocol": "LINK_TEST_V1",
+  "evidence_source": "Owner terminal outputs and explicit confirmations in TASK-001 chat, 2026-11-24; sanitized factual summary, not synthetic raw logs.",
+  "tx": {
+    "chip": "ESP32-D0WD-V3",
+    "revision": "v3.1",
+    "module": "WROOM-32",
+    "flash_bytes": 4194304,
+    "flash_voltage": 3.3,
+    "flash_manufacturer": "0x5E",
+    "flash_device": "0x4016",
+    "port_observed": "COM5",
+    "backup_reads": 2,
+    "backup_sha256_match": true,
+    "backup_restore": "NOT_RUN",
+    "overwrite": "OWNER_APPROVED_AFTER_RF0",
+    "security": {
+      "source": "owner summary_tx.txt, espefuse 4.8.1",
+      "FLASH_CRYPT_CNT": 0,
+      "ABS_DONE_0": false,
+      "ABS_DONE_1": false,
+      "UART_DOWNLOAD_DIS": false,
+      "DISABLE_DL_ENCRYPT": false,
+      "DISABLE_DL_DECRYPT": false,
+      "DISABLE_DL_CACHE": false,
+      "SECURE_VERSION": 0,
+      "XPD_SDIO_FORCE": false,
+      "status": "PASS"
+    }
+  },
+  "rx": {
+    "chip": "ESP32-C3 QFN32",
+    "revision": "v0.4",
+    "board": "Seeed XIAO ESP32-C3 (owner confirmed)",
+    "flash_bytes": 4194304,
+    "flash_manufacturer": "0x46",
+    "flash_device": "0x4016",
+    "port_observed": "COM3",
+    "backup": "OWNER_WAIVED",
+    "overwrite": "OWNER_APPROVED_AFTER_RF0",
+    "security": {
+      "source": "owner summary.txt",
+      "SPI_BOOT_CRYPT_CNT": 0,
+      "SECURE_BOOT_EN": false,
+      "DIS_DOWNLOAD_MODE": false,
+      "ENABLE_SECURITY_DOWNLOAD": false,
+      "DIS_DOWNLOAD_MANUAL_ENCRYPT": false,
+      "DIS_USB_SERIAL_JTAG_DOWNLOAD_MODE": false,
+      "SECURE_VERSION": 0,
+      "status": "PASS"
+    }
+  },
+  "power": "OWNER_CONFIRMED USB only; no battery, servo or flight PCB",
+  "sdk": {
+    "platform": "espressif32@6.9.0",
+    "arduino": "2.0.17",
+    "idf": "4.4.7",
+    "installed_verified": true,
+    "rx_observed_packages": {
+      "platform": "6.9.0",
+      "arduino": "3.20017.0 (2.0.17)",
+      "esptool": "1.40501.0 (4.5.1)",
+      "riscv_toolchain": "8.4.0+2021r2-patch5"
+    },
+    "idf_verification": "Compile-time equality guard in radio.cpp for 4.4.7; successful target compiles reported; runtime banner not yet observed",
+    "tx_observed_packages": {
+      "platform": "6.9.0",
+      "esptool": "1.40501.0",
+      "xtensa": "8.4.0+2021r2-patch5",
+      "riscv": "8.4.0+2021r2-patch5",
+      "framework": "Pinned in platformio.ini and installed in shared package store; absent from TX pkg list excerpt"
+    },
+    "native_observed_packages": {
+      "platform": "1.2.1",
+      "unity": "2.6.0",
+      "scons": "4.40801.0",
+      "host_gcc_version": "NOT_RECORDED"
+    }
+  },
+  "gates": {
+    "RF0": {
+      "status": "BLOCKED",
+      "reason": "Hardware, preservation, consent, security and SDK preflight supported; successful builds imply local_config.h available. Final owner check that both builds used same correct private peer config, ignored file, and current safe bench/ports required before upload.",
+      "local_config": "PRESENT_AT_BUILD_INFERRED; values not independently inspected; do not disclose",
+      "runtime_peer_check": "NOT_RUN"
+    },
+    "RF1": {
+      "status": "PASS",
+      "source_sha": "1076bfbc9fb20f05560339d9010205ac4b130207",
+      "command": "python -m platformio test -e native",
+      "result": "test/test_host/test_main.cpp:78 test_contract [PASSED]; native:test_host [PASSED]",
+      "seconds": 5.62,
+      "provenance": "Owner console excerpt, not independently rerun"
+    },
+    "RF2": {
+      "status": "PASS",
+      "qualification": "Both target build PASS; distinct role banners confirmed in source; runtime banners NOT_RUN; code scan found no actuator/ADC/PWM calls; full original build logs not supplied, owner excerpts and SHA recorded",
+      "source_sha": "1076bfbc9fb20f05560339d9010205ac4b130207"
+    },
+    "RF3": {
+      "status": "NOT_RUN"
+    },
+    "RF4": {
+      "status": "NOT_RUN"
+    },
+    "RF5": {
+      "status": "NOT_RUN"
+    },
+    "RF6": {
+      "status": "NOT_RUN"
+    }
+  },
+  "RF_IF_001": "BLOCKED",
+  "link_test_pass": false,
+  "build": {
+    "source_sha": "1076bfbc9fb20f05560339d9010205ac4b130207",
+    "owner_reported": true,
+    "rx": {
+      "status": "PASS",
+      "seconds": 37.83,
+      "sha256": "D0FB330CC418D663B687FD7834A558E5DCC8C37323011D7BC66B04B20F73586B"
+    },
+    "tx": {
+      "status": "PASS",
+      "seconds": 59.438,
+      "sha256": "5A0C5149B85D60A18CAAEFFECB74F51A2E9D4ACC0E9CBDAFA05386E4D12B78EB"
+    },
+    "historical_rx_failure": "namespace link vs POSIX link(), fixed at source_sha",
+    "binaries": "LOCAL_ONLY",
+    "role_banners": "distinct in source; on-device NOT_RUN"
+  },
+  "upload": {
+    "status": "NOT_RUN",
+    "next": "Final RF0 local checks; RX first, TX second; verify actual role and channel/encryption info before RF3"
+  },
+  "checkpoint": "S04_BUILD_AND_NATIVE_PASS; S05_PENDING; no physical RF results"
+}
