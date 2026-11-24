@@ -8,7 +8,7 @@
 
 Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO ESP32-C3 (RX)** điều khiển hai cánh bằng SDS1601, hệ thống bảo vệ khi mất kết nối và giao diện web tùy chọn sau cho cấu hình/chẩn đoán và quy trình kiểm thử phần cứng an toàn. Ưu tiên thiết kế có thể kiểm chứng từng bước thay vì sao chép toàn bộ dự án tham khảo.
 
-**Chưa duyệt thiết kế = chưa giao task code.** Các giả định phần cứng vẫn phải kiểm chứng trên thiết bị thực tế.
+**Chỉ giao task trong phạm vi thiết kế đã được owner duyệt.** TASK-001 đã được duyệt riêng; full product Design vẫn DRAFT. Các giả định phần cứng vẫn phải kiểm chứng trên thiết bị thực tế.
 
 ## Bộ tài liệu thiết kế
 
@@ -63,7 +63,7 @@ Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó 
 - **Điều khiển M0:** gamepad ESP-NOW là kế hoạch chủ sở hữu; UI WebSocket trên điện thoại trong design cũ hiện được xem như ý tưởng cũ, KHÔNG là nguồn điều khiển chính.
 - **File nguồn gốc** (STL/Gerber) chỉ được đính kèm ở cuộc trò chuyện, **chưa có trong repository**; các AI cần xin lại file/hashes, không đoán đường dẫn.
 
-**Tình trạng:** RULES_UPDATED / TASK_001_PLAN_READY / SCOPED_OWNER_APPROVAL_REQUIRED / NO_TASK / NO_IMPLEMENTATION.
+**Tình trạng:** RULES_UPDATED / TASK_001_SCOPED_DESIGN_APPROVED / IMPLEMENTATION_PENDING.
 
 ## Lưu ý quan trọng về ảnh tùy chỉnh horn mới
 
@@ -82,4 +82,4 @@ Google Drive tham khảo **đã truy cập và kiểm tra được** các nhóm 
 
 ## Current gate
 
-**DESIGN_DRAFT / OWNER_SA_DESIGN_APPROVAL_REQUIRED.** Đã cập nhật rules theo phần cứng hiện có; chưa có file Task/, chưa có AI Code PR, chưa sửa STL/Gerber/firmware. Chi tiết điểm chờ duyệt ở [06_DECISIONS_AND_ROADMAP.md](06_DECISIONS_AND_ROADMAP.md).
+**FULL_DESIGN_DRAFT / TASK_001_SCOPED_DESIGN_APPROVED.** Owner duyệt riêng plan thử truyền nhận ESP-NOW hai chiều. Baseline cố định: [5f133d4e63fd2aa14085600e6742a847f151ea4e](https://github.com/nguyenbui5701/BioButterfly_ESP/commit/5f133d4e63fd2aa14085600e6742a847f151ea4e). File giao việc: [Task/TASK-001-espnow-link-smoke.md](../Task/TASK-001-espnow-link-smoke.md). Chưa có kết quả test hoặc PR; chưa sửa STL/Gerber/firmware. Xem phê duyệt và các giới hạn tại [06_DECISIONS_AND_ROADMAP.md](06_DECISIONS_AND_ROADMAP.md).
