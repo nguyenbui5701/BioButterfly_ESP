@@ -52,7 +52,9 @@ bool init() {
     queue = xQueueCreate(32, sizeof(Event));
     if (!queue) return false;
     WiFi.persistent(false);
-    if (!WiFi.mode(WIFI_STA) || !WiFi.disconnect(false, false)) return false;
+    if (!WiFi.mode(WIFI_STA)) return false;
+    WiFi.setAutoReconnect(false);
+    if (!WiFi.disconnect(false, false)) return false;
     if (!check(esp_wifi_set_ps(WIFI_PS_NONE), "power_save") ||
         !check(esp_wifi_set_channel(channel, WIFI_SECOND_CHAN_NONE), "channel") || !channel_ok()) return false;
     uint8_t actual[6]{};
