@@ -150,3 +150,8 @@ Review ledger entries are immutable audit facts; corrections append new records 
 ## 9. Next SA checkpoint
 
 Issue TASK-001 using the scoped approval above. AI-SW implements the approved experiment and submits one PR. SA reviews RF0–RF6 and actual evidence before completing the task. Other tasks and full MVP remain unapproved.
+
+## TASK-001 S04 checkpoint review — 2026-11-24
+
+- PR #1, reviewed head `f06a9c855cfad1adcd4edc1ed6c932dd9cb51c07`, tested source `1076bfbc9fb20f05560339d9010205ac4b130207`: **SA_BLOCKED / S05_REQUIRED**. [SA comment](https://github.com/nguyenbui5701/BioButterfly_ESP/pull/1#issuecomment-7124465544). RF1/RF2 owner-reported PASS, RF0 final verification pending, RF3–RF6 NOT_RUN. Isolated git checkout unavailable due DNS; API static source review only, no independent rerun.
+- Task retained and handoff recorded in commit [79f2525](https://github.com/nguyenbui5701/BioButterfly_ESP/commit/79f252532589dd3025e17652b3c0919b09ca94ee). AI-HW consultation for RF0 and physical S05 support within TASK-001; AI-SW retains source/evidence ownership. No new task, no approval for merge, no flight power or actuator authorization. Next gate: S05 evidence and SA re-review.
