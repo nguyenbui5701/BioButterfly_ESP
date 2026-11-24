@@ -33,7 +33,7 @@ static void post(const Event& e) {
 static void on_receive(const uint8_t* mac, const uint8_t* data, int n) {
     Event e{}; e.ms = millis(); e.length = n;
     if (mac) memcpy(e.peer, mac, 6);
-    if (data && n == int(link::wire_size)) memcpy(e.bytes, data, link::wire_size);
+    if (data && n == int(espnow_link::wire_size)) memcpy(e.bytes, data, espnow_link::wire_size);
     else if (!data) e.length = -1;
     post(e);
 }
@@ -80,8 +80,8 @@ bool init() {
 bool pop(Event& e) { return xQueueReceive(queue, &e, 0) == pdTRUE; }
 uint32_t drops() { portENTER_CRITICAL(&drop_lock); uint32_t n=dropped; portEXIT_CRITICAL(&drop_lock); return n; }
 const uint8_t* peer() { return other_mac; }
-bool send(const link::Wire& bytes) {
-    return channel_ok() && esp_now_send(other_mac, bytes, link::wire_size) == ESP_OK;
+bool send(const espnow_link::Wire& bytes) {
+    return channel_ok() && esp_now_send(other_mac, bytes, espnow_link::wire_size) == ESP_OK;
 }
 bool command(char (&line)[48]) {
     static size_t used = 0; static bool overflow = false;
