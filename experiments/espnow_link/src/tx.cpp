@@ -36,13 +36,17 @@ void setup(){
     Serial.printf("ROLE=TX LINK_TEST_V1 ready=%u; start XXXXXXXX s|b|p|n; dump after done\n",unsigned(ready));
 }
 void loop(){
-    if(!ready){delay(10);return;}
+    if(!ready){
+        if(radio::command(line))Serial.println("INIT_FAILED; reset after resolving config");
+        delay(10);return;
+    }
     if(radio::command(line)){
         if(!started && radio::parse_start(line,run,mode)){
             total=mode=='s'?10:mode=='b'?slots:mode=='p'?230:90;
             started=true;start_ms=millis()+1000;
             Serial.printf("TX_START run=%08lx mode=%c start_ms=%lu slots=%lu\n",(unsigned long)run,mode,(unsigned long)start_ms,(unsigned long)total);
         }else if(done && !strcmp(line,"dump")) dump();
+        else if(!strcmp(line,"info")) Serial.printf("ROLE=TX LINK_TEST_V1 build=%s sdk=%s channel_ok=%u encrypted=1\n",LINK_BUILD_SHA,ESP.getSdkVersion(),unsigned(radio::channel_ok()));
         else if(!strcmp(line,"status")) report();
         else Serial.println("COMMAND_REJECT one run per boot");
     }
