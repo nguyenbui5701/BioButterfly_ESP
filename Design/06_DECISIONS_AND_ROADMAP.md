@@ -127,6 +127,14 @@ Review ledger entries are immutable audit facts; corrections append new records 
 - **Closed owner design-choice gate:** fully printed horn with direct SDS1601 mating spline and 3 collinear holes. Owner has confirmed **25T/Ø4.9mm** and **Bambu Lab A1**; do not ask these again. **Open technical gates:** actual internal tooth profile, installed nozzle & filament, printed micro-spline fit/fatigue, shaft-center retainer and real fastener stack. Detailed plan in [17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md](17_BAMBU_A1_25T_SPLINE_PRINT_VALIDATION.md).
 - **No Task** and no derived STL should be created just from this preliminary plan.
 
+## ESP-NOW first-task preapproval checkpoint — 2026-11-24
+
+- Owner requested the plan for the first task: test communication between the two ESPs.
+- SA proposed [20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md](20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md) at commit [56c005708fb9930691e4e6825b6ad82e674b6cb9](https://github.com/nguyenbui5701/BioButterfly_ESP/commit/56c005708fb9930691e4e6825b6ad82e674b6cb9).
+- Planned assignee AI-SW, priority P0; AI-HW consulted for exact gamepad board and safe USB/upload. Independent bench experiment in experiments/espnow_link/; synthetic DATA and ACK, measured delivery, RTT and stale-link detection. No servo, PCB, battery, real pilot commands or production flight protocol.
+- Propose scoped design approval for this radio-only experiment. The owner has not yet approved the detailed plan. No active Task or implementation authorized. This limited scope does not require closing mechanical/flight power gates; board identification, safe USB and existing firmware preservation still must be checked before physical programming.
+- After explicit scoped approval, pin the immutable plan/design commit, record owner's approval and create Task/TASK-001-espnow-link-smoke.md. Full product design remains DRAFT.
+
 ## 9. Next SA checkpoint
 
-Present current Design draft to owner for approval. On explicit approval, commit updated ADR states and approved baseline, then create the **first** implementation Task file under Task/ with exact files-to-read, scope, expected files, test evidence and stop conditions. Do not issue Task at this draft stage.
+Present the TASK-001 radio-only plan for scoped owner approval first. Record the exact approved immutable design SHA, then issue only TASK-001. Keep other unapproved designs and physical integration gates blocked; full MVP approval remains separate. Do not issue Task until the scoped plan is approved.
