@@ -1,6 +1,6 @@
 #include "radio.h"
 #include <cstring>
-using namespace link;
+using namespace espnow_link;
 namespace {
 Receiver rx;
 bool ready=false,started=false,done=false,pending=false;
