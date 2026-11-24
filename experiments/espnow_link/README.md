@@ -2,6 +2,8 @@
 
 AI-SW; approved design SHA 5f133d4e63fd2aa14085600e6742a847f151ea4e; ADR-019 0cac45ae57ab9534911f239d3a526e7497de9681. Base main e39157fade463f7d398db2445e8c5d98754414b7. PR #1 remains draft.
 
+**Resume here:** [evidence/RESUME_CHECKPOINT.md](evidence/RESUME_CHECKPOINT.md) is the 2026-11-24 handoff; [status.json](evidence/status.json) records gate evidence, [owner-console-excerpts.log](evidence/owner-console-excerpts.log) records sanitized owner excerpts. Validated firmware source SHA `1076bfbc9fb20f05560339d9010205ac4b130207`; newer documentation-only commits are not the embedded firmware SHA.
+
 ## Preflight / owner evidence
 TX: owner esptool 4.8.1 output ESP32-D0WD-V3 rev v3.1, WROOM-32 boot banner, 40 MHz crystal, 4MB flash manufacturer 0x5E device 0x4016; 3.3V strap. COM5 observed. Two complete 4194304-byte reads at 57600 baud, SHA256 identical (owner console output); backup binaries/hash stay local, recovery write NOT_RUN. Owner approves overwrite after RF0.
 RX: owner esptool 4.8.1 output ESP32-C3 QFN32 rev v0.4, embedded XMC 4MB manufacturer 0x46 device 0x4016, 40 MHz crystal, COM3 observed. Owner identifies standalone Seeed XIAO ESP32-C3 and waives backup, approves overwrite after RF0. Owner confirms independent USB only, no battery/2S, flight PCB or servo.
@@ -9,9 +11,9 @@ TX strapping: hold inner-left red button (GPIO12 inferred), outer-right red butt
 RX: hold BOOT, press/release RESET, release BOOT; check COM again. USB CDC enabled in RX build. No pins/servo outputs used. Antenna must be connected as specified by Seeed before RF testing.
 
 ## Build first — NO FLASH until RF0 complete
-Toolchain pins: PlatformIO Espressif32 6.9.0, Arduino package 3.20017.0 (Arduino 2.0.17, IDF 4.4.7); native 1.2.1, Unity 2.6.0. Board targets esp32dev (verified WROOM-32 hardware characteristics, not vendor schematic) and seeed_xiao_esp32c3. IDF API https://docs.espressif.com/projects/esp-idf/en/v4.4.7/esp32c3/api-reference/network/esp_now.html. Source written against IDF 4.4 callback API; target compile NOT_RUN in AI environment. No Internet/git checkout or PlatformIO in AI container. Initial GCC host subset evidence in evidence/host-test.log pertains to older source revision; current native suite still NOT_RUN.
+Toolchain pins: PlatformIO Espressif32 6.9.0, Arduino package 3.20017.0 (Arduino 2.0.17, IDF 4.4.7); native 1.2.1, Unity 2.6.0. Board targets esp32dev (verified WROOM-32 hardware characteristics, not vendor schematic) and seeed_xiao_esp32c3. IDF API https://docs.espressif.com/projects/esp-idf/en/v4.4.7/esp32c3/api-reference/network/esp_now.html. Both target builds and the native suite passed on the owner's Windows machine at the validated source SHA above; no independent AI rerun. Successful compiles also satisfy the IDF 4.4.7 compile-time guard. Distinct role banners are present in source; physical execution is NOT_RUN. Initial GCC host subset evidence in evidence/host-test.log is historical. Full original build/test logs were not supplied; see owner excerpts and recorded hashes. Preserve existing .pio artifacts and local_config.h; do not rebuild merely because a documentation checkpoint was committed.
 
-Windows PowerShell from this directory:
+Windows PowerShell from this directory (setup for a fresh machine; not required again for the existing verified build):
 ```powershell
 python -m pip install platformio==6.1.18
 python -m platformio --version
@@ -33,15 +35,15 @@ Before write, enter each bootloader and read eFuse summary only (no burn/write c
 python -m espefuse --chip esp32 --port COM5 --before no_reset summary
 python -m espefuse --chip esp32c3 --port COM3 --before no_reset summary
 ```
-Ports may change; verify each. Keep raw output private; report only security status (FLASH_CRYPT_CNT or SPI_BOOT_CRYPT_CNT, ABS_DONE_0/1 or SECURE_BOOT_EN and download restrictions). Stop if security enabled/uncertain, no force. RF0 still pending local provision, pinned toolchain verification and security review.
+Ports may change; verify each. Keep raw output private; report only security status (FLASH_CRYPT_CNT or SPI_BOOT_CRYPT_CNT, ABS_DONE_0/1 or SECURE_BOOT_EN and download restrictions). Stop if security enabled/uncertain, no force. Both owner security checks passed and package list is recorded. RF0 awaits final confirmation that the private ignored config used for both builds contains the correct peer identities and common keys without regeneration, and that current USB-only bench/ports remain safe. Successful builds imply a config existed; runtime identity/channel/encryption verification is still pending. No eFuse changes.
 
 ## Upload after explicit RF0 closure
-Close monitors; use confirmed manual boot procedures. TX must stay at verified 57600 speed. Platform config specifies no_reset before/after; inspect verbose upload command. On TX use three-button reset during Connecting if needed. RX manually enter BOOT mode and check new port.
+Use the existing validated checkout and matching firmware hashes in status.json; avoid pulling documentation-only commits until after hardware tests (the build script embeds Git HEAD). Close monitors; connect the RX antenna before normal boot, and use confirmed manual boot procedures. TX must stay at verified 57600 speed. Platform config specifies no_reset before/after; inspect verbose upload command. On TX use three-button reset during Connecting if needed. RX manually enter BOOT mode and check new port.
 ```powershell
-python -m platformio run -e link_rx -t upload --upload-port COM3 -v
-python -m platformio run -e link_tx -t upload --upload-port COM5 -v
+python -m platformio run -e link_rx -t nobuild -t upload --upload-port COM3 -v
+python -m platformio run -e link_tx -t nobuild -t upload --upload-port COM5 -v
 ```
-No erase_flash or erase NVS. After successful write and verify, manually reset RX normally, TX with inner-left red only (GPIO12 low at reset). Check ports again. Stop on write error, mismatch, unexpected hardware behavior; no force.
+Upload-only commands remain NOT_RUN on hardware. If the upload attempts a rebuild, changes hashes or uses unexpected port, reset or baud, stop and revalidate. No erase_flash or erase NVS. After successful write and verify, manually reset RX normally, TX with inner-left red only (GPIO12 low at reset). Check ports again. Stop on write error, mismatch, unexpected hardware behavior; no force.
 
 TX rollback only if required and authorized and security precheck permits: verify local backup size/hash against saved independent original; manual download mode; command from local backup directory:
 ```powershell
@@ -59,4 +61,4 @@ One run per boot. Reset both before every new mode; choose a fresh nonzero 8-hex
 Save separate raw logs, sanitized copies for evidence, and computed JSON/CSV summary before SA final review. Don't claim RF PASS from source or compile.
 
 ## Scope
-Only experiments/espnow_link changes. No original ESP-FLUTTER code/assets copied. No production flight pairing, ARM/STOP, servo/PWM/ADC, joystick, GPIO writes, battery or PCB. New dependencies are pinned Arduino/ESP-IDF and Unity for host only; transitive package list to be captured from actual build. RF-IF-001 experimental; no production approval. Revert scoped commits on feature branch if needed; no force push, self-merge or Design/Task edits.
+Only experiments/espnow_link changes. No original ESP-FLUTTER code/assets copied. No production flight pairing, ARM/STOP, servo/PWM/ADC, joystick, GPIO writes, battery or PCB. New dependencies are pinned Arduino/ESP-IDF and Unity for host only; transitive package lists recorded in evidence/owner-console-excerpts.log; actual native GCC version and PlatformIO Core version not yet recorded. RF-IF-001 experimental; no production approval. Revert scoped commits on feature branch if needed; no force push, self-merge or Design/Task edits.
