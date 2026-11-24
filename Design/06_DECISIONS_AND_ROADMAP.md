@@ -1,7 +1,7 @@
 # 06 — Architecture Decisions, Design Gates, Roadmap and Review Ledger
 
-**State:** DESIGN_DRAFT. **Last reviewed:** 2026-11-23.  
-**No approval has yet been given for the BioButterfly_ESP design.** Entries marked PROPOSED are not finalized design decisions. Do not issue Task files or implement firmware against this draft without owner sign-off.
+**State:** DESIGN_DRAFT (full product) / TASK_001_SCOPED_DESIGN_APPROVED. **Last reviewed:** 2026-11-24.  
+**Full product design remains unapproved. The owner has explicitly approved the limited TASK-001 ESP-NOW communication experiment only; see the scoped approval record below.** Entries marked PROPOSED are not finalized design decisions. Do not issue Task files or implement firmware against this draft without owner sign-off.
 
 ## 1. Design decision records
 
@@ -135,6 +135,18 @@ Review ledger entries are immutable audit facts; corrections append new records 
 - Propose scoped design approval for this radio-only experiment. The owner has not yet approved the detailed plan. No active Task or implementation authorized. This limited scope does not require closing mechanical/flight power gates; board identification, safe USB and existing firmware preservation still must be checked before physical programming.
 - After explicit scoped approval, pin the immutable plan/design commit, record owner's approval and create Task/TASK-001-espnow-link-smoke.md. Full product design remains DRAFT.
 
+## Scoped owner approval — TASK-001 — 2026-11-24
+
+- Decision ID: **ADR-019 / TASK_001_SCOPED_DESIGN_APPROVED**.
+- Owner decision: explicitly approved SA's presented TASK-001 proposal and instructed SA to continue.
+- Immutable approved design snapshot: [5f133d4e63fd2aa14085600e6742a847f151ea4e](https://github.com/nguyenbui5701/BioButterfly_ESP/commit/5f133d4e63fd2aa14085600e6742a847f151ea4e).
+- Normative approved plan: [Design/20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md](https://github.com/nguyenbui5701/BioButterfly_ESP/blob/5f133d4e63fd2aa14085600e6742a847f151ea4e/Design/20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md), including LINK_TEST_V1 and RF0–RF6.
+- Authorized role: AI-SW, priority P0, with AI-HW consulted for actual TX board and programming/power preflight. Scope is limited to synthetic DATA/ACK radio test between standalone USB-powered ESP32 gamepad and XIAO ESP32-C3, under experiments/espnow_link/.
+- Approval authorizes creating the scoped task and implementing its code/tests. Physical board programming/testing is conditional on RF0, safe documented USB power and owner authorization for any factory-firmware overwrite. TX board model/flash/USB and preservation still unknown; no generic substitution as actual TX proof.
+- Accepted bench-only targets: 20Hz, 1200 scheduled slots/60s, >=1188 unique matching application ACKs, RTT p95 <=100ms, receiver link-loss detection <=500ms in three pause/resume cycles, invalid packet rejection and fresh run after reboot. No acceptance threshold changes without SA/owner.
+- RF-IF-001 experimental findings only; no production pilot protocol, production ARM/STOP/failsafe, joystick, GPIO, servo, PCB, LiPo, CAD, Web UI or flight implementation approved. Full hardware/MECH/flight gates remain unchanged. Historical pending-approval entries above are superseded **only for TASK-001**.
+- Active assignment to be issued in Task/TASK-001-espnow-link-smoke.md. All RF gates are NOT_RUN/BLOCKED until real evidence. SA review and owner merge decision required.
+
 ## 9. Next SA checkpoint
 
-Present the TASK-001 radio-only plan for scoped owner approval first. Record the exact approved immutable design SHA, then issue only TASK-001. Keep other unapproved designs and physical integration gates blocked; full MVP approval remains separate. Do not issue Task until the scoped plan is approved.
+Issue TASK-001 using the scoped approval above. AI-SW implements the approved experiment and submits one PR. SA reviews RF0–RF6 and actual evidence before completing the task. Other tasks and full MVP remain unapproved.
