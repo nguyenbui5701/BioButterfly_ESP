@@ -1,0 +1,20 @@
+HOST ONLY — actual local execution; not ESP radio evidence.
+Source revision: 9d88c9284946b94abbe8b8eb18a2d0cf109501cd
+Source bytes reproduced locally and matched GitHub blob SHAs:
+include/link_protocol.h 0beaa0bf6f633bd78ade3481fdfff010842f649e
+src/link_protocol.cpp cc015df20c74ec1c447d692606a9fb3f65fe5000
+test/test_host/test_main.cpp 4991517a75fa403753a4b972b797d3fd79a5bed2
+
+Command:
+g++ -std=c++11 -Wall -Wextra -Werror -pedantic -fsanitize=undefined -Iinclude src/link_protocol.cpp test/test_host/test_main.cpp -o /tmp/bio-host-test
+/tmp/bio-host-test
+
+Output:
+g++ (Debian 14.2.0-19) 14.2.0
+PASS codec golden, roundtrip, malformed frames
+PASS RX sequence, freshness, timeout, recovery, timer wrap
+PASS TX bounded accounting, ACK uniqueness, skipped/error/late
+HOST TESTS PASS
+
+Exit code: 0
+PlatformIO native test: NOT_RUN (not installed).
