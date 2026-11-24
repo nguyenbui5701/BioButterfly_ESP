@@ -4,7 +4,6 @@
 #include <esp_idf_version.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
-#include <atomic>
 #include <cstring>
 #include <cstdio>
 #include "local_config.h"
@@ -24,9 +23,12 @@ static const uint8_t* const self_mac = rx_mac;
 static const uint8_t* const other_mac = tx_mac;
 #endif
 static QueueHandle_t queue = nullptr;
-static std::atomic<uint32_t> dropped{0};
+static uint32_t dropped = 0;
+static portMUX_TYPE drop_lock = portMUX_INITIALIZER_UNLOCKED;
 static void post(const Event& e) {
-    if (xQueueSend(queue, &e, 0) != pdTRUE) dropped.fetch_add(1, std::memory_order_relaxed);
+    if (xQueueSend(queue, &e, 0) != pdTRUE) {
+        portENTER_CRITICAL(&drop_lock); ++dropped; portEXIT_CRITICAL(&drop_lock);
+    }
 }
 static void on_receive(const uint8_t* mac, const uint8_t* data, int n) {
     Event e{}; e.ms = millis(); e.length = n;
@@ -54,7 +56,10 @@ bool init() {
     WiFi.persistent(false);
     if (!WiFi.mode(WIFI_STA)) return false;
     WiFi.setAutoReconnect(false);
-    if (!WiFi.disconnect(false, false)) return false;
+    const esp_err_t disconnected = esp_wifi_disconnect();
+    if (disconnected != ESP_OK && disconnected != ESP_ERR_WIFI_NOT_CONNECT) {
+        check(disconnected, "disconnect"); return false;
+    }
     if (!check(esp_wifi_set_ps(WIFI_PS_NONE), "power_save") ||
         !check(esp_wifi_set_channel(channel, WIFI_SECOND_CHAN_NONE), "channel") || !channel_ok()) return false;
     uint8_t actual[6]{};
@@ -73,7 +78,7 @@ bool init() {
     return true;
 }
 bool pop(Event& e) { return xQueueReceive(queue, &e, 0) == pdTRUE; }
-uint32_t drops() { return dropped.load(std::memory_order_relaxed); }
+uint32_t drops() { portENTER_CRITICAL(&drop_lock); uint32_t n=dropped; portEXIT_CRITICAL(&drop_lock); return n; }
 const uint8_t* peer() { return other_mac; }
 bool send(const link::Wire& bytes) {
     return channel_ok() && esp_now_send(other_mac, bytes, link::wire_size) == ESP_OK;
