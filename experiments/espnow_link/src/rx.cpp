@@ -11,7 +11,10 @@ Trace trace[slots]; uint32_t count=0;
 struct Reject{uint32_t ms,last,seq;int reason;};
 Reject rejects[128];uint32_t reject_count=0;
 void tick(uint32_t now){
-    if(rx.tick(now))Serial.printf("RX_LINK_LOST ms=%lu last_valid_ms=%lu delay_ms=%lu last_seq=%lu\n",(unsigned long)now,(unsigned long)rx.last_ms,(unsigned long)(now-rx.last_ms),(unsigned long)rx.last_seq);
+    if(rx.tick(now)){
+        const uint32_t detected=millis();
+        Serial.printf("RX_LINK_LOST ms=%lu last_valid_ms=%lu delay_ms=%lu last_seq=%lu\n",(unsigned long)detected,(unsigned long)rx.last_ms,(unsigned long)(detected-rx.last_ms),(unsigned long)rx.last_seq);
+    }
 }
 void report(){
     Serial.printf("RX_SUMMARY run=%08lx mode=%c unique=%lu rejected=%lu losses=%lu max_gap_ms=%lu last_seq=%lu last_valid_ms=%lu ack_attempt=%lu ack_error=%lu ack_skip=%lu mac_success=%lu mac_failure=%lu queue_drop=%lu trace_overflow=%lu unexpected=%lu outside=%lu pending=%u\n",
