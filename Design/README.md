@@ -35,6 +35,8 @@ Thiết kế bướm robot sử dụng **ESP32 gamepad (TX) -> ESP-NOW -> XIAO E
 | **[18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md](18_OPENSCAD_CUSTOMIZER_25T_REVIEW.md)** | **Đã chốt P7: 3 lỗ horn thẳng hàng cách 3,5mm, 2 lỗ ngoài cách 7mm; preset Futaba 3F Ø5,92 không phù hợp SDS1601 Ø4,9** |
 | **[19_HORN_EXISTING_SPLINE_INTERFACE.md](19_HORN_EXISTING_SPLINE_INTERFACE.md)** | **Owner đã có phần spline cơ khí; tiếp tục thiết kế horn nhựa, phân biệt trục servo có răng với đầu nối spline rời để chọn lỗ tâm chính xác** |
 
+| [20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md](20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md) | **Plan TASK-001: test ESP-NOW 2 chiều giữa gamepad ESP32 và XIAO ESP32-C3 độc lập, chưa nối servo/PCB/pin 2S** |
+
 ## Đội ngũ AI chuyên trách
 
 - **SA (tôi):** điều phối thiết kế liên ngành, quản lý rules, tạo Task sau phê duyệt, review và comment PR.
@@ -61,7 +63,7 @@ Mỗi AI phải bắt đầu bằng **[Design/AGENTS.md](AGENTS.md)**, sau đó 
 - **Điều khiển M0:** gamepad ESP-NOW là kế hoạch chủ sở hữu; UI WebSocket trên điện thoại trong design cũ hiện được xem như ý tưởng cũ, KHÔNG là nguồn điều khiển chính.
 - **File nguồn gốc** (STL/Gerber) chỉ được đính kèm ở cuộc trò chuyện, **chưa có trong repository**; các AI cần xin lại file/hashes, không đoán đường dẫn.
 
-**Tình trạng:** RULES_UPDATED / DESIGN_DRAFT / NO_TASK / NO_IMPLEMENTATION.
+**Tình trạng:** RULES_UPDATED / TASK_001_PLAN_READY / SCOPED_OWNER_APPROVAL_REQUIRED / NO_TASK / NO_IMPLEMENTATION.
 
 ## Lưu ý quan trọng về ảnh tùy chỉnh horn mới
 
