@@ -1,7 +1,7 @@
 #include "radio.h"
 #include <algorithm>
 #include <cstring>
-using namespace link;
+using namespace espnow_link;
 namespace {
 Ledger ledger;
 bool ready=false, started=false, done=false;
