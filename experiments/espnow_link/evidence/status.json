@@ -2,26 +2,52 @@
   "task": "TASK-001",
   "role": "AI-SW",
   "design_sha": "5f133d4e63fd2aa14085600e6742a847f151ea4e",
-  "tested_source_commit": "9d88c9284946b94abbe8b8eb18a2d0cf109501cd",
   "protocol": "LINK_TEST_V1",
-  "host": {
-    "status": "PASS",
-    "compiler": "GCC 14.2.0",
-    "platformio": "NOT_RUN",
-    "evidence": "host-test.log"
+  "evidence_source": "Owner terminal outputs and explicit confirmations in TASK-001 chat, 2026-11-24; sanitized factual summary, not synthetic raw logs.",
+  "tx": {
+    "chip": "ESP32-D0WD-V3",
+    "revision": "v3.1",
+    "module": "WROOM-32",
+    "flash_bytes": 4194304,
+    "flash_voltage": 3.3,
+    "flash_manufacturer": "0x5E",
+    "flash_device": "0x4016",
+    "port_observed": "COM5",
+    "backup_reads": 2,
+    "backup_sha256_match": true,
+    "backup_restore": "NOT_RUN",
+    "overwrite": "OWNER_APPROVED_AFTER_RF0"
+  },
+  "rx": {
+    "chip": "ESP32-C3 QFN32",
+    "revision": "v0.4",
+    "board": "Seeed XIAO ESP32-C3 (owner confirmed)",
+    "flash_bytes": 4194304,
+    "flash_manufacturer": "0x46",
+    "flash_device": "0x4016",
+    "port_observed": "COM3",
+    "backup": "OWNER_WAIVED",
+    "overwrite": "OWNER_APPROVED_AFTER_RF0"
+  },
+  "power": "OWNER_CONFIRMED USB only; no battery, servo or flight PCB",
+  "sdk": {
+    "platform": "espressif32@6.9.0",
+    "arduino": "2.0.17",
+    "idf": "4.4.7",
+    "installed_verified": false
   },
   "gates": {
     "RF0": {
       "status": "BLOCKED",
-      "reason": "Actual board identification, safe USB, preservation, provisioning and SDK not verified"
+      "reason": "Local provisioning, actual pinned toolchain and read-only security precheck pending"
     },
     "RF1": {
       "status": "NOT_RUN",
-      "reason": "PlatformIO native suite not executed; portable GCC subset PASS"
+      "reason": "Current native test not executed; previous GCC evidence is historical"
     },
     "RF2": {
-      "status": "BLOCKED",
-      "reason": "No actual target SDK/build or firmware entrypoints"
+      "status": "NOT_RUN",
+      "reason": "Both exact target builds pending"
     },
     "RF3": {
       "status": "NOT_RUN"
