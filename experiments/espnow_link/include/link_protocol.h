@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace link {
+namespace espnow_link {
 constexpr std::size_t wire_size = 16;
 constexpr uint32_t stale_ms = 450, period_ms = 50, slots = 1200, drain_ms = 500;
 enum class Kind : uint8_t { data = 1, ack = 2 };
@@ -42,4 +42,4 @@ private:
     Entry entries_[slots]{};
     Counts counts_{};
 };
-} // namespace link
+} // namespace espnow_link
