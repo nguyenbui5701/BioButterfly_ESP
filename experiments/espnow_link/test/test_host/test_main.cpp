@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-using namespace link;
+using namespace espnow_link;
 #ifdef LINK_USE_UNITY
 #include <unity.h>
 void setUp() {}
