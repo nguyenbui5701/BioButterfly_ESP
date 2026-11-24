@@ -26,7 +26,10 @@ void setup(){
     Serial.printf("ROLE=RX LINK_TEST_V1 ready=%u; start XXXXXXXX s|b|p|n; end; dump\n",unsigned(ready));
 }
 void loop(){
-    if(!ready){delay(10);return;}
+    if(!ready){
+        if(radio::command(line))Serial.println("INIT_FAILED; reset after resolving config");
+        delay(10);return;
+    }
     radio::Event e;
     for(unsigned k=0;k<32&&radio::pop(e);++k){
         if(e.send){
@@ -67,7 +70,8 @@ void loop(){
                 Serial.printf("RX_REJECT seq=%lu ms=%lu last_valid_ms=%lu reason=%d\n",(unsigned long)q.seq,(unsigned long)q.ms,(unsigned long)q.last,q.reason);
             }
             report();
-        }else if(!strcmp(line,"status"))report();
+        }else if(!strcmp(line,"info")) Serial.printf("ROLE=RX LINK_TEST_V1 build=%s sdk=%s channel_ok=%u encrypted=1\n",LINK_BUILD_SHA,ESP.getSdkVersion(),unsigned(radio::channel_ok()));
+        else if(!strcmp(line,"status"))report();
         else Serial.println("COMMAND_REJECT one run per boot");
     }
     delay(1);
