@@ -1,6 +1,6 @@
 # 05 — AI Work Rules, SA Governance and PR Review
 
-**Version:** 1.2 DRAFT, 2026-11-23. **Repository:** nguyenbui5701/BioButterfly_ESP. **Primary authoritative working documents:** Design/. **Effective for all future agents after owner sign-off.**
+**Version:** 1.3, 2026-11-24 (scoped task approval clarification; full product remains DRAFT). **Repository:** nguyenbui5701/BioButterfly_ESP. **Primary authoritative working documents:** Design/. **Effective for all future agents after owner sign-off.**
 
 ## 1. Roles and ownership
 
@@ -52,7 +52,7 @@ GitHub review may use API-based read-only file inspection **when no checkout is 
 
 **DESIGN_DRAFT -> DESIGN_REVIEW -> DESIGN_APPROVED -> TASK_READY.**
 
-- No implementation Task may be generated while the owner has not approved the design baseline.
+- No implementation Task may be generated while the owner has not approved its exact design baseline and scope. Explicit scoped approval may authorize a standalone experiment while the full product design remains DRAFT; record exact SHA and limits in 06_DECISIONS_AND_ROADMAP.md. TASK-001 is such an approved radio-only experiment. All unrelated gates remain blocked.
 - Approval must identify exact Design commit SHA, hardware assumptions, unresolved risks and approved MVP scope in 06_DECISIONS_AND_ROADMAP.md.
 - Design changes affecting safety, API, UI interaction or power need SA impact analysis and owner approval **before** AI Code applies them.
 - Tasks must refer to a pinned design SHA or an immutable approved release tag, to prevent moving targets.
