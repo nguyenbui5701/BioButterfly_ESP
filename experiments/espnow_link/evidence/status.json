@@ -34,7 +34,13 @@
     "platform": "espressif32@6.9.0",
     "arduino": "2.0.17",
     "idf": "4.4.7",
-    "installed_verified": false
+    "installed_verified": false,
+    "rx_observed_packages": {
+      "platform": "6.9.0",
+      "arduino": "3.20017.0 (2.0.17)",
+      "esptool": "1.40501.0 (4.5.1)",
+      "riscv_toolchain": "8.4.0+2021r2-patch5"
+    }
   },
   "gates": {
     "RF0": {
@@ -46,8 +52,10 @@
       "reason": "Current native test not executed; previous GCC evidence is historical"
     },
     "RF2": {
-      "status": "NOT_RUN",
-      "reason": "Both exact target builds pending"
+      "status": "FAIL",
+      "reason": "Owner install_progress.txt: link_rx failed in 156.23 s, namespace link conflicts with POSIX link declared by sys/unistd.h. Namespace renamed to espnow_link throughout source and tests; corrected build NOT_RUN. link_tx NOT_RUN.",
+      "failed_candidate": "783d040611384b392643a6d6f2b5726bb52c85c7 (prior delivered HEAD; owner log does not independently show SHA)",
+      "rx_rebuild": "NOT_RUN"
     },
     "RF3": {
       "status": "NOT_RUN"
