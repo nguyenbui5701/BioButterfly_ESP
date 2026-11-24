@@ -80,6 +80,10 @@ Do not mark `PASS` without reproducible evidence. Do not merge your own PR or pe
 - **Software:** ESP-NOW needs TWO firmware sides (TX gamepad + RX XIAO ESP32-C3), explicit peer binding, neutral arm, receiver-side watchdog, STOP priority, no implicit dual-source takeover.
 - **Tasks:** the user specifically requested RULES FIRST. No Task files, CAD edits, PCB/firmware edits or tests are authorized yet.
 
+## First communication experiment — pending scoped owner approval
+
+AI-SW and SA must read [20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md](20_ESPNOW_LINK_SMOKE_PRETASK_PLAN.md) when preparing TASK-001. This is a pre-task design, not permission to implement. It isolates USB-powered board-to-board radio DATA/ACK testing from all mechanical and flight power work. After explicit approval and SA-issued Task, only that bounded scope may proceed; all other design gates remain unchanged.
+
 ## 6. Current reality
 
 Repository Design is **DESIGN_DRAFT**; specialist roles are ready as readable instructions, but no agents were launched, no Task assigned, and no hardware performance verified. The first implementation may start **only after explicit owner approval** documented by SA.
