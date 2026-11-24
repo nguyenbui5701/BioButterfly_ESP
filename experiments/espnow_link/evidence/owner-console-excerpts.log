@@ -1,0 +1,112 @@
+# Selected owner console excerpts, 2026-11-24
+# As supplied in TASK-001 chat, not a full terminal transcript.
+# Only relevant lines reproduced; device-specific identifiers, raw eFuse blocks,
+# keys, backup SHA and machine paths excluded. No generated physical evidence.
+
+[TX flash_id / read-only]
+esptool.py v4.8.1
+Chip is ESP32-D0WD-V3 (revision v3.1)
+Crystal is 40MHz
+Manufacturer: 5e
+Device: 4016
+Detected flash size: 4MB
+Flash voltage set by a strapping pin to 3.3V
+Staying in bootloader.
+
+[TX backup read failures at 115200; historical]
+585728 (13 %)
+A fatal error occurred: Corrupt data, expected 0x1000 bytes but received 0x10 bytes
+290816 (6 %)
+A fatal error occurred: Corrupt data, expected 0x1000 bytes but received 0x10 bytes
+
+[TX backup at 57600, two independent reads]
+Read 4194304 bytes at 0x00000000 in 743.0 seconds (45.2 kbit/s)...
+Read 4194304 bytes at 0x00000000 in 742.0 seconds (45.2 kbit/s)...
+TX_factory_backup.bin 4194304
+TX_factory_verify.bin 4194304
+# Owner showed identical SHA256 for both; actual backup hash withheld.
+
+[RX flash_id / read-only]
+esptool.py v4.8.1
+Chip is ESP32-C3 (QFN32) (revision v0.4)
+Features: WiFi, BLE, Embedded Flash 4MB (XMC)
+Crystal is 40MHz
+Manufacturer: 46
+Device: 4016
+Detected flash size: 4MB
+Staying in bootloader.
+
+[RX historical install_progress.txt excerpt]
+PLATFORM: Espressif 32 (6.9.0) > Seeed Studio XIAO ESP32C3
+HARDWARE: ESP32C3 160MHz, 320KB RAM, 4MB Flash
+include/link_protocol.h:5:11: error: 'namespace link { }' redeclared as different kind of symbol
+link_rx        FAILED    00:02:36.234
+
+[Corrected RX]
+Successfully created esp32c3 image.
+======================================== [SUCCESS] Took 37.83 seconds ========================================
+
+[TX]
+Successfully created esp32 image.
+======================================== [SUCCESS] Took 59.44 seconds ========================================
+========================================= 1 succeeded in 00:00:59.438 =========================================
+
+[Owner Get-FileHash SHA256, paths reduced to role]
+RX firmware.bin D0FB330CC418D663B687FD7834A558E5DCC8C37323011D7BC66B04B20F73586B
+TX firmware.bin 5A0C5149B85D60A18CAAEFFECB74F51A2E9D4ACC0E9CBDAFA05386E4D12B78EB
+git rev-parse HEAD
+1076bfbc9fb20f05560339d9010205ac4b130207
+
+[Native test]
+Testing...
+test\test_host\test_main.cpp:78: test_contract  [PASSED]
+--------------------------------- native:test_host [PASSED] Took 5.62 seconds
+
+[RX summary.txt / selected security fields, values only]
+SPI_BOOT_CRYPT_CNT = Disable R/W (0b000)
+SECURE_BOOT_EN = False R/W (0b0)
+DIS_DOWNLOAD_MODE = False R/W (0b0)
+ENABLE_SECURITY_DOWNLOAD = False R/W (0b0)
+DIS_DOWNLOAD_MANUAL_ENCRYPT = False R/W (0b0)
+SECURE_VERSION = 0 R/W (0x0000)
+DIS_USB_SERIAL_JTAG_DOWNLOAD_MODE = False R/W (0b0)
+
+[TX summary_tx.txt / selected security fields, values only]
+espefuse.py v4.8.1
+DISABLE_DL_CACHE = False R/W (0b0)
+FLASH_CRYPT_CNT = 0 R/W (0b0000000)
+UART_DOWNLOAD_DIS = False R/W (0b0)
+ABS_DONE_0 = False R/W (0b0)
+ABS_DONE_1 = False R/W (0b0)
+DISABLE_DL_ENCRYPT = False R/W (0b0)
+DISABLE_DL_DECRYPT = False R/W (0b0)
+SECURE_VERSION = 0 R/W (0x00000000)
+XPD_SDIO_FORCE = False R/W (0b0)
+Flash voltage (VDD_SDIO) determined by GPIO12 on reset (High for 1.8V, Low/NC for 3.3V)
+
+[PlatformIO pkg list -e link_tx]
+Resolving link_tx dependencies...
+Platform espressif32 @ 6.9.0 (required: espressif32 @ 6.9.0)
+├── tool-esptoolpy @ 1.40501.0 (required: platformio/tool-esptoolpy @ ~1.40501.0)
+├── toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 (required: espressif/toolchain-riscv32-esp @ 8.4.0+2021r2-patch5)
+└── toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5 (required: espressif/toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5)
+
+[PlatformIO pkg list -e native]
+Resolving native dependencies...
+Platform native @ 1.2.1 (required: native @ 1.2.1)
+├── framework-arduinoespressif32 @ 3.20017.0 (required: platformio/framework-arduinoespressif32)
+├── tool-esptoolpy @ 1.40501.0 (required: platformio/tool-esptoolpy)
+├── tool-scons @ 4.40801.0 (required: platformio/tool-scons)
+├── toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 (required: platformio/toolchain-riscv32-esp)
+└── toolchain-xtensa-esp32 @ 8.4.0+2021r2-patch5 (required: platformio/toolchain-xtensa-esp32)
+Libraries
+└── Unity @ 2.6.0 (required: throwtheswitch/Unity @ 2.6.0)
+
+[PlatformIO pkg list -e link_rx]
+Resolving link_rx dependencies...
+Platform espressif32 @ 6.9.0 (required: espressif32 @ 6.9.0)
+├── framework-arduinoespressif32 @ 3.20017.0 (required: platformio/framework-arduinoespressif32 @ 3.20017.0)
+├── tool-esptoolpy @ 1.40501.0 (required: platformio/tool-esptoolpy @ ~1.40501.0)
+└── toolchain-riscv32-esp @ 8.4.0+2021r2-patch5 (required: espressif/toolchain-riscv32-esp @ 8.4.0+2021r2-patch5)
+
+# RF3-RF6 and physical upload: NOT_RUN.
