@@ -1,0 +1,41 @@
+{
+  "task": "TASK-001",
+  "role": "AI-SW",
+  "design_sha": "5f133d4e63fd2aa14085600e6742a847f151ea4e",
+  "tested_source_commit": "9d88c9284946b94abbe8b8eb18a2d0cf109501cd",
+  "protocol": "LINK_TEST_V1",
+  "host": {
+    "status": "PASS",
+    "compiler": "GCC 14.2.0",
+    "platformio": "NOT_RUN",
+    "evidence": "host-test.log"
+  },
+  "gates": {
+    "RF0": {
+      "status": "BLOCKED",
+      "reason": "Actual board identification, safe USB, preservation, provisioning and SDK not verified"
+    },
+    "RF1": {
+      "status": "NOT_RUN",
+      "reason": "PlatformIO native suite not executed; portable GCC subset PASS"
+    },
+    "RF2": {
+      "status": "BLOCKED",
+      "reason": "No actual target SDK/build or firmware entrypoints"
+    },
+    "RF3": {
+      "status": "NOT_RUN"
+    },
+    "RF4": {
+      "status": "NOT_RUN"
+    },
+    "RF5": {
+      "status": "NOT_RUN"
+    },
+    "RF6": {
+      "status": "NOT_RUN"
+    }
+  },
+  "RF_IF_001": "BLOCKED",
+  "link_test_pass": false
+}
