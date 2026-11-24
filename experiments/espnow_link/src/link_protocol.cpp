@@ -1,7 +1,7 @@
 #include "link_protocol.h"
 #include <cstring>
 
-namespace link {
+namespace espnow_link {
 static void put32(uint8_t* p, uint32_t v) {
     for (unsigned i = 0; i < 4; ++i) p[i] = static_cast<uint8_t>(v >> (8 * i));
 }
@@ -80,4 +80,4 @@ Result Ledger::ack(const uint8_t* b, std::size_t n, const uint8_t* source,
     rtt = age; e.status = Slot::acked; ++counts_.ack_unique;
     return Result::ok;
 }
-} // namespace link
+} // namespace espnow_link
