@@ -1,0 +1,8 @@
+.pio/
+include/local_config.h
+*.bin
+*.elf
+*.map
+*.key
+*.pem
+local/
